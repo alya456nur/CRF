@@ -1,15 +1,17 @@
-/* General styles */
 body {
     margin: 0;
-    font-family:"Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
     background-color: #f0f0f0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-image: url('images/login_bg_11zon.webp');
-    background-size: cover;
+    background-size: 100% 100%; /* Ensures the image covers the entire width and height */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Keeps the image fixed when scrolling */
 }
+
 
  /* Fallback for browsers that don't support WEBP */
 @supports not (background-image: url('images/6938839_3409297.webp')) {
@@ -369,54 +371,16 @@ img {
   .right h2.welcome {
       font-size: 40px;
   }
-
-  .btn, .form-group {
-      max-width: 100%;
-      width: 90%; /* Use 90% width to ensure margins */
-      margin-left: 0; /* Remove left margin */
-      margin-right: 0; /* Remove right margin */
-  }
 }
 
 /* Extra small devices */
 @media (max-width: 480px) {
 
-  .right h2.welcome {
-      font-size: 32px; /* Adjust font size for better fit */
-      margin: 10px 0; /* Add margin for spacing */
-      line-height: 1.2; /* Adjust line height for better readability */
-  }
-
-  .btn {
-      font-size: 14px;
-      padding: 10px;
-      width: 90%; /* Center button with 90% width */
-      margin: 10px 0; /* Add vertical margin */
-  }
-
-  .form-group {
-      width: 90%; /* Center form fields */
-      margin: 20px 0; /* Add spacing between items */
-  }
-
-  .form-group input {
-      padding: 10px;
-      font-size: 14px;
-      width: 100%; /* Full width for inputs */
-  }
-
-  /* Adjust back arrow position */
-  .back-arrow {
-      display: block; /* Show the back arrow */
-      margin: 10px 0 10px -65%; /* Position it 5% from the left */
-      align-self: flex-start; /* Align it to the left */
-  }
-
-  /* Adjust spacing between email input and icon */
-  .form-group input {
-      padding-left: 35px; /* Increase padding-left for better spacing */
-  }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 380px) {
+
+  .container {
+    width: 300px;
+  }
 }
