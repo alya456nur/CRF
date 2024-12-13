@@ -1,0 +1,203 @@
+<script type="module" src="poMod.js"defer></script>
+
+<link rel="stylesheet" href="po.css">
+
+<div class="contentTitle">
+    <h3> <i class="fa-solid fa-receipt" style="padding: 2px;"></i> Purchase Order (PO)</h3>
+    <h6>Finance / Purchase Order (PO)</h6>
+</div>
+
+<div class="container">
+    <div class="top">
+        <button class="floating-button" onclick="addPO()">+ Upload PO</button>
+    </div>
+    
+    <!-- Search and Filter Container -->
+    <div class="filter-container" onchange="filterPO()" id="filterDate">
+         <h5 >FROM</h5>
+         <input type="date" id="initialDate" name="date">
+         <h5 id="text">TO</h5>
+         <input type="date" id="lastDate" name="date">
+    </div>
+
+    <div class="filter-container" id="filterSearch">
+        <div class="search-container2" id="searchContainer">
+            <input type="search" id="chargeSearch" placeholder="Search id, company..." oninput="filterPO()">
+            <i id="search" class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <select id="filterCompany" name="company" onchange="filterPO()"></select>
+    </div>
+
+    <div class="table-container" id="POTable">
+        <table class="tableInfo">
+            <thead>
+                <tr class="poppins-regular">
+                    <th>#</th>
+                    <th>PO NUMBER</th>
+                    <th>PO DATE</th>
+                    <th>COMPANY NAME</th>
+                    <th style="text-align: center;">PO</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="pagination" id="pagination">
+        <span id="pageInfo">Showing 0 to 0 of 0 PO</span>
+        <button id="firstPage" onclick="goToFirstPage('PO')"><i class="fa-solid fa-angles-left"></i></button>
+        <button id="prevPage" onclick="changePage(-1, 'PO')"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="nextPage" onclick="changePage(1,'PO')"><i class="fa-solid fa-angle-right"></i></button>
+        <button id="lastPage" onclick="goToLastPage('PO')"><i class="fa-solid fa-angles-right"></i></button>
+    </div>
+
+
+     <!--ADD PO-->
+    <div class="form-container" id="addPOcont">
+
+        <div class="separate poppins-semibold">
+            <p class="formInfo">PO Information</p>
+            <div class="line-info"></div>
+        </div>
+
+        <form id="poForm">
+
+            <label for="poNumber">PO Number <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="poNumber" name="poNumber" placeholder="Enter PO's number" style="border-radius: 5px;" required>
+
+
+            <label for="company">Company <p style="color: red; display: inline;">*</p></label>
+            <select id="company" name="company"  class = "company" required></select>
+
+            <label for="poDate">PO Date <p style="color: red; display: inline;">*</p></label>
+            <input type="date" id="poDate" name="poDate" placeholder="poDate" style="border-radius: 5px;">
+
+            <h5 style="margin: 30px 0 10px 0;">Purchase Order (PO)</h5>
+
+            <div class="info-contain" style="margin-bottom: 10px;margin-left: 0;">
+                <div class="pdf-upload-container">
+                    <input style="border-radius: 5px ;" type="text" id="poPDF" class="file-name-display" placeholder="No file chosen" readonly>
+                    <label for="poFile" class="upload-btn" style="width: 100px;">Upload PO </label>
+                    <input type="file" id="poFile" accept=".pdf" style="display: none;" onchange="updateFileName(this,'poPDF')">
+                </div>
+            </div>
+
+            <button type="submit" class="modal-button ok">Add</button>
+            <button type="button" class="modal-button delete" onclick="cancelAddPO()">Cancel</button>
+        </form>
+
+    </div>
+
+
+    <!--Display PO-->
+    <div class="form-container" id="displayPO">
+
+        <form id="upPOForm">
+            <h5 style="padding:20px;margin: 0;">Details</h5>
+
+            <div class="info-contain">
+                <p class="poppins-semibold">PO Number:</p>
+                <p class="poppins-regular" id="poNum"></p>
+            </div>
+
+            <div class="info-contain">
+                <p class="poppins-semibold">PO Date:</p>
+                <input type="date" id="poDate2" name="poDate" style="border-radius: 5px;width: 120px;" required disabled>
+                <i id="editInput" class="fa-solid fa-pencil" onclick="enableEditIN('poDate2')"></i>
+            </div>
+
+
+            <div class="info-contain" style="width: 50%;">
+                <p class="poppins-semibold" style="width: 200px;">Company Name:</p>
+                <select id="company2" name="company"  class = "company" required disabled></select>
+                <i id="editInput" class="fa-solid fa-pencil" onclick="enableEditIN('company2')"></i>
+            </div>
+
+            <h5 style="padding:40px 0 0 20px;margin: 0;">Purchase Order (PO)</h5>
+
+            <div class="info-contain" style="margin-top:10px;margin-bottom: 10px;">
+                <a href="" id="poFile2"><i class="bi bi-file-earmark-pdf-fill"></i></a>
+            </div>
+
+            <div class="info-contain" style="margin-bottom: 10px;">
+                <div class="pdf-upload-container">
+                    <label for="poUpload" class="upload-btn">Upload PO</label>
+                    <input type="file" id="poUpload" accept=".pdf" style="display: none;">
+                    <button type="button" class="modal-button" id="removePO" style="border: 2px solid lightgray;margin: 0;border-radius: 5px;">Remove</button>
+                </div>
+            </div>
+
+            <div style="margin: 60px;"></div>
+
+            <button type="button" class="modal-button ok" id="savePO">Save</button>
+            <button type="button" class="modal-button delete" onclick="cancelDisplayPO()">Cancel</button>
+
+        </form>
+
+    </div>
+
+
+</div>
+
+<div id="addPOsuccess" class="modal">
+    <div class="modal-content">
+        <p>PO has been added successfully!</p>
+        <button class="modal-button ok" onclick="closeModal('addPOsuccess')">OK</button>
+    </div>
+</div>
+
+<div id="editPO" class="modal">
+    <div class="modal-content">
+        <p>PO has been updated</p>
+        <button class="modal-button ok" onclick="closeModal('editPO')">OK</button>
+    </div>
+</div>
+
+<div id="uploadPO" class="modal">
+    <div class="modal-content">
+        <p>PO uploaded and updated successfully.</p>
+        <button class="modal-button ok" onclick="closeModal('uploadPO')">OK</button>
+    </div>
+</div>
+
+<div id="deleteFile" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid black; width:110%%; text-align:left; margin-left:-20px;padding-left:10px;">Remove File?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will delete the following file.</p>
+        <p>Are you sure you want to proceed?</p>
+        <button class="modal-button cancel" onclick="closeModal('deleteFile')">No</button>
+        <button class="modal-button delete" id="confirmDeleteButton2">Yes</button>
+    </div>
+</div>
+
+
+<div id="deletePO" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid black; width:110%%; text-align:left; margin-left:-20px;padding-left:10px;">Delete PO?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will delete the following PO.</p>
+        <p>Are you sure you want to proceed?</p>
+        <button class="modal-button cancel" onclick="closeModal('deletePO')">No</button>
+        <button class="modal-button delete" id="confirmDeleteButton">Yes</button>
+    </div>
+</div>
+
+<div id="deletePO2" class="modal">
+    <div class="modal-content">
+        <p>PO has been deleted successfully!</p>
+        <button class="modal-button ok" onclick="closeModal('deletePO2')">OK</button>
+    </div>
+</div>
+
+<div id="errorFile" class="modal">
+    <div class="modal-content">
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i>No file selected!</p>
+        <p>Please choose a file before proceeding to submit.</p>
+        <button class="modal-button ok" onclick="closeModal('errorFile')">OK</button>
+    </div>
+</div>

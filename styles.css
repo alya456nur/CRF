@@ -1,0 +1,1400 @@
+/* @font-face rules for Poppins fonts in ttf format */
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-ExtraLightItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+}
+
+/* Class styles for each font weight and style */
+.poppins-thin {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.poppins-extralight {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.poppins-light {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.poppins-bold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.poppins-extrabold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.poppins-black {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.poppins-thin-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.poppins-extralight-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.poppins-light-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.poppins-regular-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.poppins-medium-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.poppins-semibold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.poppins-bold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.poppins-extrabold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.poppins-black-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+
+/* Base styling for sidebar */
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    font-family:"Poppins", sans-serif;
+    background-color: #eeeeee;
+}
+
+/* Custom Alert Styles */
+.custom-alert {
+    font-family: "Poppins", sans-serif;
+    font-weight:400;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#dateReceived{
+    border-radius: 5px;
+}
+
+#initialDate {
+  border-radius: 5px;
+}
+
+#lastDate {
+  border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.alert-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.alert-content p {
+    margin: 0 0 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+
+/* Loading spinner styles */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #007bff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Top Navigation Bar Styling */
+.top-nav {
+    display: none;
+    position: fixed;
+    width: 100%; /* Full width initially */
+    height: 60px; /* Height of the nav bar */
+    background-color: white ;
+    align-items: center;
+    border-bottom: 2px solid lightgrey;
+    z-index: 1;
+    justify-content: space-between;
+    color: #034bb1;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+
+.top-nav h1 {
+    color: white;
+    margin: 0;
+    text-align: center;
+    font-size: 36px;
+}
+
+.top-nav .menu-toggle {
+    font-size: 22px;
+    background: none;
+    color: darkblue;
+    border: none;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.top-nav .avatar-icon {
+    font-size: 30px;
+    color: white;
+    background-color: lightgray;
+    border-radius: 50%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.noti-icon {
+    width: auto;
+    font-size: 20px;
+    color: black;
+    margin-right: 10px;
+    display: flex;
+    justify-content: end;
+}
+
+.noti-icon:hover{
+    cursor: pointer;
+}
+.notification-bar {
+    position: fixed;
+    top: 60px;
+    right: 3%;
+    width: 300px;
+    max-height: 400px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    display: none; /* Initially hidden */
+    z-index: 1000;
+    border: 2px solid lightgray;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.notification-list {
+    padding: 10px;
+    overflow-y: auto;
+    max-height:300px ;
+}
+
+.notification-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    gap: 2px;
+}
+
+.notification-item:hover {
+    background-color: #f1f1f1;
+}
+
+.notification-item::-webkit-scrollbar {
+    width: 1px; /* Thinner scrollbar */
+}
+
+.notification-item::-webkit-scrollbar-thumb {
+    background-color: rgba(190, 155, 255, 0.8); /* Light purple for the thumb */
+    border-radius: 4px; /* Rounded edges */
+}
+
+.notification-item::-webkit-scrollbar-track {
+    background-color: rgba(230, 220, 255, 0.3); /* Light purple track background */
+}
+
+/* For Firefox */
+.notification-item{
+    scrollbar-width: thin; /* Makes the scrollbar thin */
+    scrollbar-color: rgba(190, 155, 255, 0.8) rgba(230, 220, 255, 0.3); /* thumb and track colors */
+}
+
+.clear-all {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.clear-all:hover {
+    text-decoration: underline;
+}
+
+.notification-dot {
+    position: fixed;
+    top: 30px;
+    height: 7px;
+    width: 7px;
+    background-color: red;
+    border-radius: 50%;
+    display: none;
+    z-index: 1100;
+}
+
+/* Make the image inside the avatar fit the circle */
+.avatar-icon img {
+    width: 100%;                    /* Ensures the image takes full width */
+    height: 90%;                   /* Ensures the image takes full height */
+    border-radius: 50%;             /* Makes the image circular */
+    object-fit: cover;              /* Ensures the image covers the entire circle */
+    border: 2px solid black; 
+}
+
+/* Adjust avatar size on smaller screens */
+#top-avatar {
+    width: 40px;
+    height: 40px;
+    padding: 0;  /* Remove any extra padding */
+    margin-left: auto;
+}
+
+.user {
+    padding-right: 30px;
+    padding-bottom: 5px;
+    margin: 0; /* Remove any default margin */
+}
+
+#username {
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 1px; /* Reduce space between username and department */
+}
+
+#department {
+    font-size: 9px;
+    margin-top: 1px; /* Reduce space between department and username */
+}
+
+a {
+    text-decoration: none;
+}
+
+
+.logo {
+    height: 40px;
+    width: auto;
+    display: block;
+    padding: 25px;
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+    border: 1px solid black;
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 60px; /* Adjust based on navbar height */
+    right: 30px; /* Align with the avatar icon */
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    width: 300px;
+    z-index: 10;
+    overflow: hidden; /* Prevent overflow */
+    flex-direction: column; /* Arrange items in a column */
+}
+
+/* Enable flexbox only for items */
+.dropdown-menu a {
+    display: flex; /* Change display to flex for items */
+    padding: 12px 16px; /* Slightly larger padding */
+    text-decoration: none;
+    color: black;
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    border-bottom: 1px solid black;
+    transition: background-color 0.3s, color 0.3s;
+    flex: 0; /* Prevent items from stretching */
+}
+
+/* Hover effect for dropdown items */
+.dropdown-menu a:hover {
+    background-color: #034bb1;
+    color: white;
+}
+
+/* Last item styling to remove border */
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+
+/* Sidebar styling */
+.sidebar {
+    display: none;
+    position: fixed;
+    top: 62px;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: white;
+    padding-top: 20px;
+    flex-direction: column;
+    align-items: center;
+    transition: left 0.3s ease, width 0.3s ease;
+    z-index: 5;
+    border-right: 2px solid lightgrey;
+    overflow: hidden; /* Hide overflow */
+    box-sizing: border-box; /* Include padding and border in the element’s width and height */
+}
+
+.sidebar.active {
+    left: -250px;
+}
+
+
+/* Close Button */
+.sidebar .close-toggle {
+    position: absolute;
+    top: 10px; /* Space from top */
+    left:10px; /* Space from right */
+    background: none;
+    color: white;
+    border: none;
+    font-size: 42px; /* Adjusted size */
+    cursor: pointer;
+}
+
+/* Logo Styling */
+.sidebar .logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; /* Space below */
+}
+
+.sidebar .logo {
+    height: 70px; /* Height for the logo */
+    width: 70px; /* Width for the logo */
+    object-fit: cover;
+    border-radius: 50%; /* Circle shape */
+    border: 2px solid #fff; /* White border */
+}
+
+.text-wrapper {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow */
+    position: relative; /* Positioning for absolute child */
+    width: 100%; /* Ensure it takes full width */
+}
+
+
+/* Sidebar Nav Links */
+.sidebar .nav-links {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box; /* Include padding in the width */
+}
+
+.sidebar .nav-links a i {
+    margin-right: 8px; /* Adjust the gap size here */
+}
+
+
+.nav-item a .fa-chevron-down {
+    margin-left: auto; /* Pushes the chevron icon to the far right */
+}
+
+.nav-item a .fa-chevron-up {
+    margin-left: auto; /* Pushes the chevron icon to the far right */
+}
+
+.sidebar .nav-links a {
+    display: flex; /* Align icons and text */
+    align-items: center;
+    justify-content: flex-start; /* Left align */
+    text-decoration: none;
+    color: black; /* Text color */
+    padding: 15px 15px; /* Reduced padding to fit */
+    margin: 5px 0; /* Space between links */
+    border-radius: 5px; /* Rounded corners */
+    transition: all 0.3s ease; /* Smooth hover effects */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflowed content */
+    text-overflow: ellipsis; /* Ellipsis for overflowed text */
+    font-size: 13px;
+}
+
+.sidebar .nav-links a .icon {
+    margin-right: 10px; /* Space between icon and text */
+    width: 24px; /* Set width for image icons */
+    height: 24px; /* Set height for image icons */
+    vertical-align: middle; /* Align icons vertically */
+}
+
+.sidebar .nav-links a:hover {
+    background-color: #034bb1; /* Light blue hover */
+    color: white;
+}
+
+/* Active Link Styling */
+.sidebar .nav-links a.active {
+    background-color: #034bb1; /* Highlight active link */
+    font-weight: bold; /* Bold active item */
+    color: white;
+}
+
+/* Wrapper around nav links to handle scrolling */
+.nav-links-wrapper {
+    flex: 1; /* Allow it to take available height */
+    width: 100%; /* Full width of the sidebar */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 0 20px; /* Padding around the wrapper */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Customize the scrollbar for the nav links */
+.nav-links-wrapper::-webkit-scrollbar {
+    width: 1px; /* Thinner scrollbar */
+}
+
+.nav-links-wrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(190, 155, 255, 0.8); /* Light purple for the thumb */
+    border-radius: 4px; /* Rounded edges */
+}
+
+.nav-links-wrapper::-webkit-scrollbar-track {
+    background-color: rgba(230, 220, 255, 0.3); /* Light purple track background */
+}
+
+/* For Firefox */
+.nav-links-wrapper {
+    scrollbar-width: thin; /* Makes the scrollbar thin */
+    scrollbar-color: rgba(190, 155, 255, 0.8) rgba(230, 220, 255, 0.3); /* thumb and track colors */
+}
+
+
+
+/* Sub-nav Styling */
+.sub-nav {
+    display: none; /* Hide sub-nav by default */
+    flex-direction: column; /* Stack sub-nav items */
+    padding-left: 20px; /* Indent sub-nav items */
+}
+
+.sub-nav.active {
+    display: flex; /* Show sub-nav when active */
+}
+
+.sub-nav a {
+    text-decoration: none;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+
+/* Sidebar Text Wrapper */
+.sidebar .text-wrapper {
+    display: none; /* Initially hidden */
+    font-size: 16px;
+    color: #fff; /* White text */
+    margin-bottom: 20px;
+    text-align: center; /* Centered text */
+    transition: opacity 0.3s ease; /* Smooth visibility */
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.sidebar.active .text-wrapper {
+    display: block; /* Show when sidebar is active */
+    opacity: 1; /* Full opacity */
+}
+
+.link {
+  color: darkblue; /* Default link color */
+  text-decoration: none; /* Remove underline */
+}
+
+/* Change color on hover */
+.link:hover {
+  color: #ffcc00; /* Color on hover */
+}
+
+/* Change color when the link is active */
+.link:active {
+  color: green; /* Color when clicked */
+}
+
+/* Main Content Area Styling */
+/* Default content when sidebar is visible */
+#main-content-placeholder {
+    background-color: #eeeeee;
+    margin-left: 250px; /* Account for sidebar width */
+    transition: margin-left 0.3s ease; /* Move content when sidebar expands */
+    margin-top: 62px; /* Add top margin to move content down */
+    transition: margin-left 0.3s ease, margin-top 0.3s ease; /* Smooth transition for both properties */
+    font-family: "Poppins", sans-serif;
+    padding-bottom: 80px;
+}
+
+/* Adjust content when sidebar is collapsed */
+#main-content-placeholder.expanded {
+    margin-left: 0px; /* Remove margin when sidebar is collapsed */
+}
+
+
+.contentTitle h3{
+  color:black;
+  margin-bottom: 2px; /* Adjust to reduce space below h2 */
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.contentTitle h6 {
+    margin-top: -9px;
+    font-style: italic;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+}
+
+
+.contentTitle{
+    background-color: white;
+    padding-left: 50px;
+    border-bottom: 2px solid lightgrey;
+    height: 50px;
+    align-items: center;
+    color:blue;
+
+}
+
+/* Floating button */
+.floating-button {
+    background-color: #034bb1;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 10px 20px; /* Adjusted padding for better spacing */
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: auto; /* Push the button to the right */
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}
+
+.floating-button:hover {
+    background-color: darkblue;
+}
+
+.container{
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Container styles */
+.top {
+    display: flex;
+    align-items: center; /* Vertically center the elements */
+}
+
+
+#pageInfo {
+    margin-right: auto; /* Optional spacing from the left edge */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: transparent;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    color: #ccc;
+    border: 1px solid #ccc;
+    cursor: not-allowed;
+}
+
+/* Hover effect for enabled buttons */
+.pagination button:not(:disabled):hover {
+    color: gray;  /* Lighter text color on hover */
+    border: 1px solid gray;  /* Lighter border on hover */
+    cursor: pointer;
+}
+
+.pagination.hidden {
+    display: none;
+}
+
+.search-container.hidden {
+    display: none;
+}
+
+.filter-container.hidden  {
+    display: none;
+}
+.search-container2.hidden {
+    display: none;
+}
+
+/* Icons */
+.green-icon, .delete-icon {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s;
+    display: inline-block; /* Make sure icons stay in line */
+}
+
+.green-icon {
+    color: black;
+}
+.green-icon:hover {
+    color: green;
+}
+
+/* Disabled edit-icon (green-icon) */
+.green-icon.disabled-icon, .delete-icon.disabled-icon, .upload-icon.disabled-icon {
+    color: gray; /* Optional: visually indicate it's disabled */
+    cursor: not-allowed; /* Change cursor to not-allowed */
+    pointer-events: none; /* Prevent any interaction */
+}
+
+.delete-icon {
+    color: black;
+}
+.delete-icon:hover {
+    color: darkred;
+}
+
+
+/* Styles for the search container */
+.search-container {
+    position: relative; /* Make the container relative to position the icon inside */
+    flex-grow: 1; /* Allow the search container to grow */
+    flex-shrink: 1; /* Allow the search container to shrink */
+    flex-basis: 0; /* Allow it to occupy available space */
+    display: flex;
+  align-items: center;
+}
+
+.search-container2{
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 8px 40px 8px 10px; /* Add padding to the left to make space for the icon */
+    border-top-left-radius: 8px; /* Apply rounded corners to the top right */
+    border-bottom-left-radius: 8px; /* Apply rounded corners to the bottom right */
+    border: 1px solid #909090;
+    box-sizing: border-box;
+}
+
+.inputB{
+    border-radius: 5px;
+}
+
+.inputC{
+    border-radius: 5px;
+    width: 60%;
+}
+.fa-calendar-days{
+    padding: 8px;
+  font-size: 15px;
+  color:  #aaa;
+  pointer-events: none;
+  border: 1px solid gray;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: #f0eeee;
+}
+/* Style for companyInfo section */
+.info-section {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.info-section label {
+    font-weight: bold;
+    color: #333;
+    font-size: 15px;
+    flex: 1;
+}
+
+.info-section span {
+    color: #555;
+    font-size: 13px;
+    text-align: left;
+    flex: 2;
+}
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}
+
+.modal p{
+    font-size: 13px;
+}
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    border: 2px solid darkgray;
+}
+.modal-button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.modal-button.ok {
+    background-color: #034bb1;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+}
+.modal-button.ok:hover {
+    background-color: darkblue;
+}
+.modal-button.cancel {
+    background-color: #1c04a4;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+}
+
+.modal-button.cancel:hover {
+    background-color: darkblue;
+}
+
+.modal-button.delete {
+    background-color: red;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.modal-button.delete:hover   {
+    background-color: darkred;
+    transition: background-color 0.3s;
+}
+
+/* Styles for the search icon */
+.fa-magnifying-glass {
+  padding: 9px;
+  font-size: 87%;
+  color:  #aaa;
+  pointer-events: none;
+  border: 1px solid gray;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.close-button:hover {
+    background-color: darkred;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+}
+
+.separate {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  align-items: center; /* Align items vertically */
+}
+
+.formInfo {
+  color: #8D8D8D;
+  padding-right: 10px;
+  font-size: 17px;
+  margin: 0; /* Remove default margin */
+}
+
+.line-info {
+  flex-grow: 1; /* Make the line stretch to fill remaining space */
+  height: 2px; /* Line thickness */
+  background-color: #C4C4C4; /* Line color */
+}
+
+
+
+/* Inputs */
+label {
+    display: block;
+    margin-top: 10px;
+    font-size: 13px;
+      color: #515151;
+      font-weight: 600;
+}
+
+input, .state {
+    width: 100%;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border-top-left-radius: 5px;
+    border: 1px solid #909090;
+    border-bottom-left-radius: 5px;
+    padding: 8px;
+}
+
+/* Hide the number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* For Firefox */
+}
+
+/* General styles for the select element */
+select {
+    width: 100%; /* Make the select element full width */
+    padding: 8px;
+    border: 1px solid #909090;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 12px;
+    appearance: auto; /* Restore the dropdown arrow */
+  -webkit-appearance: auto; /* For WebKit-based browsers */
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    font-size: 12px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}
+
+.select2-container {
+    width: 100%;      /* Adjust to fit the parent container */
+    font-size: 12px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}
+
+.select2-dropdown {
+    white-space: nowrap; /* Prevent wrapping of long text */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+select::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+select::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Background of the scrollbar track */
+    border-radius: 10px; /* Rounded corners */
+}
+
+select::-webkit-scrollbar-thumb {
+    background: lightgrey; /* Color of the scrollbar handle */
+    border-radius: 10px; /* Rounded corners */
+}
+
+select::-webkit-scrollbar-thumb:hover {
+    background: #ccc; /* Color of the scrollbar handle on hover */
+}
+
+/* For Firefox */
+select {
+    scrollbar-width: thin; /* Makes the scrollbar thinner */
+    scrollbar-color: lightgrey #f0f0f0; /* Thumb color and track color */
+}
+
+input:disabled, input[readonly],
+select:disabled, select[readonly],
+textarea:disabled, textarea[readonly] {
+    background-color: #f0eeee; /* Light grey */
+    cursor: not-allowed; /* Optional: shows not-allowed cursor for better UX */
+}
+
+
+.PIC {
+  width:185px;
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+  display: flex;
+  align-items: center; /* Align items vertically */
+  
+  gap: 4px; /* Add spacing between elements */
+  background-color:#F2F2F2;
+  height: 30px;
+}
+
+
+.staffTitle {
+  padding:0px 10px;
+  font-size: 12px;
+  margin: 0; /* Remove default margin */
+}
+
+.separator {
+  width: 2px; /* Line thickness */
+  height: 30px; /* Line height */
+  background-color: lightgrey; /* Line color */
+}
+
+.staffAll {
+    -webkit-appearance: menulist; /* For Webkit-based browsers like Chrome and Safari */
+  -moz-appearance: none; /* For Firefox */
+  appearance: menulist; /* For other browsers */
+  background: none; /* Remove background color */
+  border: none; /* Remove border */
+  outline: none; /* Remove focus outline */
+  box-shadow: none; /* Remove box shadow */
+  font-size: 12px; /* Match the font size */
+  font-weight: 600;
+}
+
+textarea {
+    width: 80%; /* Takes up the full width of the parent container */
+    max-width: 900px; /* Set a max width if you don't want it to stretch too much */
+    height: 400px; /* Adjust the height as needed */
+    box-sizing: border-box; /* Ensures padding is included in width calculation */
+}
+
+body{
+  background:lightgray;
+}
+
+.test{
+  border:none;
+  border-radius: 5px;
+  background:white;
+  width: 100%;
+  height:80px;
+  margin: 0 10px;
+}
+
+.align-box{
+  padding:12px 20px;
+}
+
+.align-box h2{
+  margin:0;
+}
+
+.align-box h5{
+  margin:0;
+  color:#9d9d9d;
+}
+
+.data{
+  display:flex;
+  gap:20px;
+  padding:0 10px;
+  margin:30px 0px;
+}
+
+@media(max-width:900px){
+    .green-icon, .delete-icon {
+        font-size: 16px;
+        cursor: pointer;
+        padding: 5px;
+        transition: color 0.3s;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+        left: -200px;
+    }
+
+.select2-container {
+    max-width: 300px;
+}
+
+.select2-dropdown {
+    max-width: 300px;
+}
+
+
+.sidebar.active {
+    left: 0;
+}
+
+    .top-nav.collapsed {
+        margin-left: 200px; /* Shift to the right by the width of the sidebar */
+        width: calc(100% - 200px); /* Reduce width dynamically when sidebar is collapsed */
+    }
+
+    #main-content-placeholder {
+        margin-left: 0;
+    }
+
+    .top-nav h1 {
+        font-size: 36px;
+    }
+
+    .dropdown-menu {
+        width: 90%;
+        max-width: 100%;
+        right: 5%;
+    }
+
+    .dropdown-menu a {
+        font-size: 16px;
+    }
+
+    .avatar-icon {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .select2-container {
+    max-width: 200px;
+}
+
+.select2-dropdown {
+    max-width: 200px;
+}
+    
+    .top-nav h1 {
+        font-size: 30px;
+    }
+
+    .top-nav {
+        height: 60px;
+    }
+
+    .logo{
+        width: auto;
+        height: 35px;
+    }
+
+    .sidebar {
+        width: 180px;
+    }
+
+    #top-avatar {
+        width: 30px;
+        height: 30px;
+    }
+
+    .top-nav .avatar-icon {
+        font-size: 30px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .top-nav.collapsed {
+        margin-left: 180px; /* Shift to the right by the width of the sidebar */
+        width: calc(100% - 180px); /* Reduce width dynamically when sidebar is collapsed */
+    }
+
+    .sidebar.active .nav-links a {
+        font-size: 14px;
+    }
+
+    .sidebar.active .sub-nav a {
+        font-size: 12px;
+    }
+
+    .dropdown-menu {
+        top: 60px;
+        right: 30px;
+    }
+
+    .search-container2 .fa-magnifying-glass {
+        font-size: 63%;
+    }
+
+
+    .notification-bar {
+        width: 70%;
+        right: 15%;
+    }
+
+}
+
+@media (max-width: 400px) {
+    .logo{
+        height: 25px;
+    }
+}
+
+@media (max-width: 360px) {
+    .dropdown-menu {
+        right: 0px;
+    }
+}
+
+@media (max-width: 320px) {
+    .top-nav h1 {
+        font-size: 20px;
+    }
+}

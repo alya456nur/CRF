@@ -1,0 +1,201 @@
+<script type="module" src="invoiceMod.js"defer></script>
+
+<link rel="stylesheet" href="invoice.css">
+
+<div class="contentTitle">
+    <h3> <i class="fa-solid fa-file-invoice-dollar" style="padding: 2px;"></i> Price for Lab Testing</h3>
+    <h6>Finance / Invoice</h6>
+</div>
+
+<div class="data" id="data">
+  <div class="test" style="border-bottom:12px solid orange;">
+    <div class="align-box">
+      <h5>Total Sales</h5>
+      <h2 id="totalSales">0</h2>
+    </div>
+  </div>
+
+  <div class="test" style="border-bottom:12px solid #034bb0;">
+    <div class="align-box">
+      <h5>In-house sales</h5>
+      <h2 id="inHouseSales">0</h2>
+    </div>
+  </div>
+
+  <div class="test" style="border-bottom:12px solid #44cde9;">
+    <div class="align-box">
+      <h5>Outsources Total</h5>
+      <h2 id="outSales">0</h2>
+    </div>
+  </div>
+
+</div>
+
+<div class="container">
+    
+    <!-- Search and Filter Container -->
+    <div class="filter-container" onchange="filterInvoices()" id="filterDate">
+         <h5 >FROM</h5>
+         <input type="date" id="initialDate" name="date">
+         <h5 id="text">TO</h5>
+         <input type="date" id="lastDate" name="date">
+    </div>
+
+    <div class="filter-container" id="filterSearch">
+        <div class="search-container2" id="searchContainer">
+            <input type="search" id="chargeSearch" placeholder="Search id, name, company..." oninput="filterInvoices()">
+            <i id="search" class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <select id="filterStatus" name="status" onchange="filterInvoices()">
+            <option value="" enabled selected>ALL STATUS</option>
+            <option value="CANCELLED" name="CANCELLED">CANCELLED</option>
+            <option value="NOT COMPLETED" name="NOT COMPLETED">NOT COMPLETED</option>
+            <option value="DEPOSIT" name="DEPOSIT">DEPOSIT</option>
+            <option value="COMPLETED" name="COMPLETED">COMPLETED</option>
+        </select>
+
+        <select id="filterCompany" name="company" onchange="filterInvoices()"></select>
+    </div>
+
+    <div class="table-container" id="chargeTable">
+        <table class="tableInfo" style="width: 120%;">
+            <thead>
+                <tr class="poppins-regular">
+                    <th>#</th>
+                    <th>ID NUMBER</th>
+                    <th>REGISTER DATE</th>
+                    <th>COMPANY NAME</th>
+                    <th>SAMPLE NAME</th>
+                    <th>IN-HOUSE (RM)</th>
+                    <th>OUT-HOUSE (RM)</th>
+                    <th>SST (8%)</th>
+                    <th>SUBTOTAL</th>
+                    <th>TOTAL AMOUNT</th>
+                    <th>STATUS</th>
+                    <th style="text-align: center;">INVOICE</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="pagination" id="pagination">
+        <span id="pageInfo">Showing 0 to 0 of 0 charge</span>
+        <button id="firstPage" onclick="goToFirstPage('invoice')"><i class="fa-solid fa-angles-left"></i></button>
+        <button id="prevPage" onclick="changePage(-1, 'invoice')"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="nextPage" onclick="changePage(1,'invoice')"><i class="fa-solid fa-angle-right"></i></button>
+        <button id="lastPage" onclick="goToLastPage('invoice')"><i class="fa-solid fa-angles-right"></i></button>
+    </div>
+
+
+    <div class="form-container" id="displayInvoice">
+
+        <h5 style="padding:20px;margin: 0;">Details</h5>
+        <form id="chargeForm">
+            <div class="info-contain" style="margin-bottom: auto;">
+                <p class="poppins-semibold">Payment Status:</p>
+                <select id="changeStatus" name="status" style="width: auto;">
+                    <option value="CANCELLED" name="CANCELLED">CANCELLED</option>
+                    <option value="NOT COMPLETED" name="NOT COMPLETED">NOT COMPLETED</option>
+                    <option value="COMPLETED" name="COMPLETED">COMPLETED</option>
+                </select>
+            </div>
+
+            <div class="info-contain" style="margin-bottom: auto;">
+                <p class="poppins-semibold">Payment Method:</p>
+                <select id="changeMethod" name="method" style="width: auto;" required>
+                    <option value="" disabled selected>CHOOSE A METHOD</option>
+                    <option value="ONLINE (QR)" name="ONLINE (QR)">ONLINE (QR)</option>
+                    <option value="ONLINE (TRANSFER)" name="ONLINE (TRANSFER)">ONLINE (TRANSFER)</option>
+                    <option value="CASH" name="CASH">CASH</option>
+                    <option value="DEPOSIT" name="DEPOSIT">DEPOSIT</option>
+                </select>
+                <p style="color: red; display: inline;">*</p>
+            </div>
+
+            <div class="info-contain" style="margin-bottom: auto;">
+                <p class="poppins-semibold">Payment Date:</p>
+                <input type="date" id="payDate" name="payDate" placeholder="payDate" style="border-radius: 5px;width: auto;">
+                <p style="color: red; display: inline;">*</p>
+            </div>
+
+            <div class="info-contain">
+                <p class="poppins-semibold">ID Number:</p>
+                <p class="poppins-regular" id="prodID"></p>
+            </div>
+
+            <div class="info-contain">
+                <p class="poppins-semibold">Register Date:</p>
+                <p class="poppins-regular" id="dateRegis"></p>
+            </div>
+
+
+            <div class="info-contain">
+                <p class="poppins-semibold">Company Name:</p>
+                <p class="poppins-regular" id="companyName"></p>
+            </div>
+
+            <div class="info-contain">
+                <p class="poppins-semibold">Sample Name:</p>
+                <p class="poppins-regular" id="prodName"></p>
+            </div>
+
+
+            <h5 style="padding:40px 0 0 20px;margin: 0;">Invoice</h5>
+
+            <div class="info-contain" style="margin-top:10px;margin-bottom: 10px;">
+                <a href="" id="invoiceFile"><i class="bi bi-file-earmark-pdf-fill"></i></a>
+            </div>
+
+            <div class="info-contain" style="margin-bottom: 10px;">
+                <div class="pdf-upload-container">
+                    <label for="invoiceUpload" class="upload-btn">Upload Invoice</label>
+                    <input type="file" id="invoiceUpload" accept=".pdf" style="display: none;">
+                    <button type="button" class="modal-button" id="removeInvoice" style="border: 2px solid lightgray;margin: 0;border-radius: 5px;">Remove</button>
+                </div>
+            </div>
+
+            <p class="poppins-semibold" style="padding:20px 0 0 20px;margin: 0;">Remarks:</p>
+            <div class="info-contain">
+                <textarea class="remarksInvoice" id="remarksInvoice" disabled style="height: 100px;margin: 0px 0px 20px 0px;"></textarea>
+                <i id="editInput" class="fa-solid fa-pencil" onclick="enableEditIN('remarksInvoice')"></i>
+            </div>
+
+            <button type="button" class="modal-button ok" id="saveData">Save</button>
+            <button type="button" class="modal-button delete" onclick="cancelDisplayInvoice()">Cancel</button>
+        </form>
+
+    </div>
+
+
+</div>
+
+<div id="editCharge" class="modal">
+    <div class="modal-content">
+        <p>Charge has been saved.</p>
+        <button class="modal-button ok" onclick="closeModal('editCharge')">OK</button>
+    </div>
+</div>
+
+<div id="uploadInvoice" class="modal">
+    <div class="modal-content">
+        <p>Invoice uploaded and updated successfully.</p>
+        <button class="modal-button ok" onclick="closeModal('uploadInvoice')">OK</button>
+    </div>
+</div>
+
+<div id="deleteFile" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid black; width:110%%; text-align:left; margin-left:-20px;padding-left:10px;">Remove File?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will delete the following file.</p>
+        <p>Are you sure you want to proceed?</p>
+        <button class="modal-button cancel" onclick="closeModal('deleteFile')">No</button>
+        <button class="modal-button delete" id="confirmDeleteButton2">Yes</button>
+    </div>
+</div>

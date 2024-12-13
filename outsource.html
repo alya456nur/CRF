@@ -1,0 +1,133 @@
+<script type="module" src="outsourceMod.js"defer></script>
+
+<link rel="stylesheet" href="internal.css">
+
+<div class="contentTitle">
+    <h3><i class="fa-solid fa-vial"></i> PARAMETER LIST</h3>
+    <h6>Lab Testing / Parameter List / Outsource</h6>
+</div>
+
+<div class="container">
+    <h3 id="listHeading">Outsource Testing Parameter</h3>
+    <div class="top">
+        <!-- Search Bar -->
+        <div class="search-container2" id="searchContainer">
+            <input type="search" id="outsourceSearch" placeholder="Search testing name, parameter..." oninput="filterOutsources()">
+            <i id="search" class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <button class="floating-button" onclick="addOutsource()">+ Add Parameter</button>
+    </div>
+
+
+    <div class="table-container" id="outsourceTable">
+        <table>
+            <thead>
+                <tr class="poppins-regular">
+                    <th>#</th>
+                    <th>TESTING NAME</th>
+                    <th>PARAMETER</th>
+                    <th>AMOUNT</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination" id="pagination">
+        <span id="pageInfo">Showing 0 to 0 of 0 testing</span>
+
+        <button id="firstPage" onclick="goToFirstPage('outsource')"><i class="fa-solid fa-angles-left"></i></button>
+        <button id="prevPage" onclick="changePage(-1, 'outsource')"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="nextPage" onclick="changePage(1, 'outsource')"><i class="fa-solid fa-angle-right"></i></button>
+        <button id="lastPage" onclick="goToLastPage('outsource')"><i class="fa-solid fa-angles-right"></i></button>
+    </div>
+
+
+    <!-- Add Company Form (hidden initially) -->
+    <div class="form-container" id="addOutsourceForm">
+
+        <div class="separate poppins-semibold">
+            <p class="formInfo">Outsource Testing Information</p>
+            <div class="line-info"></div>
+        </div>
+
+        <form id="outsourceForm">
+            <label for="outName">Testing Name <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="outName" name="outName" placeholder="Enter testing's name" required>
+
+            <label for="outParam">List of Parameter <p style="color: red; display: inline;">*</p></label>
+            <textarea id="outParam" placeholder="Enter parameter"></textarea>
+
+            <label for="outPrice">AMOUNT (RM) <p style="color: red; display: inline;">*</p></label>
+            <div class="input-wrapper">
+                <span class="currency-symbol">RM</span>
+                <input type="number" id="outPrice" name="outPrice" placeholder="0" required>
+            </div>
+
+            <button type="submit" class="modal-button ok">Add</button>
+            <button type="button" class="modal-button delete" onclick="cancelAddOut()">Cancel</button>
+        </form>
+    </div>
+
+    <div class="form-container" id="updateOutsourceForm">
+        <div class="separate poppins-semibold">
+            <p class="formInfo">Outsource Testing Information</p>
+            <div class="line-info"></div>
+        </div>
+
+        <form id="upOutsourceForm">
+            <label for="outName2">Testing Name <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="outNam2e" name="outName2" placeholder="Enter testing's name" required>
+
+            <label for="outParam2">List of Parameter <p style="color: red; display: inline;">*</p></label>
+            <textarea id="outParam2" placeholder="Enter parameter"></textarea>
+
+            <label for="outPrice2">AMOUNT (RM) <p style="color: red; display: inline;">*</p></label>
+            <div class="input-wrapper">
+                <span class="currency-symbol">RM</span>
+                <input type="number" id="outPrice2" name="outPrice" placeholder="0" required>
+            </div>
+
+            <button type="submit" class="modal-button ok">Save</button>
+            <button type="button" class="modal-button delete" onclick="cancelUpdateOut()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- Add Company Modal -->
+<div id="addOutsource" class="modal">
+    <div class="modal-content">
+        <p>Testing has been successfully added!</p>
+        <button class="modal-button ok" onclick="closeModal('addOutsource')">OK</button>
+    </div>
+</div>
+
+<!-- Add Company Modal -->
+<div id="editOutsource" class="modal">
+    <div class="modal-content">
+        <p>Testing has been successfully updated!</p>
+        <button class="modal-button ok" onclick="closeModal('editOutsource')">OK</button>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteOut" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid black; width:110%; text-align:left; margin-left:-20px;padding-left:10px;"> Delete Parameter?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will permanently remove the parameter from all testing.</p>
+        <button class="modal-button cancel" onclick="closeModal('deleteOut')">Cancel</button>
+        <button class="modal-button delete" id="confirmDeleteButton">Delete</button>
+    </div>
+</div>
+
+<div id="deleteOut2" class="modal">
+    <div class="modal-content">
+        <p>Testing has been successfully deleted!</p>
+        <button class="modal-button ok" onclick="closeModal('deleteOut2')">OK</button>
+    </div>
+</div>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Request Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"> <!-- Import icons file -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+    <!-- Load external JavaScript files -->
+    <script type="module" src="index.js"defer></script>
+
+    <script src="public.js" defer></script>
+
+    <script src="sidebar.js" defer></script>
+
+    <script src="popup.js"defer></script>
+
+    <script type="module" src="popupMod.js"defer></script>
+
+    <script src="staff.js"defer></script>
+
+    <script src="company.js"defer></script>
+
+    <script src="contact.js"defer></script>
+
+    <script src="overview.js"defer></script>
+
+    <script src="list.js"defer></script>
+
+    <script src="internal.js"defer></script>
+
+    <script src="outsource.js"defer></script>
+
+    <script src="profile.js"defer></script>
+
+    <script src="testing.js"defer></script>
+
+    <script src="invoice.js"defer></script>
+
+    <script src="po.js"defer></script>
+
+    <script src="report.js"defer></script>
+
+</head>
+<body>
+
+    <script>
+        let unsubscribe = null;
+        let unsubscribeCharge = null;  // Unsubscribe reference for CHARGE listener
+        let unsubscribeTesting = null;  // Unsubscribe reference for TESTING listener
+
+
+        // Declare global variables
+        let userId = null;
+        let staffName = null;
+        let Lname = null;
+        let Fname = null;
+        let staffDept = null;  
+
+        let lastNotificationTimestamp = null; // Keep track of the last notification timestamp
+
+        let maxNotifications = 30; // Maximum allowed notifications
+
+        let notifications = [];
+
+        let currentPage = 1; // Track the current page
+        const rowsPerPage = 5; // Define rows per page
+
+        let staffs = [];
+
+        let companies = []; // Store all company data
+        let contacts = []; // Store all company data
+        let companyMap = {}; 
+
+        let overviews = [];
+            
+        let products = []; // Store all company data
+        let prodMap = {};
+
+        let staffMap = {}; 
+
+        let internals = []; // Store all company data
+        let outsources = []; // Store all company data
+
+        let internalMap = {}; 
+        let outMap = {}; 
+
+
+        let testingData = []; // Store all company data
+
+        let charges = [];
+
+        let po = [];
+
+
+    </script>
+
+
+  <!-- Top Navigation Bar -->
+  <div class="top-nav" id="top-nav">
+    <a href="/"><img src="images/MBC NEW LOGO-01.webp" class="logo"></a>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+
+    <div class="sortBar" style="display: flex; margin-left:auto; align-items: center;">
+
+      <i class="bi bi-bell noti-icon" onclick="displayNotice()">
+        <span class="notification-dot" id="notificationDot"></span>
+      </i>
+
+
+      <!-- Avatar Icon with Dropdown -->
+      <a href="javascript:void(0)" class="avatar-icon" id="top-avatar" onclick="toggleDropdown()">
+          <i class="bi bi-person"></i>
+      </a>
+      <div class = "user">
+        <p id = "username" class="poppins-semibold"></p>
+        <p id = "department" class="poppins-regular"></p>
+      </div>
+      
+
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="dropdown-menu poppins-regular " id="dropdownMenu">
+      <a class="dropdown-item" href="/"><i class="bi bi-speedometer2"></i> Dashboard</a>
+      <a class="dropdown-item" href="/profile"><i class="bi bi-person"></i> Profile</a>
+      <a class="dropdown-item" href="javascript:void(0)" id="logout2"><i class="bi bi-box-arrow-right"></i> Logout</a>
+    </div>
+
+    </div>
+
+    <!-- Notification Bar -->
+    <div class="notification-bar" id="notificationBar">
+    <div class="notification-header">
+      <p class="poppins-semibold">Notifications</p>
+      <button class="clear-all" onclick="clearNotifications(userId)">Clear All</button>
+    </div>
+    <div class="notification-list" id="notificationList">
+      <!-- Notifications will be dynamically added here -->
+    </div>
+    </div>
+
+  <div class="sidebar" id="sidebar">
+        <!-- Add a wrapper around the nav links for independent scrolling -->
+        <div class="nav-links-wrapper poppins-semibold">
+            <div class="nav-links">
+                
+            </div>
+        </div>
+
+        <!-- Contact Section at the bottom -->
+        <div class="contact-info" style="margin-top: auto; padding: 10px; border-top: 1px solid #ccc; color: black; font-size: 12px; padding-bottom: 70px; font-family: 'Poppins', sans-serif;">
+            <h4>Contact Me</h4>
+            <p>If you encounter any issues, please reach out:</p>
+            <p><i class="bi bi-envelope"></i>Alya-support@webapp.com</p>
+            <p><i class="bi bi-telephone"></i>+60-11 2099 9364<a href="https://wa.link/342asn" class="link">(Whatsapp)</a></p> 
+        </div>
+    </div>
+
+  <!-- Placeholder for Main Content -->
+  <div id="main-content-placeholder" class="main-content">
+    <!-- Add the spinner HTML to your page -->
+
+  </div>
+
+  <!-- Custom Alert Modal -->
+    <div id="customAlert" class="custom-alert hidden">
+        <div class="alert-content">
+            <p id="alertMessage"></p>
+            <div id="loadingSpinner" class="spinner hidden"></div>
+        </div>
+    </div>
+</body>
+</html>

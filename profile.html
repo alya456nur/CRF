@@ -1,0 +1,151 @@
+<script type="module" src="profileMod.js"defer></script>
+
+<link rel="stylesheet" href="profile.css">
+
+
+<div class="contentTitle">
+    <h3> <i class="bi bi-person"></i> PROFILE</h3>
+    <h6>Profile</h6>
+</div>
+
+
+<div id="updateProfile" class="modal2">
+    <div class="modal-content2">
+        <p>Profile has been successfully updated!</p>
+        <button class="modal-button ok" onclick="closeProfile()">OK</button>
+    </div>
+</div>
+
+<div style="justify-content: center;">
+    <div class="edit-profile-container">
+        <!-- Avatar Icon -->
+        <div class="avatar-icon2">
+            <i class="bi bi-person-circle"></i>
+        </div>
+
+        <!-- Input Fields -->
+        <form class="mt-4">
+            <!-- Upload Photo Button -->
+            <div class="mt-3" id="uploadPhotoContainer" style="display: none;">
+                <label for="uploadPhoto" class="form-label">PROFILE PICTURE</label>
+                <input type="file" id="uploadPhoto" class="form-control" accept="image/*">
+            </div>
+
+            <div class="mb-3">
+                <label for="dept" class="form-label">DEPARTMENT</label>
+                <input type="text" class="form-control" id="dept" placeholder="Your Department" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="Fname" class="form-label">FIRST NAME</label>
+                <input type="text" class="form-control" id="Fname" placeholder="Enter your username" disabled required>
+            </div>
+            <div class="mb-3">
+                <label for="Lname" class="form-label">LAST NAME</label>
+                <input type="text" class="form-control" id="Lname" placeholder="Enter your username" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">CONTACT</label>
+                <input type="phone" class="form-control" id="phone" placeholder="Enter your phone number" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">EMAIL</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" disabled>
+            </div>
+        </form>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button type="button" id="editButton" class="editButton" onclick="enableEdit()">Edit Profile</button>
+            <div id="saveCancelButtons" class="save-cancel-buttons" style="display: none;">
+                <button type="button" class="cancelBtn" onclick="cancelEdit()">Cancel</button>
+                <button type="button" class="editButton" onclick="saveChanges()">Save Changes</button>
+            </div>
+            <button type="button" class="editPrivate" id="editEmail" onclick="showEmailChange()">Change Email</button>
+            <button type="button" class="editPrivate" id="editPass" onclick="showPasswordChange()">Change Password</button>
+        </div>
+    </div>
+
+
+    <div class="change-email-password-container hidden">
+        <!-- Change Email Section -->
+        <div id="changeEmailSection" style="display: none;">
+            <h3>CHANGE EMAIL</h3>
+            <form id="changeEmailForm" autocomplete="off">
+                <!-- Hidden dummy field to prevent autofill -->
+                <input type="email" style="display:none" autocomplete="off" name="fakeEmail">
+
+                <div class="mb-3">
+                    <label for="newEmail" class="form-label">NEW EMAIL</label>
+                    <input type="email" class="form-control" id="newEmail" placeholder="Enter new email" name="newEmail123" autocomplete="off" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">PASSWORD</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password" placeholder="Enter password" name="currentPassword123" autocomplete="new-password" required>
+                        <span class="input-group-text" onclick="toggleVisibility('password')">
+                            <i id="eyeIconPassword" class="bi bi-eye-slash toggle-password"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <button type="button" class="editButton" onclick="submitEmailChange()">Submit</button>
+                    <button type="button" class="cancelBtn" onclick="cancelEmailChange()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Change Password Section -->
+        <div id="changePasswordSection" style="display: none;">
+            <h3>CHANGE PASSWORD</h3>
+            <form id="changePasswordForm" autocomplete="off">
+                <!-- Hidden dummy field to prevent autofill -->
+                <input type="password" style="display:none" autocomplete="off" name="fakePassword">
+
+                <div class="mb-3">
+                    <label for="currentPassword" class="form-label">CURRENT PASSWORD</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password" name="currentPassword123" autocomplete="new-password" required>
+                        <span class="input-group-text" onclick="toggleVisibility('currentPassword')">
+                            <i id="eyeIconCurrentPassword" class="bi bi-eye-slash toggle-password"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="newPassword" class="form-label">NEW PASSWORD</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="newPassword" placeholder="Enter new password" name="newPassword123" autocomplete="new-password" required>
+                        <span class="input-group-text" onclick="toggleVisibility('newPassword')">
+                            <i id="eyeIconNewPassword" class="bi bi-eye-slash toggle-password"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="confirmNewPassword" class="form-label">CONFIRM NEW PASSWORD</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="confirmNewPassword" placeholder="Confirm new password" name="confirmNewPassword123" autocomplete="new-password" required>
+                        <span class="input-group-text" onclick="toggleVisibility('confirmNewPassword')">
+                            <i id="eyeIconConfirmNewPassword" class="bi bi-eye-slash toggle-password"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <button type="button" class="editButton" onclick="submitPasswordChange()">Submit</button>
+                    <button type="button" class="cancelBtn" onclick="cancelPasswordChange()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<!-- Custom Alert Modal -->
+    <div id="cusAlert" class="custom-alert hidden">
+        <div class="alert-content">
+            <p id="Message"></p>
+            <button class="btn" onclick="closeAlert()">OK</button>
+        </div>
+    </div>

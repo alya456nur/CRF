@@ -1,0 +1,94 @@
+<script type="module" src="overviewMod.js"defer></script>
+<link rel="stylesheet" href="overview.css">
+
+<div class="contentTitle">
+    <h3> <i class="bi bi-clipboard-data" style="padding: 2px;"></i> OVERVIEW</h3>
+    <h6>Products / Overview</h6>
+</div>
+
+<div class="container">
+    <h3 id="listHeading">Testing Overview</h3>
+
+    <!-- Search and Filter Container -->
+    <div class="filter-container" onchange="filterProducts()">
+        <h5 id="text">FROM</h5>
+         <input type="date" id="initialDate" name="date">
+         <h5 id="text">TO</h5>
+         <input type="date" id="lastDate" name="date">
+    </div>
+
+    <!-- Search and Filter Container -->
+    <div class="filter-container">
+        <select id="filterResult" name="result" onchange="filterProducts()">
+            <option value="" enabled selected>ALL RESULT STATUS</option>
+            <option value="CANCELLED">CANCELLED</option>
+            <option value="PENDING">PENDING</option>
+            <option value="RECEIVED">ONGOING</option>
+            <option value="COMPLETED">COMPLETED</option>
+        </select>
+
+        <select id="filterPay" name="pay" onchange="filterProducts()">
+            <option value="" enabled selected>ALL PAY STATUS</option>
+            <option value="CANCELLED">CANCELLED</option>
+            <option value="NOT COMPLETED">NOT COMPLETED</option>
+            <option value="DEPOSIT">DEPOSIT</option>
+            <option value="COMPLETED">COMPLETED</option>
+        </select>
+    </div>
+
+    <!-- Search and Filter Container -->
+    <div class="filter-container" id="filterOverview">
+        <select id="filterStaff" name="staff" onchange="filterProducts()">
+        </select>
+
+        <select id="filterCompany" name="company" onchange="filterProducts()">
+        </select>
+    </div>
+
+
+    <div class="search-container" id="searchContainer">
+            <input type="search" id="productSearch" placeholder="Search staff, name, company..." oninput="filterProducts()">
+            <i id="search" class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+
+
+    <div class="table-container" id="productTable">
+        <table>
+            <thead>
+                <tr class="poppins-regular">
+                    <th>NO</th>
+                    <th>PRODUCT ID</th>
+                    <th>PRODUCT NAME</th>
+                    <th>DATE REGISTER</th>
+                    <th>COMPANY</th>
+                    <th>STAFF IN CHARGE</th>
+                    <th>RESULT STATUS</th>
+                    <th>PAY STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination" id="pagination">
+        <span id="pageInfo">Showing 0 to 0 of 0 testing</span>
+        <button id="firstPage" onclick="goToFirstPage('overview')"><i class="fa-solid fa-angles-left"></i></button>
+        <button id="prevPage" onclick="changePage(-1, 'overview')"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="nextPage" onclick="changePage(1, 'overview')"><i class="fa-solid fa-angle-right"></i></button>
+        <button id="lastPage" onclick="goToLastPage('overview')"><i class="fa-solid fa-angles-right"></i></button>
+    </div>
+
+</div>
+
+
+<!-- Custom Alert Modal -->
+<div id="customAlert" class="custom-alert hidden">
+    <div class="alert-content">
+        <p id="alertMessage"></p>
+        <div id="loadingSpinner" class="spinner hidden"></div>
+    </div>
+</div>

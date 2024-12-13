@@ -1,0 +1,218 @@
+/* General body styling */
+body {
+  background-color: #eee;
+}
+
+
+input {
+  all: unset; /* Remove all inherited styles */
+  /* Add your own styles */
+  border: 1px solid #ccc;
+  padding: 5px;
+  background-color: white;
+  font-family: "Poppins", sans-serif;
+  width: 200px;
+  height: 17px;
+  font-size: 10px;
+}
+
+select {
+  all: unset; /* Remove all inherited styles */
+  appearance: auto; /* Restore the dropdown arrow */
+  -webkit-appearance: auto; /* For WebKit-based browsers */
+  font-weight: 600;
+  border: 2px solid #ccc;
+  padding: 2px 15px;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.chart{
+  display: flex;
+  gap: 30px;
+  width: 100%;
+}
+
+#sampleChart {
+  width: 300px !important;
+  height: auto !important;
+}
+
+.data {
+  display: flex;
+  gap: 20px;
+  padding: 0 0px;
+  margin: 15px 0px;
+}
+.test {
+  margin: 0 0px;
+}
+.welcomePage h2{
+  color: #034bb1;
+  display: flex;
+  margin: 0;
+}
+
+.welcomePage{
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.filter-container{
+  display: flex;
+  color: #9d9d9d;
+  font-size: 14px;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-container h5{
+    margin: 0;
+  }
+
+
+.content {
+  margin: 0px 20px;
+}
+
+.title{
+  color: #9d9d9d;
+}
+
+.line {
+  width: auto;
+  height: 0px;
+  border: 1px solid #ccc;
+}
+.container h3{
+  color: #9d9d9d;
+    
+}
+.container {
+    border-radius: 10px;
+    max-width: 1300px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+#barChart{
+  width: 100%;
+}
+
+#doughnut{
+  width: 50%;
+}
+.barContain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+#salesChart {
+  width: 100% !important;
+  height: auto !important;
+  padding: 0 40px;
+}
+
+.sort {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 25px 0px 25px;
+  align-items: center;
+}
+
+/* Navbar container */
+.navbar {
+  height: 90%;
+  display: flex;
+  width: auto;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* Nav item styling */
+.nav-items {
+  text-decoration: none;
+  color: #9d9d9d;
+  padding: 8px;
+  text-align: center;
+  font-size: 15px;
+  border-right: 1px solid #ccc;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Remove bottom border for the last item */
+.nav-items:last-child {
+  border-right: none;
+}
+
+/* Hover effect */
+.nav-items:hover {
+  background-color: #034bb1;
+  color: #fff;
+}
+
+/* Active state (optional) */
+.nav-items.active {
+  background-color: #034bb1;
+  color: #fff;
+}
+
+
+@media(max-width:900px){
+
+  input {
+    width: auto;
+  }
+
+  .filter-container{
+    width: auto;
+  }
+
+  .chart {
+    display: grid;            /* Enables grid layout */
+    gap: 15px;                /* Adds spacing between grid items */
+    place-items: center;      /* Centers items both vertically and horizontally */
+}
+
+
+}
+
+@media (max-width: 768px) {
+
+}
+
+@media (max-width: 608px) {
+  #doughnut{
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .welcomePage h2 {
+    font-size: 18px;
+  }
+
+  .filter-container{
+    font-size: 12px;
+  }
+
+  .align-box h5 {
+      font-size: 12px;
+  }
+
+}
+
+@media (max-width: 360px) {
+
+}
+

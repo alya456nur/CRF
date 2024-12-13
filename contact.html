@@ -1,0 +1,173 @@
+<script type="module" src="contactMod.js"defer></script>
+
+<link rel="stylesheet" href="contact.css">
+
+<div class="contentTitle">
+    <h3><i class="bi bi-file-person"></i> CONTACTS</h3>
+    <h6>Clients / Contact</h6>
+</div>
+
+<div class="container">
+    <div class="top">
+        <h3 id="listHeading">List of Contacts</h3>
+        <button class="floating-button" onclick="addContact()">+ Add Contact</button>
+    </div>
+
+        <!-- Search Bar -->
+        <div class="search-container" id="searchContainer">
+            <input type="search" id="contactSearch" placeholder="Search name, company..." oninput="filterContacts()">
+            <i id="search" class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+
+    <div class="table-container" id="contactTable">
+        <table>
+            <thead>
+                <tr class="poppins-regular">
+                    <th>NO</th>
+                    <th>NAME</th>
+                    <th>COMPANY</th>
+                    <th>EMAIL</th>
+                    <th>NO. TELEPHONE</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination" id="pagination">
+        <span id="pageInfo">Showing 0 to 0 of 0 contacts</span>
+        <button id="firstPage" onclick="goToFirstPage('contacts')"><i class="fa-solid fa-angles-left"></i></button>
+        <button id="prevPage" onclick="changePage(-1, 'contacts')"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="nextPage" onclick="changePage(1,'contacts')"><i class="fa-solid fa-angle-right"></i></button>
+        <button id="lastPage" onclick="goToLastPage('contacts')"><i class="fa-solid fa-angles-right"></i></button>
+    </div>
+
+
+    <!-- Add Company Form (hidden initially) -->
+    <div class="form-container" id="addContactForm">
+        <button class="close-button" onclick="cancelAddC()">X</button>
+
+        <div class="separate poppins-semibold">
+            <p class="formInfo">Contact Information</p>
+            <div class="line-info"></div>
+        </div>
+
+        <form id="contactForm">
+            <label for="contactName">Contact Name <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="contactName" name="contactName" placeholder="Enter contact's name" required>
+
+
+            <label for="company">Company <p style="color: red; display: inline;">*</p></label>
+            <select id="company" name="company"  class = "company" required>
+            </select>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email">
+
+            <label for="phone">Phone Number <p style="color: red; display: inline;">*</p></label>
+            <input type="tel" id="phone" name="phone" placeholder="Phone No." required>
+
+            <button type="submit" class="modal-button ok">Add</button>
+            <button type="button" class="modal-button delete" onclick="cancelAddC()">Cancel</button>
+        </form>
+    </div>
+
+    <div class="form-container" id="updateContactForm">
+        <button class="close-button" onclick="cancelUpdateC()">X</button>
+
+        <div class="separate poppins-semibold">
+            <p class="formInfo">Contact Information</p>
+            <div class="line-info"></div>
+        </div>
+
+        <form id="upContactForm">
+
+            <label for="contactName">Contact Name <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="contactName2" name="contactName" placeholder="Enter contact's name" required>
+
+
+            <label for="company">Company <p style="color: red; display: inline;">*</p></label>
+            <select id="company2" name="company"  class = "company" required>
+
+            </select>
+
+            <label for="email">Email</label>
+            <input type="email" id="email2" name="email" placeholder="Email">
+
+            <label for="phone">Phone Number <p style="color: red; display: inline;">*</p></label>
+            <input type="tel" id="phone2" name="phone" placeholder="Phone No." required>
+
+            <button type="submit" class="modal-button ok">Save</button>
+            <button type="button" class="modal-button delete" onclick="cancelUpdateC()">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Company Information Display -->
+    <div class="form-container" id="contactInfo">
+        <button class="close-button" onclick="cancelInfoC()">X</button>
+
+        <div class="info-section">
+            <label for="contactName">Contact Name:</label>
+            <span id="contactName3"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="company">Company:</label>
+            <span id="company3"></span>
+        </div>
+
+
+        <div class="info-section">
+            <label for="email">Email:</label>
+            <span id="email3"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="phone">Phone Number:</label>
+            <span id="phone3"></span>
+        </div>
+
+        <button type="button" class="modal-button delete" onclick="cancelInfoC()">Close</button>
+    </div>
+
+</div>
+
+
+<!-- Add Company Modal -->
+<div id="addContact" class="modal">
+    <div class="modal-content">
+        <p>Contact has been successfully added!</p>
+        <button class="modal-button ok" onclick="closeModal('addContact')">OK</button>
+    </div>
+</div>
+
+<!-- Add Company Modal -->
+<div id="editContact" class="modal">
+    <div class="modal-content">
+        <p>Contact has been successfully updated!</p>
+        <button class="modal-button ok" onclick="closeModal('editContact')">OK</button>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteContact" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid black; width:110%; text-align:left; margin-left:-20px;padding-left:10px;"> Delete Contact?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will permanently delete the contact from the associated company.</p>
+        <p>Are you sure you want to proceed?</p>
+        <button class="modal-button cancel" onclick="closeModal('deleteContact')">Cancel</button>
+        <button class="modal-button delete" id="confirmDeleteButton">Delete</button>
+    </div>
+</div>
+
+<div id="deleteContact2" class="modal">
+    <div class="modal-content">
+        <p>Contact has been successfully deleted!</p>
+        <button class="modal-button ok" onclick="closeModalP('deleteContact2')">OK</button>
+    </div>
+</div>

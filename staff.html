@@ -1,0 +1,174 @@
+<script type="module" src="staffMod.js"defer></script>
+
+<link rel="stylesheet" href="staff.css">
+
+<div class="contentTitle">
+    <h3><i class="fa-solid fa-users-gear"></i> STAFF</h3>
+    <h6>Staff/Staff List</h6>
+</div>
+
+<div class="container" id="staffList">
+    <div class="top">
+        <h3 id="listHeading">List of Staff</h3>
+        <button class="floating-button" onclick="addStaff()">+ Register Staff</button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container" id="searchContainer">
+        <input type="search" id="staffSearch" placeholder="Search name, department..." style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;" oninput="filterStaff()">
+        <i id="search" class="fa-solid fa-magnifying-glass"></i>
+    </div>
+
+
+    <div class="table-container" id="staffTable">
+        <table>
+            <thead>
+                <tr class="poppins-regular">
+                    <th>NO</th>
+                    <th>NAME</th>
+                    <th>DEPARTMENT</th>
+                    <th>EMAIL</th>
+                    <th>NO. TELEPHONE</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination" id="pagination">
+        <span id="pageInfo">Showing 0 to 0 of 0 staff</span>
+
+        <button id="firstPage" onclick="goToFirstPage('staff')"><i class="fa-solid fa-angles-left"></i></button>
+        <button id="prevPage" onclick="changePage(-1, 'staff')"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="nextPage" onclick="changePage(1, 'staff')"><i class="fa-solid fa-angle-right"></i></button>
+        <button id="lastPage" onclick="goToLastPage('staff')"><i class="fa-solid fa-angles-right"></i></button>
+    </div>
+
+</div>
+
+<div class="bigContain" style="justify-content: center;" id="regStaff">
+    <div class="container2">
+        <h3 id="listHeading">Register Staff</h3>
+        <form id="staffForm">
+
+            <label for="dept">Department <p style="color: red; display: inline;">*</p></label>
+            <select id="dept" name="dept"  class = "dept" required>
+                <option value="" disabled selected>Select a department</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Lab">Lab</option>
+                <option value="Finance">Finance</option>
+            </select>
+
+            <label for="FName">First Name <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="FName" name="FName" placeholder="Enter staff's first name" required>
+
+            <label for="LName">Last Name</label>
+            <input type="text" id="LName" name="LName" placeholder="Enter staff's last name">
+
+            <label for="contact">Contact No <p style="color: red; display: inline;">*</p></label>
+            <input type="phone" id="contact" name="contact" placeholder="ex. 012-345 6789" required>
+
+            <label for="email">Email <p style="color: red; display: inline;">*</p></label>
+            <input type="email" id="email" name="email" placeholder="Email">
+
+            <div class="mb-3">
+                <label for="Password" class="form-label">PASSWORD <p style="color: red; display: inline;">*</p></label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="Password" placeholder="Enter password" name="Password" required>
+                    <span class="input-group-text" onclick="toggleVisibility('Password')">
+                        <i id="eyeIconPassword" class="bi bi-eye-slash toggle-password"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">CONFIRM PASSWORD <p style="color: red; display: inline;">*</p></label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="ConfirmPassword" placeholder="Confirm password" name="confirmPass" required>
+                    <span class="input-group-text" onclick="toggleVisibility('ConfirmPassword')">
+                        <i id="eyeIconConfirmPassword" class="bi bi-eye-slash toggle-password"></i>
+                    </span>
+                </div>
+            </div>
+
+            <button type="submit" class="modal-button ok">Add</button>
+            <button type="button" class="modal-button delete" onclick="cancelStaff()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+
+<div class= "bigContain" style="justify-content: center;" id="updateStaff">
+    <div class="container2">
+        <h3 id="listHeading">Update Staff's Department</h3>
+        <form id="upStaffForm">
+
+            <label for="dept">Department <p style="color: red; display: inline;">*</p></label>
+            <select id="dept2" name="dept"  class = "dept" required>
+                <option value="" disabled selected>Select a department</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Lab">Lab</option>
+                <option value="Finance">Finance</option>
+            </select>
+
+            <label for="FName">First Name</label>
+            <input type="text" id="FName2" name="FName" placeholder="Enter staff's first name" disabled>
+
+            <label for="LName">Last Name</label>
+            <input type="text" id="LName2" name="LName" placeholder="Enter staff's last name" disabled>
+
+            <label for="contact">Contact No</label>
+            <input type="phone" id="contact2" name="contact" placeholder="ex. 012-345 6789" disabled>
+
+            <label for="email">Email</label>
+            <input type="email" id="email2" name="email" placeholder="Email" disabled>
+
+            <button type="submit" class="modal-button ok">Save</button>
+            <button type="button" class="modal-button delete" onclick="cancelUpStaff()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<div id="addStaff" class="modal">
+    <div class="modal-content">
+        <p>Staff's account has been successfully registered!</p>
+        <button class="modal-button ok" onclick="closeModal('addStaff')">OK</button>
+    </div>
+</div>
+
+<!-- Add Company Modal -->
+<div id="editStaff" class="modal">
+    <div class="modal-content">
+        <p>Staff's department has been successfully updated!</p>
+        <button class="modal-button ok" onclick="closeModal('editStaff')">OK</button>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteStaff" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid black; width:110%; text-align:left; margin-left:-20px;padding-left:10px;"> Delete Staff's account?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will permanently delete all of staff's data:</p>
+        <p>Are you sure you want to proceed?</p>
+        <button class="modal-button cancel" onclick="closeModal('deleteStaff')">Cancel</button>
+        <button class="modal-button delete" id="confirmDeleteButton">Delete</button>
+    </div>
+</div>
+
+<div id="deleteStaff2" class="modal">
+    <div class="modal-content">
+        <p>Staff's account has been successfully deleted!</p>
+        <button class="modal-button ok" onclick="closeModal('deleteStaff2')">OK</button>
+    </div>
+</div>
+
+<div id="alertUser" class="modal">
+    <div class="modal-content">
+        <p id="Message" style="text-align: left;"></p>
+        <button class="modal-button ok" onclick="closeModal('alertUser')">OK</button>
+    </div>
+</div>

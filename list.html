@@ -1,0 +1,239 @@
+<script type="module" src="listMod.js"defer></script>
+
+<link rel="stylesheet" href="list.css">
+
+<div class="contentTitle">
+    <h3> <i class="bi bi-file-spreadsheet"></i> SAMPLES</h3>
+    <h6>Samples / List</h6>
+</div>
+
+<div class="container">
+    <div class="top">
+        <h3 id="listHeading">List of Samples</h3>
+        <button class="floating-button" id="float"onclick="addProd()">+ Add Sample</button>
+    </div>
+
+    <!-- Search and Filter Container -->
+    <div class="filter-container" onchange="filterProductsM()" id="filterDate">
+        <h5>FROM</h5>
+         <input type="date" id="initialDate" name="date">
+         <h5 id="text">TO</h5>
+         <input type="date" id="lastDate" name="date">
+    </div>
+
+    <!-- Search and Filter Container -->
+    <div class="filter-container" id="filterOverview">
+        <select id="filterStaff" name="staff" onchange="filterProductsM()">
+        </select>
+
+        <select id="filterCompany" name="company" onchange="filterProductsM()">
+        </select>
+    </div>
+
+
+    <div class="search-container" id="searchContainer">
+            <input type="search" id="productSearch" placeholder="Search staff, name, company..." oninput="filterProductsM()">
+            <i id="search" class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+
+
+    <div class="table-container" id="productTable">
+        <table>
+            <thead>
+                <tr class="poppins-regular">
+                    <th>NO</th>
+                    <th>SAMPLE ID</th>
+                    <th>SAMPLE NAME</th>
+                    <th>DATE RECEIVED</th>
+                    <th>COMPANY</th>
+                    <th>PIC</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination" id="pagination">
+        <span id="pageInfo">Showing 0 to 0 of 0 samples</span>
+        <button id="firstPage" onclick="goToFirstPage('list')"><i class="fa-solid fa-angles-left"></i></button>
+        <button id="prevPage" onclick="changePage(-1, 'list')"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="nextPage" onclick="changePage(1,'list')"><i class="fa-solid fa-angle-right"></i></button>
+        <button id="lastPage" onclick="goToLastPage('list')"><i class="fa-solid fa-angles-right"></i></button>
+    </div>
+
+
+    <!-- Company Information Display -->
+    <div class="form-container" id="productInfo">
+        <button class="close-button" onclick="cancelInfoPM()">X</button>
+
+        <div class="info-section">
+            <label for="id">SAMPLE ID:</label>
+            <span id="prodId"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="name">SAMPLE NAME:</label>
+            <span id="name"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="appearance">PHYSICAL APPEARANCE:</label>
+            <span id="appearance"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="date">DATE RECEIVED:</label>
+            <span id="date"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="staff">STAFF IN CHARGE:</label>
+            <span id="staff"></span>
+        </div>
+
+
+        <div class="info-section">
+            <label for="company">COMPANY:</label>
+            <span id="company"></span>
+        </div>
+
+    </div>
+
+    <!--ADD PRODUCT FORM-->
+    <div class="form-container" id="addProductForm">
+        <button class="close-button" onclick="cancelAddL()">X</button>
+        <form id="prodForm">
+
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Sample Information</p>
+                <div class="line-info"></div>
+            </div>
+
+            <label for="company">Company <p style="color: red; display: inline;">*</p></label>
+            <select id="companyName" name="company" class="company" required style="border-radius: 5px;"></select>
+
+
+            <div class="prodApp">
+                <div class="form-group">
+
+                    <label for="appearance">Physical Appearance <p style="color: red; display: inline;">*</p></label>
+                    <select id="appearanceS" name="appearance" required>
+                        <option value="" disabled selected>Select Appearance</option>
+                        <option value="LIQUID">LIQUID</option>
+                        <option value="SEMI SOLID">SEMI SOLID</option>
+                        <option value="SOLID">SOLID</option>
+                        <option value="SOLID POWDER">SOLID POWDER</option>
+                        <option value="POWDER">POWDER</option>
+                        <option value="SWAB">SWAB</option>
+                        <option value="PASTE">PASTE</option>
+                        <option value="SURFACE">SURFACE</option>
+                        <option value="AIR">AIR</option>
+                    </select>
+                </div>
+                <div class="form-group" id="dateGroup">
+                    <label for="dateReceived">Date Received <p style="color: red; display: inline;">*</p></label>
+                    <input type="date" id="dateReceived" name="dateReceived" required> 
+                </div>
+            </div>
+            
+            <label for="productName">Sample Name <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="productName" name="productName" placeholder="Enter Sample's name" required>
+
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button type="submit" class="modal-button ok">Add</button>
+                <button type="button" class="modal-button delete" onclick="cancelAddL()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+
+    <!--UPDATE Sample FORM-->
+    <div class="form-container" id="upProductForm">
+        <button class="close-button" onclick="cancelUpdateL()">X</button>
+        <form id="upProductForm2">
+
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Sample Information</p>
+                <div class="line-info"></div>
+            </div>
+
+            <label for="company">Company<p style="color: red; display: inline;">*</p></label>
+            <select id="companyName2" name="company"  class = "company" required style="border-radius: 5px;"></select>
+
+            <div class="prodApp">
+                <div class="form-group">
+                    <label for="appearance">Physical Appearance <p style="color: red; display: inline;">*</p></label>
+                    <select id="appearance2" name="appearance" required>
+                        <option value="" disabled selected>Select Appearance</option>
+                        <option value="LIQUID">LIQUID</option>
+                        <option value="SEMI SOLID">SEMI SOLID</option>
+                        <option value="SOLID">SOLID</option>
+                        <option value="SOLID POWDER">SOLID POWDER</option>
+                        <option value="POWDER">POWDER</option>
+                        <option value="SWAB">SWAB</option>
+                        <option value="PASTE">PASTE</option>
+                        <option value="SURFACE">SURFACE</option>
+                        <option value="AIR">AIR</option>
+                    </select>
+                </div>
+                <div class="form-group" id="dateGroup">
+                    <label for="dateReceived">Date Received <p style="color: red; display: inline;">*</p></label>
+                    <input type="date" id="dateReceived2" name="dateReceived" required> 
+                </div>
+            </div>
+            <label for="productName">Sample Name <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="productName2" name="productName" placeholder="Enter Sample's name" required>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button type="submit" class="modal-button ok">Save</button>
+                <button type="button" class="modal-button delete" onclick="cancelUpdateL()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+<!-- Add Company Modal -->
+<div id="addProd" class="modal">
+    <div class="modal-content">
+        <p>Sample has been successfully added!</p>
+        <button class="modal-button ok" onclick="closeModal('addProd')">OK</button>
+    </div>
+</div>
+
+<!-- Add Company Modal -->
+<div id="editProd" class="modal">
+    <div class="modal-content">
+        <p>Sample has been successfully updated!</p>
+        <button class="modal-button ok" onclick="closeModal('editProd')">OK</button>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteProd" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid black; width:110%; text-align:left; margin-left:-20px;padding-left:10px;"> Delete Sample?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will permanently delete all data associated with this record:</p>
+        <p>- The selected sample.</p>
+        <p>- All charges and testing related to the sample.</p>
+        <p>- All files related to the sample.</p>
+        <p>Are you sure you want to proceed?</p>
+        <button class="modal-button cancel" onclick="closeModal('deleteProd')">Cancel</button>
+        <button class="modal-button delete" id="confirmDeleteButton">Delete</button>
+    </div>
+</div>
+
+<div id="deleteProd2" class="modal">
+    <div class="modal-content">
+        <p>Sample has been successfully deleted!</p>
+        <button class="modal-button ok" onclick="closeModal('deleteProd2')">OK</button>
+    </div>
+</div>
+

@@ -1,0 +1,254 @@
+/* Global styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.hidden {
+    display: none;
+}
+
+.option .hidden{
+    display: none;
+}
+
+
+.pagination.hidden {
+    display: none;
+}
+
+.dropdown-container {
+    position: relative;
+    width: 100%; /* Adjust as needed */
+}
+
+
+/* Styles for the Filter and Search Container */
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px; /* Space between filter and search bar */
+    margin-bottom: 20px;
+}
+
+
+
+.container {
+    margin-top: 30px;
+    padding: 20px;
+    max-width: 1300px;
+    border-radius: 10px;
+    background-color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.table-container {
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* Custom scrollbar for WebKit browsers */
+.table-container::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #e0e0e0; /* Light grey background for the scrollbar track */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #a0a0a0; /* Medium grey color for the scrollbar handle */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #808080; /* Darker grey for the scrollbar handle on hover */
+}
+
+/* Custom scrollbar for Firefox */
+.table-container {
+    scrollbar-width: thin; /* Makes the scrollbar thinner */
+    scrollbar-color: #a0a0a0 #e0e0e0; /* Thumb color and track color */
+}
+
+
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 12px;
+    border-collapse: collapse;
+}
+th, td {
+    border-bottom: 1px solid #d4d4d4;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Set a fixed width for the action buttons column */
+td:last-child, th:last-child {
+    width: 100px; /* Adjust the width as needed */
+    text-align: center; /* Center the icons */
+}
+
+th:first-child {
+    border-left: none;
+}
+
+th:last-child {
+    border-right: none;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    border:none;
+    background-color: #eeeeee;
+    border-bottom: 0.5px solid #d4d4d4;
+    position: relative;
+    color: grey;
+    height:30px;
+}
+tr {
+    background-color: white;
+}
+
+/* Custom right border */
+th:not(:last-child)::after {
+    position: absolute;
+    content: "";
+    top: 15px; /* Adjust top offset for custom height */
+    right: 0;
+    bottom:15px; /* Adjust bottom offset for custom height */
+    width: 1px; /* Border width */
+    background-color: #d4d4d4;
+}
+
+tr:first-child th {
+    border-top: none;
+}
+
+
+tr:hover {
+    background-color: rgba(200, 200, 200, 0.3);
+}
+
+
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+
+.close-button {
+    position: absolute;
+    top: -130px;
+    right: 0px;
+    background-color: red;
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Form container */
+.form-container {
+    display: none;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.form-container.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Hide table when form is displayed */
+.table-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9);
+}
+
+
+
+
+/* Button inside modal */
+button.modal-button {
+    margin-top: 20px;
+}
+
+
+/* Responsive adjustments for container */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        margin-top: 30px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    input, select {
+        padding: 8px;
+    }
+
+    .modal-content {
+        width: 260px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    .filter-container {
+        flex-direction: column; /* Stack vertically */
+        align-items: flex-start; /* Align to the start */
+    }
+
+    th, td {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    input, select {
+        padding: 6px;
+    }
+
+    .modal-content {
+        width: 220px;
+    }
+
+}
+
+
+@media (max-width: 360px) {
+}

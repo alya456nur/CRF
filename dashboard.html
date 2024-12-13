@@ -1,0 +1,125 @@
+<link rel="stylesheet" href="dashboard.css">
+<script type="module" src="reportMod.js"defer></script>
+<script type="module" src="dashboardMod.js"defer></script>
+
+<div class="contentTitle">
+    <h3> <i class="bi bi-speedometer2"></i> DASHBOARD</h3>
+    <h6>DASHBOARD</h6>
+</div>
+
+<div class="content" id="content">   
+    <div class="welcomePage">
+        <h2 id="greet"></h2>
+
+        <!-- Search and Filter Container -->
+        <div class="filter-container" onchange="filterDate()" id="filterDate">
+            <h5>FROM</h5>
+             <input type="date" id="initialDate" name="date">
+             <h5 id="text">TO</h5>
+             <input type="date" id="lastDate" name="date">
+        </div>
+
+    </div>
+
+
+    <div class="data" id="data1">
+      <div class="test" style="border-bottom:12px solid orange;">
+        <div class="align-box">
+          <h5>No. of Tests</h5>
+          <h2 id="testTotal">0</h2>
+        </div>
+      </div>
+
+      <div class="test" style="border-bottom:12px solid cyan;">
+        <div class="align-box">
+          <h5>Ongoing Tests</h5>
+          <h2 id="ongoingTotal">0</h2>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="data" id="data2">
+      <div class="test" style="border-bottom:12px solid red;">
+        <div class="align-box">
+          <h5>Cancelled Tests</h5>
+          <h2 id="cancelTotal">0</h2>
+        </div>
+      </div>
+
+      <div class="test" style="border-bottom:12px solid darkblue;">
+        <div class="align-box">
+          <h5>Pending Tests</h5>
+          <h2 id="pendTotal">0</h2>
+        </div>
+      </div>
+
+      <div class="test" style="border-bottom:12px solid lightblue;">
+        <div class="align-box">
+          <h5>Completed Tests</h5>
+          <h2 id="completeTest">0</h2>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="data" id="data3">
+      <div class="test" style="border-bottom:12px solid orange;">
+        <div class="align-box">
+          <h5>Total Sales</h5>
+          <h2 id="totalSales">0</h2>
+        </div>
+      </div>
+
+      <div class="test" style="border-bottom:12px solid #034bb0;">
+        <div class="align-box">
+          <h5>In-house sales</h5>
+          <h2 id="inHouseSales">0</h2>
+        </div>
+      </div>
+
+      <div class="test" style="border-bottom:12px solid #44cde9;">
+        <div class="align-box">
+          <h5>Outsources Total</h5>
+          <h2 id="outSales">0</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart">
+
+        <div class="container" id="barChart">
+            <div class="sort">
+                <h3>Total Income</h3>
+                <div class="navbar">
+                <a href="#" class="nav-items" id="day">Day</a>
+                <a href="#" class="nav-items" id="weekly">Week</a>
+                <a href="#" class="nav-items" id="monthly">Month</a>
+                <a href="#" class="nav-items" id="yearly">Year</a>
+                </div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="barContain">
+                <canvas id="salesChart"></canvas>
+            </div>
+        </div>
+
+        <div class="container" id="doughnut">
+            <div class="sort">
+                <h3>Summary</h3>
+                <select id="year" onchange="fetchChartData()">
+                </select>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="barContain">
+                <canvas id="sampleChart"></canvas>
+            </div>
+        </div>
+        
+    </div>
+
+</div>

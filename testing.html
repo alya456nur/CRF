@@ -1,0 +1,840 @@
+<script type="module" src="testingMod.js"defer></script>
+
+<link rel="stylesheet" href="testing.css">
+
+<div class="contentTitle">
+    <h3> <i class="fa-regular fa-rectangle-list" style="padding: 2px;"></i>Registered Samples</h3>
+    <h6>Lab Testing / Testing List</h6>
+</div>
+
+<div class="data" id="data1">
+  <div class="test" style="border-bottom:12px solid orange;">
+    <div class="align-box">
+      <h5>No. of Tests</h5>
+      <h2 id="testTotal">0</h2>
+    </div>
+  </div>
+
+  <div class="test" style="border-bottom:12px solid cyan;">
+    <div class="align-box">
+      <h5>Ongoing Tests</h5>
+      <h2 id="ongoingTotal">0</h2>
+    </div>
+  </div>
+
+</div>
+
+<div class="data" id="data2">
+  <div class="test" style="border-bottom:12px solid red;">
+    <div class="align-box">
+      <h5>Cancelled Tests</h5>
+      <h2 id="cancelTotal">0</h2>
+    </div>
+  </div>
+
+  <div class="test" style="border-bottom:12px solid darkblue;">
+    <div class="align-box">
+      <h5>Pending Tests</h5>
+      <h2 id="pendTotal">0</h2>
+    </div>
+  </div>
+
+  <div class="test" style="border-bottom:12px solid lightblue;">
+    <div class="align-box">
+      <h5>Completed Tests</h5>
+      <h2 id="completeTest">0</h2>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+
+    <div class="top">
+        <h3 id="listHeading">Testing List</h3>
+        <button class="floating-button" id="float"onclick="addTest()">+ Register Sample</button>
+    </div>
+
+    <!-- Search and Filter Container -->
+    <div class="filter-container" onchange="filterTestings()" id="filterDate">
+         <h5 >FROM</h5>
+         <input type="date" id="initialDate" name="date">
+         <h5 id="text">TO</h5>
+         <input type="date" id="lastDate" name="date">
+    </div>
+
+    <div class="filter-container" id="filterSearch">
+        <div class="search-container2" id="searchContainer">
+            <input type="search" id="testSearch" placeholder="Search id, name, company..." oninput="filterTestings()">
+            <i id="search" class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <select id="filterStatus" name="status" onchange="filterTestings()">
+            <option value="" enabled selected>ALL STATUS</option>
+            <option value="CANCELLED" name="CANCELLED">CANCELLED</option>
+            <option value="PENDING" name="PENDING">PENDING</option>
+            <option value="ONGOING" name="ONGOING">ONGOING</option>
+            <option value="COMPLETED" name="COMPLETED">COMPLETED</option>
+        </select>
+
+        <select id="filterCompany" name="company" onchange="filterTestings()"></select>
+    </div>
+
+
+
+    <div class="table-container" id="testingTable">
+        <table class="tableInfo">
+            <thead>
+                <tr class="poppins-regular">
+                    <th>#</th>
+                    <th>ID NUMBER</th>
+                    <th>REGISTER DATE</th>
+                    <th>COMPANY NAME</th>
+                    <th>SAMPLE NAME</th>
+                    <th>STATUS</th>
+                    <th style="text-align: center;">COA</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="pagination" id="pagination">
+        <span id="pageInfo">Showing 0 to 0 of 0 testing</span>
+        <button id="firstPage" onclick="goToFirstPage('testing')"><i class="fa-solid fa-angles-left"></i></button>
+        <button id="prevPage" onclick="changePage(-1, 'testing')"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="nextPage" onclick="changePage(1,'testing')"><i class="fa-solid fa-angle-right"></i></button>
+        <button id="lastPage" onclick="goToLastPage('testing')"><i class="fa-solid fa-angles-right"></i></button>
+    </div>
+
+
+
+
+
+    <!---ADD FORM--->
+    <div class="form-container" id="addTestingForm">
+        
+        <form id="testForm">
+
+            <div class="topInfo">
+                <div class="PIC poppins-semibold" style="width: 200px;">
+                    <p class="staffTitle">ID Number:</p>
+                    <p class="staffAll" id="itemID"></p>
+                </div>
+
+                <div class="PIC poppins-semibold">
+                    <p class="staffTitle">PIC:</p>
+                    <div class="separator"></div>
+                    <p class="staffAll" id="staffName"></p>
+                </div>
+            </div>
+            
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Customer Information</p>
+                <div class="line-info"></div>
+            </div>
+
+            <label for="company">Company <p style="color: red; display: inline;">*</p></label>
+            <div style="width:310px;">
+                <select id="company" name="company"  class = "company" style="width: 310px;" required onchange="fillInfo()">
+            </select>
+            </div>
+
+            <div class="inputContain">
+                <div class="form-group">
+                    <label for="companyName">Company Name <p style="color: red; display: inline;">*</p></label>
+                    <input class="inputB" type="text" id="companyName" name="companyName" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyPhone">No. Telephone <p style="color: red; display: inline;">*</p></label>
+                    <input class="inputC" type="text" id="companyPhone" name="companyPhone" readonly>
+                </div>
+
+            </div>
+
+            <div class="inputContain">
+                <div class="form-group">
+                    <label for="companyAddress">Address <p style="color: red; display: inline;">*</p></label>
+                    <input class="inputB" type="text" id="companyAddress1" name="companyAddress" readonly>
+                    <input class="inputB" type="text" id="companyAddress2" name="companyAddress" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyEmail">E-mail</label>
+                    <input class="inputC" type="text" id="companyEmail" name="companyEmail" readonly>
+                </div>
+            </div>
+
+
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Contact Information</p>
+                <div class="line-info"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Contact Person <p style="color: red; display: inline;">*</p></label>
+            </div>
+
+            <table class="table1" id="contactName">
+                <thead>
+                    <tr class="poppins-regular">
+                        <th>CONTACT NAME</th>
+                        <th>EMAIL</th>
+                        <th>NO. TELEPHONE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+
+
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Testing Service Requested</p>
+                <div class="line-info"></div>
+            </div>
+
+            <div class="inputContain">
+
+                <div class="form-group">
+
+                    <label for="sample">Sample <p style="color: red; display: inline;">*</p></label>
+                    <select id="sample" name="sample"  class = "sample" required disabled onchange="fillSample()">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateReceived">Date Received Test item<p style="color: red; display: inline;">*</p></label>
+                    <div class="search-container" id="searchContainer">
+                        <input class="dateB" type="date" id="received" name="dateReceived" readonly required> 
+                        <i class="fa-regular fa-calendar-days"></i>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="inputContain">
+                <div class="form-group">
+                    <label for="sampleName">Sample Name <p style="color: red; display: inline;">*</p></label>
+                    <input class="inputB" type="text" id="sampleName" name="sampleName" readonly required>
+                </div>
+
+                <div class="form-group">
+                    <label for="appearance">Physical Appearance<p style="color: red; display: inline;">*</p></label>
+                    <input class="inputC" type="text" id="appearance" name="appearance" readonly required>
+                </div>
+            </div>
+
+
+            <h4 class="heading4">Internal Testing Details</h4>
+
+            <div class="inputContain2">
+                <div class="form-group">
+                    <label for="inName">Testing Name (Internal) <p style="color: red; display: inline;">*</p></label>
+                    <select id="inName" name="inName"  class = "inName">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="floating-button" id="addIn" onclick="paramIn('inName', 'inTest', 'inTotal')">+ Add Testing</button>
+                </div>
+            </div>
+
+
+            <table class="table1" id="inTest">
+                <thead>
+                    <tr class="poppins-regular">
+                        <th>TESTING NAME</th>
+                        <th>PARAMETER</th>
+                        <th>AMOUNT</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+
+            <h4 class="heading4">Outsource Testing Details</h4>
+
+            <div class="inputContain2">
+                <div class="form-group">
+                    <label for="outName">Testing Name (Outsource) <p style="color: red; display: inline;">*</p></label>
+                    <select id="outName" name="outName"  class = "outName">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="floating-button" id="addOut" onclick="paramOut('outName','outTest','outTotal')">+ Add Testing</button>
+                </div>
+            </div>
+
+
+            <table class="table1" id="outTest">
+                <thead>
+                    <tr class="poppins-regular">
+                        <th>TESTING NAME</th>
+                        <th>PARAMETER</th>
+                        <th>AMOUNT</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+
+
+            <h4>Remarks to Laboratory</h4>
+            <textarea class="remarks" id="labRemarks"></textarea>
+
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Charge Information</p>
+                <div class="line-info"></div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="inTotal" class="label1">IN-HOUSE TOTAL(RM)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="inTotal" name="inTotal" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="outTotal" class="label1">OUTSOURCES TOTAL(RM)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="outTotal" name="outTotal" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="subTotal" class="label1">SUBTOTAL (RM)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="subTotal" name="subTotal" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="sst" class="label1">SST (8%)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="sst" name="sst" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="discount" class="label1">DISCOUNT(RM) <p style="color: red; display: inline;">*</p></label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="discount" name="discount" placeholder="0" required>
+                </div>
+            </div>
+
+            <div class="separate poppins-semibold">
+                <div class="line-info"></div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="Total" class="label1">TOTAL AMOUNT (RM)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="Total" name="Total" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="separate poppins-semibold">
+                <div class="line-info"></div>
+            </div>
+
+            <button type="submit" class="modal-button ok">Submit Request</button>
+            <button type="button" class="modal-button delete" onclick="cancelAddT()">Cancel</button>
+
+        </form>
+    </div>
+
+
+
+
+
+    <!--UPDATE FORM-->
+    <div class="form-container" id="updateTestingForm">
+        
+        <form id="upTestForm">
+
+            <div class="topInfo">
+                <div class="PIC poppins-semibold" style="width: 200px;">
+                    <p class="staffTitle">ID Number:</p>
+                    <p class="staffAll" id="itemID3"></p>
+                </div>
+
+                <div class="PIC poppins-semibold">
+                    <p class="staffTitle">PIC:</p>
+                    <div class="separator"></div>
+                    <p class="staffAll" id="staffName3"></p>
+                </div>
+            </div>
+            
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Customer Information</p>
+                <div class="line-info"></div>
+            </div>
+
+            <label for="company">Company <p style="color: red; display: inline;">*</p></label>
+            <div style="width:310px;">
+                <select id="company3" name="company"  class = "company" style="width: 310px;" required onchange="fillInfo2()">
+            </select>
+            </div>
+
+            <div class="inputContain">
+                <div class="form-group">
+                    <label for="companyName">Company Name <p style="color: red; display: inline;">*</p></label>
+                    <input class="inputB" type="text" id="companyName3" name="companyName" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyPhone">No. Telephone <p style="color: red; display: inline;">*</p></label>
+                    <input class="inputC" type="text" id="companyPhone3" name="companyPhone" readonly>
+                </div>
+
+            </div>
+
+            <div class="inputContain">
+                <div class="form-group">
+                    <label for="companyAddress">Address <p style="color: red; display: inline;">*</p></label>
+                    <input class="inputB" type="text" id="companyAddress13" name="companyAddress" readonly>
+                    <input class="inputB" type="text" id="companyAddress23" name="companyAddress" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="companyEmail">E-mail</label>
+                    <input class="inputC" type="text" id="companyEmail3" name="companyEmail" readonly>
+                </div>
+            </div>
+
+
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Contact Information</p>
+                <div class="line-info"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Contact Person <p style="color: red; display: inline;">*</p></label>
+            </div>
+
+            <table class="table1" id="contactName3">
+                <thead>
+                    <tr class="poppins-regular">
+                        <th>CONTACT NAME</th>
+                        <th>EMAIL</th>
+                        <th>NO. TELEPHONE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+
+
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Testing Service Requested</p>
+                <div class="line-info"></div>
+            </div>
+
+            <div class="inputContain">
+
+                <div class="form-group">
+
+                    <label for="sample">Sample <p style="color: red; display: inline;">*</p></label>
+                    <select id="sample3" name="sample"  class = "sample" required disabled onchange="fillSample2()">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateReceived">Date Received Test item<p style="color: red; display: inline;">*</p></label>
+                    <div class="search-container" id="searchContainer3">
+                        <input class="dateB" type="date" id="received3" name="dateReceived" readonly required> 
+                        <i class="fa-regular fa-calendar-days"></i>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="inputContain">
+                <div class="form-group">
+                    <label for="sampleName">Sample Name <p style="color: red; display: inline;">*</p></label>
+                    <input class="inputB" type="text" id="sampleName3" name="sampleName" readonly required>
+                </div>
+
+                <div class="form-group">
+                    <label for="appearance">Physical Appearance<p style="color: red; display: inline;">*</p></label>
+                    <input class="inputC" type="text" id="appearance3" name="appearance" readonly required>
+                </div>
+            </div>
+
+
+            <h4 class="heading4">Internal Testing Details</h4>
+
+            <div class="inputContain2">
+                <div class="form-group">
+                    <label for="inName">Testing Name (Internal) <p style="color: red; display: inline;">*</p></label>
+                    <select id="inName3" name="inName3"  class = "inName">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="floating-button" id="addIn" onclick="paramIn('inName3','inTest3', 'inTotal2')">+ Add Testing</button>
+                </div>
+            </div>
+
+
+            <table class="table1" id="inTest3">
+                <thead>
+                    <tr class="poppins-regular">
+                        <th>TESTING NAME</th>
+                        <th>PARAMETER</th>
+                        <th>AMOUNT</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+
+            <h4 class="heading4">Outsource Testing Details</h4>
+
+            <div class="inputContain2">
+                <div class="form-group">
+                    <label for="outName">Testing Name (Outsource) <p style="color: red; display: inline;">*</p></label>
+                    <select id="outName3" name="outName"  class = "outName">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="floating-button" id="addOut" onclick="paramOut('outName3','outTest3', 'outTotal2')">+ Add Testing</button>
+                </div>
+            </div>
+
+
+            <table class="table1" id="outTest3">
+                <thead>
+                    <tr class="poppins-regular">
+                        <th>TESTING NAME</th>
+                        <th>PARAMETER</th>
+                        <th>AMOUNT</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+
+
+            <h4>Remarks to Laboratory</h4>
+            <textarea class="remarks" id="labRemarks3"></textarea>
+
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Charge Information</p>
+                <div class="line-info"></div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="inTotal" class="label1">IN-HOUSE TOTAL(RM)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="inTotal2" name="inTotal" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="outTotal" class="label1">OUTSOURCES TOTAL(RM)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="outTotal2" name="outTotal" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="subTotal" class="label1">SUBTOTAL (RM)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="subTotal2" name="subTotal" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="sst" class="label1">SST (8%)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="sst2" name="sst" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="discount" class="label1">DISCOUNT(RM) <p style="color: red; display: inline;">*</p></label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="discount2" name="discount" placeholder="0" required>
+                </div>
+            </div>
+
+            <div class="separate poppins-semibold">
+                <div class="line-info"></div>
+            </div>
+
+            <div class="inputContain2">
+                <label for="Total" class="label1">TOTAL AMOUNT (RM)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">RM</span>
+                    <input type="number" id="Total2" name="Total" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <div class="separate poppins-semibold">
+                <div class="line-info"></div>
+            </div>
+
+            <button type="submit" class="modal-button ok">Save</button>
+            <button type="button" class="modal-button delete" onclick="cancelEditT()">Cancel</button>
+
+        </form>
+    </div>
+
+
+
+
+    <!--DISPLAY FORM-->
+    <div class="form-container" id="displayTestingForm">
+
+        <div class="PIC poppins-semibold">
+            <p class="staffTitle">ID Number:</p>
+            <p class="staffAll" id="itemID2"></p>
+        </div>
+
+
+        <div class="separate poppins-semibold">
+            <p class="formInfo" style="color:black;"><i class="bi bi-people" style="margin-right: 5px;"></i>Client Details</p>
+            <div class="line-info" style="background: black;"></div>
+        </div>
+
+        <div class="info-contain">
+            <p class="poppins-semibold">PIC Name:</p>
+            <p class="poppins-regular" id="staffName2"></p>
+        </div>
+
+        <div class="info-contain">
+            <p class="poppins-semibold">Company Name:</p>
+            <p class="poppins-regular" id="companyName2"></p>
+        </div>
+
+        <div class="info-contain">
+            <p class="poppins-semibold">Company Address:</p>
+            <p class="poppins-regular" id="companyAddress2"></p>
+        </div>
+
+        <div class="info-contain">
+            <p class="poppins-semibold">No. Telefon:</p>
+            <p class="poppins-regular" id="companyPhone2"></p>
+        </div>
+
+        <div class="info-contain">
+            <p class="poppins-semibold">E-mail:</p>
+            <p class="poppins-regular" id="companyEmail2">/p>
+        </div>
+
+
+        <div class="info-contain" style="margin-left: 0; margin-top: 20px;">
+            <p class="poppins-semibold">Contact Person:</p>
+        </div>
+
+        <table class="table1" id="contactName2">
+            <thead>
+                <tr class="poppins-regular">
+                    <th>CONTACT NAME</th>
+                    <th>EMAIL</th>
+                    <th>NO. TELEPHONE</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+        
+        <div class="separate poppins-semibold">
+            <p class="formInfo" style="color:black;"><i class="bi bi-journal-text" style="margin-right: 5px;margin-top: 40px;"></i>Testing Request</p>
+            <div class="line-info" style="background: black;"></div>
+        </div>
+
+        <div class="info-contain">
+            <p class="poppins-semibold">Sample Name:</p>
+            <p class="poppins-regular" id="sampleName2"></p>
+        </div>
+
+        <div class="info-contain">
+            <p class="poppins-semibold">Physical Appearance:</p>
+            <p class="poppins-regular" id="appearance2"></p>
+        </div>
+
+        <div class="info-contain">
+            <p class="poppins-semibold">Sample Received Date:</p>
+            <p class="poppins-regular" id="received2"></p>
+        </div>
+
+        <div class="info-contain" style="margin-top: 20px; margin-left: 0;">
+            <p class="poppins-semibold">Inhouse Testing Request:</p>
+        </div>
+
+
+        <table class="table1" id="inTest2" style="min-width: 20%;">
+            <thead>
+                <tr class="poppins-regular">
+                    <th>TESTING NAME</th>
+                    <th>PARAMETER</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+
+
+        <div class="info-contain" style="margin-top: 20px; margin-left: 0;">
+            <p class="poppins-semibold">Outsource Testing Request:</p>
+        </div>
+
+
+        <table class="table1" id="outTest2" style="margin-bottom: 40px;min-width: 20%;">
+            <thead>
+                <tr class="poppins-regular">
+                    <th>TESTING NAME</th>
+                    <th>PARAMETER</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+
+        <form id="displayTest">
+
+            <div class="info-contain" style="margin-top: -29px;">
+                <p class="poppins-semibold">Outsources COA</p>
+            </div>
+
+            <div class="info-contain" style="margin-top:10px;margin-bottom: 10px;">
+                <a href="" id="outFile"><i class="bi bi-file-earmark-pdf-fill"></i></a>
+                <button type="button" class="modal-button" id="removeOutCOA" style="border: 2px solid lightgray;">Remove</button>
+            </div>
+
+            <div class="info-contain" style="margin-bottom: 10px;">
+                <div class="pdf-upload-container">
+                    <input style="border-radius: 5px ;" type="text" id="outPDF" class="file-name-display" placeholder="No file chosen" readonly>
+                    <label for="outFile2" class="upload-btn">Upload Outsources COA</label>
+                    <input type="file" id="outFile2" accept=".pdf" style="display: none;" onchange="updateFileName(this,'outPDF')">
+                </div>
+            </div>
+
+            <div class="info-contain" style="margin-top: 20px;">
+                <p class="poppins-semibold">Remarks to Laboratory</p>
+            </div>
+
+            <div class="info-contain" style="margin-top: 10px;margin-bottom: 10px;">
+                <textarea class="remarks" id="labRemarks2" readonly></textarea>
+            </div>
+
+
+            <div class="info-contain" style="margin-top: 20px;">
+                <p class="poppins-semibold">Certificates of Analysis (COA)</p>
+            </div>
+
+            <div class="info-contain" style="margin-top:10px;margin-bottom: 10px;">
+                <a href="" id="inFile"><i class="bi bi-file-earmark-pdf-fill"></i></a>
+                <button type="button" class="modal-button" id="removeCOA" style="border: 2px solid lightgray;">Remove</button>
+            </div>
+
+            <div class="info-contain" style="margin-bottom: 10px;">
+                <div class="pdf-upload-container">
+                    <input style="border-radius: 5px ;" type="text" id="inPDF" class="file-name-display" placeholder="No file chosen" readonly>
+                    <label for="inFile2" class="upload-btn">Upload COA</label>
+                    <input type="file" id="inFile2" accept=".pdf" style="display: none;" onchange="updateFileName(this,'inPDF')">
+                </div>
+            </div>
+
+            <button type="button" class="modal-button ok" id="saveData">Save</button>
+            <button type="button" class="modal-button delete" onclick="cancelDisplay()">Cancel</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- Add Company Modal -->
+<div id="addTest" class="modal">
+    <div class="modal-content">
+        <p>Testing has been successfully requested!</p>
+        <button class="modal-button ok" onclick="closeModal('addTest')">OK</button>
+    </div>
+</div>
+
+<!-- Add Company Modal -->
+<div id="editTest" class="modal">
+    <div class="modal-content">
+        <p>Testing has been successfully updated!</p>
+        <button class="modal-button ok" onclick="closeModal('editTest')">OK</button>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteTest" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid black; width:110%%; text-align:left; margin-left:-20px;padding-left:10px;"> Cancel Testing?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will cancel the following testing.</p>
+        <p>Are you sure you want to proceed?</p>
+        <button class="modal-button cancel" onclick="closeModal('deleteTest')">No</button>
+        <button class="modal-button delete" id="confirmDeleteButton">Yes</button>
+    </div>
+</div>
+
+<div id="deleteTest2" class="modal">
+    <div class="modal-content">
+        <p>Testing has been successfully cancelled!</p>
+        <button class="modal-button ok" onclick="closeModal('deleteTest2')">OK</button>
+    </div>
+</div>
+
+
+<div id="errorFile" class="modal">
+    <div class="modal-content">
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i>No file selected!</p>
+        <p>Please choose a file before proceeding to save.</p>
+        <button class="modal-button ok" onclick="closeModal('errorFile')">OK</button>
+    </div>
+</div>
+
+<div id="deleteFile" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid black; width:110%%; text-align:left; margin-left:-20px;padding-left:10px;">Remove File?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will delete the following file.</p>
+        <p>Are you sure you want to proceed?</p>
+        <button class="modal-button cancel" onclick="closeModal('deleteFile')">No</button>
+        <button class="modal-button delete" id="confirmDeleteButton2">Yes</button>
+    </div>
+</div>

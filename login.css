@@ -1,0 +1,422 @@
+/* General styles */
+body {
+    margin: 0;
+    font-family:"Poppins", sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('images/login_bg_11zon.webp');
+    background-size: cover;
+}
+
+ /* Fallback for browsers that don't support WEBP */
+@supports not (background-image: url('images/6938839_3409297.webp')) {
+  body {
+    background-image: url('images/6938839_3409297.jpg');
+  }
+}
+
+/* @font-face rules for Poppins fonts in ttf format */
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-ExtraLightItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+}
+
+#loginForm .hidden {
+    display: none;
+}
+
+img {
+  height: auto;
+  width: 65%;
+  margin: 0 15px;
+}
+
+/* Custom Alert Styles */
+.custom-alert, .load-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}
+
+.alert-content, .load-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.alert-content p ,.load-content p {
+    margin: 0 0 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.alert-content .btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.alert-content .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Loading spinner styles */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #007bff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+.container {
+    display: flex;
+    width: 350px;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    justify-content: center;
+}
+
+
+/* Right side */
+.right {
+  padding: 35px 0 60px 0px;
+  width: 50%;
+  align-content: center;
+  justify-content: center;
+  display: grid;
+  place-items: center;
+}
+
+.right h2.welcome {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #0b4eb2;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Form field styles */
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 12px 12px 40px; /* Increased padding-left to 40px for spacing */
+  font-size: 16px;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #1658b6;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #bbcde7;
+}
+
+.form-group label {
+  position: absolute;
+  top: 50%;
+  left: 33px; /* Increased distance from the icon */
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #bbcde7;
+  pointer-events: none;
+  transition: 0.2s ease all;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+  top: 0px;
+  left: 25px;
+  font-size: 12px;
+  color: #007bff;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+}
+
+#loginForm {
+  place-content: center;
+  place-items: center;
+  display: grid;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 30%;
+  right: 0px;
+  font-size: 20px;
+  color: #bbcde7;
+  cursor: pointer;
+}
+
+
+/* Button styles */
+.btn {
+  padding: 10px 100px;
+  background-color: #55b4e4;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn:hover {
+  background-color: #6de6f3;
+}
+
+.register-link {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.register-link a {
+  color: #034bb1;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+.fade-in.show {
+    opacity: 1;
+}
+.form-group {
+    margin-bottom: 1rem;
+}
+.back-arrow {
+    cursor: pointer;
+    color: #007bff; /* Adjust the color to fit your theme */
+    font-size: 20px;
+    margin-bottom: 1rem;
+    display: none; /* Initially hidden */
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+
+  .right h2.welcome {
+      font-size: 40px;
+  }
+
+  .btn, .form-group {
+      max-width: 100%;
+      width: 90%; /* Use 90% width to ensure margins */
+      margin-left: 0; /* Remove left margin */
+      margin-right: 0; /* Remove right margin */
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+
+  .right h2.welcome {
+      font-size: 32px; /* Adjust font size for better fit */
+      margin: 10px 0; /* Add margin for spacing */
+      line-height: 1.2; /* Adjust line height for better readability */
+  }
+
+  .btn {
+      font-size: 14px;
+      padding: 10px;
+      width: 90%; /* Center button with 90% width */
+      margin: 10px 0; /* Add vertical margin */
+  }
+
+  .form-group {
+      width: 90%; /* Center form fields */
+      margin: 20px 0; /* Add spacing between items */
+  }
+
+  .form-group input {
+      padding: 10px;
+      font-size: 14px;
+      width: 100%; /* Full width for inputs */
+  }
+
+  /* Adjust back arrow position */
+  .back-arrow {
+      display: block; /* Show the back arrow */
+      margin: 10px 0 10px -65%; /* Position it 5% from the left */
+      align-self: flex-start; /* Align it to the left */
+  }
+
+  /* Adjust spacing between email input and icon */
+  .form-group input {
+      padding-left: 35px; /* Increase padding-left for better spacing */
+  }
+}
+
+@media (max-width: 375px) {
+}

@@ -1,0 +1,207 @@
+.input-wrapper {
+    position: relative;
+    width: 80%;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: 10px; /* Adjust to your preference */
+    top: 50%;
+    transform: translateY(-50%);
+    color: black;
+}
+
+input[type="text"] {
+  width:80%;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  font-size:100%;
+    padding-left: 35px; /* Add padding to prevent text from overlapping with the "RM" symbol */
+    padding-right: 10px;
+}
+
+/* Hide the increment and decrement buttons in number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.container {
+    margin-top: 30px;
+    padding: 20px;
+    max-width: 1300px;
+    border-radius: 10px;
+    background-color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.table-container {
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* Custom scrollbar for WebKit browsers */
+.table-container::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #e0e0e0; /* Light grey background for the scrollbar track */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #a0a0a0; /* Medium grey color for the scrollbar handle */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #808080; /* Darker grey for the scrollbar handle on hover */
+}
+
+/* Custom scrollbar for Firefox */
+.table-container {
+    scrollbar-width: thin; /* Makes the scrollbar thinner */
+    scrollbar-color: #a0a0a0 #e0e0e0; /* Thumb color and track color */
+}
+#pageInfo {
+    margin-right: auto; /* Optional spacing from the left edge */
+}
+
+
+/* Form container */
+.form-container {
+    display: none;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.form-container.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+/*fix this table*/
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 12px;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #d4d4d4;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Set a fixed width for the action buttons column */
+td:last-child, th:last-child {
+    width: 100px; /* Adjust the width as needed */
+    text-align: center; /* Center the icons */
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background-color: #eeeeee;
+    position: relative;
+    color: grey;
+    height:30px;
+}
+tr {
+    background-color: white;
+}
+
+
+
+tr:hover {
+    background-color: rgba(200, 200, 200, 0.3);
+}
+
+
+
+.search-container2{
+    width: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#searchContainer .hidden{
+  display: none;
+}
+
+
+
+/* Hide table when form is displayed */
+.table-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9);
+}
+
+/* Button inside modal */
+button.modal-button {
+    margin-top: 20px;
+}
+
+/* Responsive adjustments for container */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        margin-top: 30px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    input, select {
+        padding: 8px;
+    }
+
+    .modal-content {
+        width: 260px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    .filter-container {
+        flex-direction: column; /* Stack vertically */
+        align-items: flex-start; /* Align to the start */
+    }
+
+    th, td {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    input, select {
+        padding: 6px;
+    }
+
+    .modal-content {
+        width: 220px;
+    }
+
+}

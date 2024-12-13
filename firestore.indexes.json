@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionId": "CHARGE",
+      "fields": [
+        { "fieldPath": "companyID", "order": "ASCENDING" },
+        { "fieldPath": "payStatus", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionId": "CHARGE",
+      "fields": [
+        { "fieldPath": "payStatus", "order": "ASCENDING" },
+        { "fieldPath": "payDate", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

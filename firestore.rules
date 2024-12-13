@@ -1,0 +1,82 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Rules for STAFF collection
+    match /STAFF/{userId} {
+      allow read: if request.auth != null;  // Allow read access for all authenticated users
+      allow write: if request.auth != null && (
+        request.auth.uid == userId || // Allow document owner to edit their own data
+        isAdmin(request.auth.uid)    // Allow Admins to edit any STAFF data
+      );
+      allow delete: if request.auth != null && isAdmin(request.auth.uid); // Allow Admins to delete any STAFF data
+    }
+
+    // Rule for the 'notify' sub-collection
+    match /STAFF/{userUID}/notify/{notificationID} {
+      allow read, write: if request.auth != null; // Allow authenticated users to read/write
+      allow delete: if false; // No delete access for notifications
+    }
+
+    // Rules for COMPANY collection
+    match /COMPANY/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for COMPANY
+    }
+
+    // Rules for CONTACT collection
+    match /CONTACT/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for CONTACT
+    }
+
+    // Rules for PRODUCT collection
+    match /PRODUCT/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for PRODUCT
+    }
+
+    // Rules for CHARGE collection
+    match /CHARGE/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for CHARGE
+    }
+
+    // Rules for RESULT collection
+    match /RESULT/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for RESULT
+    }
+
+    // Rules for PRODUCT_CHARGE collection
+    match /PRODUCT_CHARGE/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for PRODUCT_CHARGE
+    }
+
+    // Rules for INTERNAL collection
+    match /INTERNAL/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for INTERNAL
+    }
+
+    // Rules for OUTSOURCE collection
+    match /OUTSOURCE/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for OUTSOURCE
+    }
+
+    // Rules for TESTING collection
+    match /TESTING/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for TESTING
+    }
+
+    // Rules for Meta collection
+    match /Meta/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for Meta
+    }
+
+    // Rules for PO collection
+    match /PO/{docId} {
+      allow read, write, delete: if request.auth != null; // Allow delete access for PO
+    }
+
+    // Function to check if the user is an Admin
+    function isAdmin(uid) {
+      return get(/databases/$(database)/documents/STAFF/$(uid)).data.staffDept == "Admin";
+    }
+  }
+}

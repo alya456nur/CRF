@@ -1,0 +1,44 @@
+<!-- Top Navigation Bar -->
+  <div class="top-nav" id="top-nav">
+    <a href="/"><img src="images/MBC NEW LOGO-01.webp" class="logo"></a>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+
+    <div class="sortBar" style="display: flex; margin-left:auto; align-items: center;">
+
+      <i class="bi bi-bell noti-icon" onclick="displayNotice()">
+        <span class="notification-dot" id="notificationDot"></span>
+      </i>
+
+
+      <!-- Avatar Icon with Dropdown -->
+      <a href="javascript:void(0)" class="avatar-icon" id="top-avatar" onclick="toggleDropdown()">
+          <i class="bi bi-person"></i>
+      </a>
+      <div class = "user">
+        <p id = "username" class="poppins-semibold"></p>
+        <p id = "department" class="poppins-regular"></p>
+      </div>
+      
+
+    </div>
+
+    <!-- Dropdown Menu -->
+  <div class="dropdown-menu poppins-regular " id="dropdownMenu">
+      <a class="dropdown-item" href="/"><i class="bi bi-speedometer2"></i> Dashboard</a>
+      <a class="dropdown-item" href="/profile"><i class="bi bi-person"></i> Profile</a>
+      <a class="dropdown-item" href="javascript:void(0)" id="logout2"><i class="bi bi-box-arrow-right"></i> Logout</a>
+  </div>
+
+  </div>
+
+<!-- Notification Bar -->
+<div class="notification-bar" id="notificationBar">
+  <div class="notification-header">
+      <p class="poppins-semibold">Notifications</p>
+      <button class="clear-all" onclick="clearNotifications(userId)">Clear All</button>
+  </div>
+  <div class="notification-list" id="notificationList">
+      <!-- Notifications will be dynamically added here -->
+  </div>
+</div>

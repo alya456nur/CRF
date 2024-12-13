@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CRF Login</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+    <!-- Custom Alert Modal -->
+    <div id="customAlert" class="custom-alert hidden">
+        <div class="alert-content">
+            <p id="alertMessage"></p>
+            <button class="btn" onclick="closeCustomAlert()">OK</button>
+        </div>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="loadAlert" class="load-alert hidden">
+        <div class="load-content">
+            <p id="loadMessage"></p>
+            <div id="loadingSpinner" class="spinner hidden"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="right">
+            <img src="images/MBC NEW LOGO-01.webp" id="logoImg">
+            <h2 class="welcome">Welcome!</h2>
+            <form id="loginForm"  autocomplete="on" method="POST">
+                <div class="form-group">
+                    <i class="bi bi-envelope icon"></i>
+                    <input type="email" id="email" name="email" placeholder=" " autocomplete="on" required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-group">
+                    <i class="bi bi-lock icon"></i>
+                    <input type="password" id="password" name="password" placeholder=" " autocomplete="on" required>
+                    <label for="password">Password</label>
+                    <i class="bi bi-eye-slash toggle-password" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+                </div>
+                <button class="btn" type="submit">Login</button>
+            </form>
+            <div class="register-link">
+                <a href="#" id="forgotLink">Forgot Password?</a>
+            </div>
+            <div id="forgotPasswordForm" class="hidden fade-in">
+                <span class="back-arrow" id="backLink"><i class="bi bi-arrow-left"></i> Back</span>
+                <div class="form-group">
+                    <i class="bi bi-envelope-fill icon"></i>
+                    <input type="email" id="forgotEmail" placeholder=" " required>
+                    <label for="forgotEmail">Enter your email</label>
+                </div>
+                <button class="btn" id="resetPasswordBtn" type="button">RESET PASSWORD</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Show the forgot password form
+        document.getElementById('forgotLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            const img = document.getElementById('logoImg');
+            const welcomeMessage = document.querySelector('.welcome');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            const backLink = document.getElementById('backLink');
+            const forgotPasswordLink = document.getElementById('forgotLink');
+
+            forgotPasswordLink.style.display = 'none';
+            img.classList.add('hidden');
+            document.getElementById("loginForm").style.display = "none";
+            welcomeMessage.classList.add('hidden');
+            forgotPasswordForm.classList.remove('hidden');
+            setTimeout(() => {
+                forgotPasswordForm.classList.add('show');
+            }, 10);
+
+            backLink.style.display = 'block';
+        });
+
+        // Hide the forgot password form and show the login form
+        document.getElementById('backLink').addEventListener('click', function () {
+            const img = document.getElementById('logoImg');
+            const welcomeMessage = document.querySelector('.welcome');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            const backLink = document.getElementById('backLink');
+            const forgotPasswordLink = document.getElementById('forgotLink');
+
+            forgotPasswordForm.classList.remove('show');
+            setTimeout(() => {
+                forgotPasswordForm.classList.add('hidden');
+                welcomeMessage.classList.remove('hidden');
+                document.getElementById("loginForm").style.display = "grid";
+                img.classList.remove('hidden');
+                forgotPasswordLink.style.display = 'block';
+            }, 500);
+
+            backLink.style.display = 'none';
+        });
+
+        // Function to toggle password visibility
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePassword');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('bi-eye-slash'); // Change icon to "eye"
+                toggleIcon.classList.add('bi-eye'); // Show the eye icon
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('bi-eye'); // Change icon to "eye-slash"
+                toggleIcon.classList.add('bi-eye-slash'); // Hide the eye icon
+            }
+        }
+
+        // Function to show the custom alert
+        function showCustomAlert2(message) {
+            const customAlert = document.getElementById('customAlert');
+            const alertMessage = document.getElementById('alertMessage');
+            alertMessage.textContent = message;
+            customAlert.classList.remove('hidden');
+        }
+
+        // Function to show the custom alert
+        function showCustomAlert(message, callback) {
+            document.getElementById('loadMessage').innerText = message;
+            document.getElementById('loadAlert').classList.remove('hidden');
+            document.getElementById('loadingSpinner').classList.remove('hidden');
+
+            // Start the callback after a delay (simulating some processing or redirection)
+                if (typeof callback === 'function') {
+                    callback();
+                }
+        }
+
+        // Function to hide the custom alert
+        function closeAlert() {
+            document.getElementById('loadAlert').classList.add('hidden');
+            document.getElementById('loadingSpinner').classList.add('hidden');
+        }
+
+
+        // Function to close the custom alert
+        function closeCustomAlert() {
+            const customAlert = document.getElementById('customAlert');
+            customAlert.classList.add('hidden');
+        }
+    </script>
+
+    <script type="module">
+    // Import the necessary Firebase modules
+    import { app, auth, db, storage, analytics, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, logEvent } from "./firebase-config.js";
+
+    // Check the user's authentication status
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        window.location.href = "/";
+      }
+    });
+
+    // Handle sign-in
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        showCustomAlert('Logging in, please wait...', () => {});
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                logEvent(analytics, 'login', { method: 'Email' }); // Log the login event
+                window.location.href = "/"
+            })
+            .catch((error) => {
+                console.log('Error code:', error.code);
+                let errorMessage = 'Error signing in: ' + error.message;
+                
+                if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+                    errorMessage = 'Password or Email is incorrect. Please try again.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = 'The email address is badly formatted.';
+                }
+                else if (error.code === 'auth/user-not-found') {
+                    errorMessage = 'User is not found. Please register them first';
+                }
+
+                console.error('Error signing in:', errorMessage);
+                closeAlert();
+                // Display the errorMessage using the custom alert
+                showCustomAlert2(errorMessage);
+            });
+    });
+
+    // Handle reset password
+    document.getElementById('resetPasswordBtn').addEventListener('click', function () {
+        const forgotEmail = document.getElementById('forgotEmail').value;
+
+        // Validate if email is entered
+        if (!forgotEmail) {
+            showCustomAlert('Please enter an email address.');
+            return;
+        }
+
+        // Send the reset password email
+        sendPasswordResetEmail(auth, forgotEmail)
+        .then(() => {
+            showCustomAlert('Password reset email sent! Check your inbox.');
+        })
+        .catch((error) => {
+            console.log('Error code:', error.code);
+            if (error.code === 'auth/invalid-email') {
+                showCustomAlert('The email address is badly formatted.');
+            } else {homehome
+                showCustomAlert('Error sending password reset email: ' + error.message);
+            }
+        });
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<script type="module" src="companyMod.js"defer></script>
+
+<link rel="stylesheet" href="company.css">
+
+<div class="contentTitle">
+    <h3><i class="bi bi-building"></i> COMPANIES</h3>
+    <h6>Clients / Companies</h6>
+</div>
+
+<div class="container">
+    <div class="top">
+        <h3 id="listHeading">List of Companies</h3>
+        <button class="floating-button" onclick="addCompany()">+ Add Company</button>
+    </div>
+
+
+    <!-- Search and Filter Container -->
+    <div class="filter-container" onchange="filterTable()">
+        <select id="filterState" name="state">
+            <option value="" enabled selected>ALL STATES</option>
+            <option value="JOHOR">JOHOR</option>
+            <option value="KEDAH">KEDAH</option>
+            <option value="KELANTAN">KELANTAN</option>
+            <option value="MELAKA">MELAKA</option>
+            <option value="NEGERI SEMBILAN">NEGERI SEMBILAN</option>
+            <option value="PAHANG">PAHANG</option>
+            <option value="PERAK">PERAK</option>
+            <option value="PERLIS">PERLIS</option>
+            <option value="PULAU PINANG">PULAU PINANG</option>
+            <option value="SABAH">SABAH</option>
+            <option value="SARAWAK">SARAWAK</option>
+            <option value="SELANGOR">SELANGOR</option>
+            <option value="TERENGGANU">TERENGGANU</option>
+            <option value="WILAYAH PERSEKUTUAN">WILAYAH PERSEKUTUAN</option>
+        </select>
+
+        <!-- Search Bar -->
+        <div class="search-container" id="searchContainer">
+            <input type="search" id="companySearch" placeholder="Search name, address..." oninput="filterTable()">
+            <i id="search" class="fa-solid fa-magnifying-glass"></i>
+        </div>
+    </div>
+
+
+    <div class="table-container" id="companyTable">
+        <table>
+            <thead>
+                <tr class="poppins-regular">
+                    <th>NO</th>
+                    <th>NAME</th>
+                    <th>ADDRESS</th>
+                    <th>EMAIL</th>
+                    <th>NO. TELEPHONE</th>
+                    <th>PIC</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination" id="pagination">
+        <span id="pageInfo">Showing 0 to 0 of 0 companies</span>
+
+        <button id="firstPage" onclick="goToFirstPage('company')"><i class="fa-solid fa-angles-left"></i></button>
+        <button id="prevPage" onclick="changePage(-1, 'company')"><i class="fa-solid fa-angle-left"></i></button>
+        <button id="nextPage" onclick="changePage(1, 'company')"><i class="fa-solid fa-angle-right"></i></button>
+        <button id="lastPage" onclick="goToLastPage('company')"><i class="fa-solid fa-angles-right"></i></button>
+    </div>
+
+
+    <!-- Add Company Form (hidden initially) -->
+    <div class="form-container" id="addCompanyForm">
+        <button class="close-button" onclick="cancelAdd()">X</button>
+
+        <div class="PIC poppins-semibold">
+            <p class="staffTitle">PIC:</p>
+            <div class="separator"></div>
+            <select class="staffAll" id="staffName">
+            </select>
+        </div>
+
+        <div class="separate poppins-semibold">
+            <p class="formInfo">Company Information</p>
+            <div class="line-info"></div>
+        </div>
+
+        <form id="companyForm">
+            <label for="companyName">Company Name <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="companyName" name="companyName" placeholder="Enter company's name" required>
+
+            <label for="street">Street <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="street" name="street" placeholder="Street" required>
+
+            <label for="city">City <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="city" name="city" placeholder="City" required>
+
+            <label for="postcode">Postcode <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="postcode" name="postcode" placeholder="Postcode" required maxlength="5" pattern="\d{5}" title="Please enter a 5-digit postcode">
+
+            <label for="state">State <p style="color: red; display: inline;">*</p></label>
+            <select id="state" name="state"  class = "state" required>
+                <option value="" disabled selected>Select a state</option>
+                <option value="JOHOR">JOHOR</option>
+                <option value="KEDAH">KEDAH</option>
+                <option value="KELANTAN">KELANTAN</option>
+                <option value="MELAKA">MELAKA</option>
+                <option value="NEGERI SEMBILAN">NEGERI SEMBILAN</option>
+                <option value="PAHANG">PAHANG</option>
+                <option value="PERAK">PERAK</option>
+                <option value="PERLIS">PERLIS</option>
+                <option value="PULAU PINANG">PULAU PINANG</option>
+                <option value="SABAH">SABAH</option>
+                <option value="SARAWAK">SARAWAK</option>
+                <option value="SELANGOR">SELANGOR</option>
+                <option value="TERENGGANU">TERENGGANU</option>
+                <option value="WILAYAH PERSEKUTUAN">WILAYAH PERSEKUTUAN</option>
+            </select>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email">
+
+            <label for="phone">No. Telephone <p style="color: red; display: inline;">*</p></label>
+            <input type="tel" id="phone" name="phone" placeholder="Phone No." required>
+
+            <button type="submit" class="modal-button ok">Add</button>
+            <button type="button" class="modal-button delete" onclick="cancelAdd()">Cancel</button>
+        </form>
+    </div>
+
+    <div class="form-container" id="updateCompanyForm">
+
+        <button class="close-button" onclick="cancelUpdate()">X</button>
+
+        <div class="PIC poppins-semibold">
+            <p class="staffTitle">PIC:</p>
+            <div class="separator"></div>
+            <select class="staffAll" id="staffName2">
+            </select>
+        </div>
+
+        <div class="separate poppins-semibold">
+            <p class="formInfo">Company Information</p>
+            <div class="line-info"></div>
+        </div>
+
+        <form id="upCompanyForm">
+            <label for="companyName">Company Name <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="companyName2" name="companyName" placeholder="Enter company's name" required>
+
+            <label for="street">Street <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="street2" name="street" placeholder="Street" required>
+
+            <label for="city">City <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="city2" name="city" placeholder="City" required>
+
+            <label for="postcode">Postcode <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="postcode2" name="postcode" placeholder="Postcode" required maxlength="5" pattern="\d{5}" title="Please enter a 5-digit postcode">
+
+            <label for="state">State <p style="color: red; display: inline;">*</p></label>
+            <select id="state2" name="state" required>
+                <option value="" disabled selected>Select a state</option>
+                <option value="JOHOR">JOHOR</option>
+                <option value="KEDAH">KEDAH</option>
+                <option value="KELANTAN">KELANTAN</option>
+                <option value="MELAKA">MELAKA</option>
+                <option value="NEGERI SEMBILAN">NEGERI SEMBILAN</option>
+                <option value="PAHANG">PAHANG</option>
+                <option value="PERAK">PERAK</option>
+                <option value="PERLIS">PERLIS</option>
+                <option value="PULAU PINANG">PULAU PINANG</option>
+                <option value="SABAH">SABAH</option>
+                <option value="SARAWAK">SARAWAK</option>
+                <option value="SELANGOR">SELANGOR</option>
+                <option value="TERENGGANU">TERENGGANU</option>
+                <option value="WILAYAH PERSEKUTUAN">WILAYAH PERSEKUTUAN</option>
+            </select>
+
+            <label for="email">Email</label>
+            <input type="email" id="email2" name="email" placeholder="Email">
+
+            <label for="phone">No. Telephone <p style="color: red; display: inline;">*</p></label>
+            <input type="tel" id="phone2" name="phone" placeholder="Phone No." required>
+
+            <button type="submit" class="modal-button ok">Save</button>
+            <button type="button" class="modal-button delete" onclick="cancelUpdate()">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Company Information Display -->
+    <div class="form-container" id="companyInfo">
+        <button class="close-button" onclick="cancelInfo()">X</button>
+        <div class="info-section">
+            <label for="staff">PIC:</label>
+            <span id="staff"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="companyName">Company Name:</label>
+            <span id="companyName3"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="street">Street:</label>
+            <span id="street3"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="city">City:</label>
+            <span id="city3"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="postcode">Postcode:</label>
+            <span id="postcode3"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="state">State:</label>
+            <span id="state3"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="email">Email:</label>
+            <span id="email3"></span>
+        </div>
+
+        <div class="info-section">
+            <label for="phone">No. Tel:</label>
+            <span id="phone3"></span>
+        </div>
+
+        <button type="button" class="modal-button delete" onclick="cancelInfo()">Close</button>
+    </div>
+
+</div>
+
+
+<!-- Add Company Modal -->
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <p>Company has been successfully added!</p>
+        <button class="modal-button ok" onclick="closeModal('addModal')">OK</button>
+    </div>
+</div>
+
+<!-- Add Company Modal -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <p>Company has been successfully updated!</p>
+        <button class="modal-button ok" onclick="closeModal('editModal')">OK</button>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid black; width:110%; text-align:left; margin-left:-20px;padding-left:10px;"> Delete Company?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will permanently delete all data associated with this record:</p>
+        <p>- The selected company.</p>
+        <p>- All contacts, samples, charges and testing related to the company.</p>
+        <p>- All files related to the company.</p>
+        <p>Are you sure you want to proceed?</p>
+        <button class="modal-button cancel" onclick="closeModal('deleteModal')">Cancel</button>
+        <button class="modal-button delete" id="confirmDeleteButton">Delete</button>
+    </div>
+</div>
+
+<div id="deleteModal2" class="modal">
+    <div class="modal-content">
+        <p>Company has been successfully deleted!</p>
+        <button class="modal-button ok" onclick="closeModal('deleteModal2')">OK</button>
+    </div>
+</div>
