@@ -184,9 +184,6 @@ async function uploadInvoice(chargeData) {
                     } catch (error) {
                         console.warn('Error deleting old invoice:', error);
                     }
-
-                    const timestamp = new Date().toLocaleString(); // Get current time
-                    addNotification(`${staffName} uploaded an invoice for testing ${chargeData.prodID} at ${timestamp}`);
                 }
 
                 // Upload the new invoice to Firebase Storage
@@ -205,6 +202,9 @@ async function uploadInvoice(chargeData) {
                     payStatus: 'COMPLETED',
                     payDate: today
                 });
+
+                const timestamp = new Date().toLocaleString(); // Get current time
+                addNotification(`${staffName} uploaded an invoice for testing ${chargeData.prodID} at ${timestamp}`);
 
                 showModal('uploadInvoice');
             } catch (error) {

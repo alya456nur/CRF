@@ -108,13 +108,22 @@ function justWindow(){
 
 async function loadPageContent() {
   // Function to load content based on path after authentication
-  const path = window.location.pathname.replace('/', ''); // Get the current path and strip leading '/'
+  let path = window.location.pathname.replace('/', ''); // Get the current path and strip leading '/'
   
-  if (path === 'contact' || path === 'company' || path === 'dashboard' || path === 'overview'|| path === 'list'|| path === 'profile' || path === 'internal' || 
-      path === 'outsource' || path === 'testing' || path === 'invoice' || path === 'PO' || path === 'report' || path === 'staff') {
-    loadContent(path); // Load valid page content
+  // If the path is empty, set it to the index page (default to 'dashboard')
+  if (!path) {
+    path = 'dashboard';
+  }
+
+  // List of valid paths
+  const validPaths = ['contact', 'company', 'dashboard', 'overview', 'list', 'profile', 'internal', 
+                      'outsource', 'testing', 'invoice', 'PO', 'report', 'staff'];
+
+  // Check if path is valid, else redirect to '404.html'
+  if (!validPaths.includes(path)) {
+    window.location.replace('/404.html'); // Redirect to 404 page
   } else {
-    loadContent('dashboard'); // Default to dashboard if the path is unknown
+    await loadContent(path); // Load valid page content
   }
 }
 
@@ -248,227 +257,221 @@ async function loadPics() {
 
 // Function to load content dynamically only for logged-in users
 async function loadContent(page) {
+    try{
+        const response = await fetch(`${page}.html`);
+    
+        if (!response.ok) {
+          throw new Error('Page not found');
+        }
 
-    fetch(`${page}.html`)
-        .then(response => {
-            if (!response.ok) throw new Error('Page not found');
-            return response.text();
-        })
-        .then(data => {
-            document.getElementById('main-content-placeholder').innerHTML = data;
-            currentPage = 1;
-
+        const data = await response.text();
+        document.getElementById('main-content-placeholder').innerHTML = data;
+        currentPage = 1;
             
-            // Only push state if it’s a new page
-            if (window.history.state?.page !== page) {
-                window.history.pushState({ page }, '', `/${page}`);
-            }
+        // Only push state if it’s a new page
+        if (window.history.state?.page !== page) {
+            window.history.pushState({ page }, '', `/${page}`);
+        }
 
-            if (page === 'dashboard') {
-                window.listenToCharges = listenToCharges;
-                window.renderChart = renderChart;
-                window.filterDate = filterDate;
-                
-                dateListener('dashboard');
-                setInitialDate();
-                populateAll();
-            }
-            else if (page === 'staff'){
-                window.handleEditStaff = handleEditStaff;
-                window.handleStaffRegister = handleStaffRegister;
-                window.deleteStaff = deleteStaff;
+        if (page === 'dashboard') {
+            window.listenToCharges = listenToCharges;
+            window.renderChart = renderChart;
+            window.filterDate = filterDate;
+            
+            dateListener('dashboard');
+            setInitialDate();
+            populateAll();
+        }
+        else if (page === 'staff'){
+            window.handleEditStaff = handleEditStaff;
+            window.handleStaffRegister = handleStaffRegister;
+            window.deleteStaff = deleteStaff;
 
-                fetchStaff();
-            }
-            // Additional page-specific logic
-            else if (page === 'company') {
-                window.deleteCompany = deleteCompany;
-                window.handleEditSubmission = handleEditSubmission;
-                window.editItem = editItem;
-                window.fetchStaffOptions2 = fetchStaffOptions2;
-                window.populateStaffOptions2 = populateStaffOptions2;
-                window.fetchStaffOptions3 = fetchStaffOptions3;
-                window.retrieveStaffs = retrieveStaffs;
+            fetchStaff();
+        }
+        // Additional page-specific logic
+        else if (page === 'company') {
+            window.deleteCompany = deleteCompany;
+            window.handleEditSubmission = handleEditSubmission;
+            window.editItem = editItem;
+            window.fetchStaffOptions2 = fetchStaffOptions2;
+            window.populateStaffOptions2 = populateStaffOptions2;
+            window.fetchStaffOptions3 = fetchStaffOptions3;
+            window.retrieveStaffs = retrieveStaffs;
 
-                fetchStaffProduct();
-                fetchCompanies();
-                document.getElementById('companyForm').addEventListener('submit', handleFormSubmission);
-            } else if (page === 'contact') {
-                window.deleteContact = deleteContact;
-                window.EditContactSubmission = EditContactSubmission;
-                window.editContact = editContact;
-                window.retrieveCompanies = retrieveCompanies;
-                window.fetchOptions = fetchOptions;
+            fetchStaffProduct();
+            fetchCompanies();
+            document.getElementById('companyForm').addEventListener('submit', handleFormSubmission);
+        } else if (page === 'contact') {
+            window.deleteContact = deleteContact;
+            window.EditContactSubmission = EditContactSubmission;
+            window.editContact = editContact;
+            window.retrieveCompanies = retrieveCompanies;
+            window.fetchOptions = fetchOptions;
 
-                fetchComContact();
-                fetchContacts();
-                document.getElementById('contactForm').addEventListener('submit', addContactSubmission);
-            } else if (page === 'overview') {
-                window.retrieveStaffs = retrieveStaffs;
-                window.fetchStaffOptions = fetchStaffOptions;
-                window.formatDate = formatDate;
-                 window.fetchProducts = fetchProducts;
+            fetchComContact();
+            fetchContacts();
+            document.getElementById('contactForm').addEventListener('submit', addContactSubmission);
+        } else if (page === 'overview') {
+            window.retrieveStaffs = retrieveStaffs;
+            window.fetchStaffOptions = fetchStaffOptions;
+            window.formatDate = formatDate;
+             window.fetchProducts = fetchProducts;
 
-                dateListener('overview');
-                setInitialDate();
-                fetchStaffProduct();
-                fetchComContact();
-                fetchProducts();
-                fetchStaffOptions('filterStaff');
-                fetchOptions('filterCompany');
-            } else if (page === 'list') {
-                window.retrieveStaffs = retrieveStaffs;
-                window.formatDate = formatDate;
-                window.editProd = editProd;
-                window.EditProductSubmission = EditProductSubmission;
-                window.fetchOptions = fetchOptions;
-                window.formatDateForInput = formatDateForInput;
-                window.addProdSubmission = addProdSubmission;
-                window.deleteProd = deleteProd;
-                window.fetchStaffOptions2 = fetchStaffOptions2;
-                window.populateStaffOptions2 = populateStaffOptions2;
-                window.fetchStaffOptions3 = fetchStaffOptions3;
-                window.fetchWithCache = fetchWithCache;
-                window.fetchProductsM = fetchProductsM;
-                window.deleteFolder = deleteFolder;
+            dateListener('overview');
+            setInitialDate();
+            fetchStaffProduct();
+            fetchComContact();
+            fetchProducts();
+            fetchStaffOptions('filterStaff');
+            fetchOptions('filterCompany');
+        } else if (page === 'list') {
+            window.retrieveStaffs = retrieveStaffs;
+            window.formatDate = formatDate;
+            window.editProd = editProd;
+            window.EditProductSubmission = EditProductSubmission;
+            window.fetchOptions = fetchOptions;
+            window.formatDateForInput = formatDateForInput;
+            window.addProdSubmission = addProdSubmission;
+            window.deleteProd = deleteProd;
+            window.fetchStaffOptions2 = fetchStaffOptions2;
+            window.populateStaffOptions2 = populateStaffOptions2;
+            window.fetchStaffOptions3 = fetchStaffOptions3;
+            window.fetchWithCache = fetchWithCache;
+            window.fetchProductsM = fetchProductsM;
+            window.deleteFolder = deleteFolder;
 
-                fetchStaffProduct();
-                fetchComContact();
+            fetchStaffProduct();
+            fetchComContact();
 
-                dateListener('list');
-                setInitialDate();
-                fetchProductsM();
-                fetchStaffOptions('filterStaff');
-                fetchOptions('filterCompany');
-                document.getElementById('prodForm').addEventListener('submit', addProdSubmission);
-            }
-            else if (page === 'internal') {
-                window.deleteInternal = deleteInternal;
-                window.editInternal = editInternal;
-                window.handleEditInternal = handleEditInternal;
-                window.addInternalSubmission = addInternalSubmission;
+            dateListener('list');
+            setInitialDate();
+            fetchProductsM();
+            fetchStaffOptions('filterStaff');
+            fetchOptions('filterCompany');
+            document.getElementById('prodForm').addEventListener('submit', addProdSubmission);
+        }
+        else if (page === 'internal') {
+            window.deleteInternal = deleteInternal;
+            window.editInternal = editInternal;
+            window.handleEditInternal = handleEditInternal;
+            window.addInternalSubmission = addInternalSubmission;
 
-                fetchInternal();
-                document.getElementById('internalForm').addEventListener('submit', addInternalSubmission);
-            }
-            else if (page === 'outsource') {
-                window.deleteOutsource = deleteOutsource;
-                window.editOutsource = editOutsource;
-                window.handleEditOutsource = handleEditOutsource;
-                window.addOutsourceSubmission = addOutsourceSubmission;
+            fetchInternal();
+            document.getElementById('internalForm').addEventListener('submit', addInternalSubmission);
+        }
+        else if (page === 'outsource') {
+            window.deleteOutsource = deleteOutsource;
+            window.editOutsource = editOutsource;
+            window.handleEditOutsource = handleEditOutsource;
+            window.addOutsourceSubmission = addOutsourceSubmission;
 
-                fetchOutsources();
-                document.getElementById('outsourceForm').addEventListener('submit', addOutsourceSubmission);
-            }
+            fetchOutsources();
+            document.getElementById('outsourceForm').addEventListener('submit', addOutsourceSubmission);
+        }
 
-            else if (page === 'testing') {
-                window.fetchTestings = fetchTestings;
-                window.formatDate = formatDate;
-                window.fetchOptions = fetchOptions;
-                window.formatDateForInput = formatDateForInput;
-                window.retrieveInternal = retrieveInternal;
-                window.retrieveOutsource = retrieveOutsource;
-                window.retrieveProducts = retrieveProducts;
-                window.fetchStaffProduct = fetchStaffProduct;
-                window.fillInfo = fillInfo;
-                window.fillSample = fillSample;
-                window.paramIn = paramIn;
-                window.paramOut = paramOut;
-                window.addTestSubmission = addTestSubmission;
-                window.cancelTest = cancelTest;
-                window.editTest = editTest;
-                window.fillInfo2 = fillInfo2;
-                window.fillSample2 = fillSample2;
-                window.populateTables = populateTables;
-                window.formatDate2 = formatDate2;
-                window.fetchContacts2 = fetchContacts2;
-                window.populateTables2 = populateTables2;
-                window.checkAndDisplayCOA = checkAndDisplayCOA;
-                window.uploadFile = uploadFile;
-                window.displayTestSubmission = displayTestSubmission;
-                window.generateCOAIcon = generateCOAIcon;
-                window.changeStatus = changeStatus;
-                window.removeFile = removeFile;
+        else if (page === 'testing') {
+            window.fetchTestings = fetchTestings;
+            window.formatDate = formatDate;
+            window.fetchOptions = fetchOptions;
+            window.formatDateForInput = formatDateForInput;
+            window.retrieveInternal = retrieveInternal;
+            window.retrieveOutsource = retrieveOutsource;
+            window.retrieveProducts = retrieveProducts;
+            window.fetchStaffProduct = fetchStaffProduct;
+            window.fillInfo = fillInfo;
+            window.fillSample = fillSample;
+            window.paramIn = paramIn;
+            window.paramOut = paramOut;
+            window.addTestSubmission = addTestSubmission;
+            window.cancelTest = cancelTest;
+            window.editTest = editTest;
+            window.fillInfo2 = fillInfo2;
+            window.fillSample2 = fillSample2;
+            window.populateTables = populateTables;
+            window.formatDate2 = formatDate2;
+            window.fetchContacts2 = fetchContacts2;
+            window.populateTables2 = populateTables2;
+            window.checkAndDisplayCOA = checkAndDisplayCOA;
+            window.uploadFile = uploadFile;
+            window.displayTestSubmission = displayTestSubmission;
+            window.generateCOAIcon = generateCOAIcon;
+            window.changeStatus = changeStatus;
+            window.removeFile = removeFile;
 
-                dateListener('test');
-                setInitialDate();
+            dateListener('test');
+            setInitialDate();
 
-                fetchTestings();
-                fetchOptions('filterCompany');
+            fetchTestings();
+            fetchOptions('filterCompany');
 
 
-            }
-            else if (page === 'invoice') {
-                window.retrieveCompanies = retrieveCompanies;
-                window.fetchOptions = fetchOptions;
-                window.formatDate = formatDate;
-                window.generateInvoiceIcon = generateInvoiceIcon;
-                window.uploadInvoice = uploadInvoice;
-                window.checkAndDisplayCOARealTime = checkAndDisplayCOARealTime;
-                window.removeInvoice = removeInvoice;
-                window.displaySubmission = displaySubmission;
-                window.fetchInvoices = fetchInvoices;
-                window.editCharge = editCharge;
-                window.formatDateForInput = formatDateForInput;
+        }
+        else if (page === 'invoice') {
+            window.retrieveCompanies = retrieveCompanies;
+            window.fetchOptions = fetchOptions;
+            window.formatDate = formatDate;
+            window.generateInvoiceIcon = generateInvoiceIcon;
+            window.uploadInvoice = uploadInvoice;
+            window.checkAndDisplayCOARealTime = checkAndDisplayCOARealTime;
+            window.removeInvoice = removeInvoice;
+            window.displaySubmission = displaySubmission;
+            window.fetchInvoices = fetchInvoices;
+            window.editCharge = editCharge;
+            window.formatDateForInput = formatDateForInput;
 
-                dateListener('invoice');
-                setInitialDate();
+            dateListener('invoice');
+            setInitialDate();
 
-                fetchComContact();
+            fetchComContact();
 
-                fetchInvoices();
+            fetchInvoices();
 
-                fetchOptions('filterCompany');
-            }
-            else if (page === 'PO') {
-                window.retrieveCompanies = retrieveCompanies;
-                window.fetchOptions = fetchOptions;
-                window.formatDate = formatDate;
-                window.generateInvoiceIcon = generateInvoiceIcon;
-                window.uploadPO = uploadPO;
-                window.deletePO = deletePO;
-                window.displayPORealTime = displayPORealTime;
-                window.removePO = removePO;
-                window.displaySubmissionPO = displaySubmissionPO;
-                window.editPO = editPO;
-                window.formatDateForInput = formatDateForInput;
-                window.addPOSubmission = addPOSubmission;
-                window.fetchPOs = fetchPOs;
+            fetchOptions('filterCompany');
+        }
+        else if (page === 'PO') {
+            window.retrieveCompanies = retrieveCompanies;
+            window.fetchOptions = fetchOptions;
+            window.formatDate = formatDate;
+            window.generateInvoiceIcon = generateInvoiceIcon;
+            window.uploadPO = uploadPO;
+            window.deletePO = deletePO;
+            window.displayPORealTime = displayPORealTime;
+            window.removePO = removePO;
+            window.displaySubmissionPO = displaySubmissionPO;
+            window.editPO = editPO;
+            window.formatDateForInput = formatDateForInput;
+            window.addPOSubmission = addPOSubmission;
+            window.fetchPOs = fetchPOs;
 
-                dateListener('PO');
-                setInitialDate();
+            dateListener('PO');
+            setInitialDate();
 
-                fetchComContact();
+            fetchComContact();
 
-                fetchPOs();
+            fetchPOs();
 
-                fetchOptions('filterCompany');
-            }
-            else if(page == 'report'){
-                window.listenToCharges = listenToCharges;
-                window.renderChart = renderChart;
+            fetchOptions('filterCompany');
+        }
+        else if(page == 'report'){
+            window.listenToCharges = listenToCharges;
+            window.renderChart = renderChart;
 
-                active();
-                listenToCharges("monthly");
+            active();
+            listenToCharges("monthly");
 
-            }
-            else if(page == 'profile'){
-                window.loadProfileData = loadProfileData;
-                window.saveChanges = saveChanges;
-                window.submitEmailChange = submitEmailChange;
-                window.submitPasswordChange = submitPasswordChange;
+        }
+        else if(page == 'profile'){
+            window.loadProfileData = loadProfileData;
+            window.saveChanges = saveChanges;
+            window.submitEmailChange = submitEmailChange;
+            window.submitPasswordChange = submitPasswordChange;
 
-                loadProfileData();
-            }
-
-        })
-        .catch(error => {
-            console.error('Error loading content:', error);
-            loadContent('dashboard');
-
-            // Hide the page loading spinner if there's an error
-            document.getElementById('pageLoadingSpinner').classList.add('hidden');
-        });
+            loadProfileData();
+        }
+    } catch (error) {
+        console.error('Error loading content:', error);
+    }
 }
 
 
