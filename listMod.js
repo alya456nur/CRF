@@ -414,12 +414,12 @@ async function deleteFolder(folderPath) {
 
 
 async function fetchStaffOptions2(elementID) {
-    const staffMap = await retrieveStaffs();
-    populateStaffOptions2(staffMap, elementID);  // Pass the ID of the dropdown
+    const staffMap2 = await retrieveStaffsDept();
+    populateStaffOptions2(staffMap2, elementID);  // Pass the ID of the dropdown
 }
 
 async function fetchStaffOptions3(elementID) {
-    const staffMap = await retrieveStaffs();
+    const staffMap = await retrieveStaffsDept();
     populateStaffOptions3(staffMap, elementID);  // Pass the ID of the dropdown
 }
 

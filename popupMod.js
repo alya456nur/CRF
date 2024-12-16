@@ -3,6 +3,9 @@ import { app, db, auth, storage, ref,getDownloadURL, uploadBytes, Timestamp, doc
 
 async function loadNotifications(userUID) {
     const notificationList = document.getElementById('notificationList');
+    // Preload the ringtone to ensure it plays without delay
+    const ringtone = new Audio('audio/notification.wav');
+    ringtone.preload = 'auto'; // Preload the audio
 
     try {
         // Get notifications from Firestore, sorted by timestamp in descending order
@@ -42,20 +45,18 @@ async function loadNotifications(userUID) {
 
                 const currentTime = Date.now();
 
-                console.log(notificationTimestamp);
-
                 // Format the timestamp to check within the last minute
                 const formattedTimestamp = notificationTimestamp.getTime(); // Get the timestamp in milliseconds
 
 
                 // Check if the new notification is within the last minute (60000 ms)
-                if (currentTime - formattedTimestamp <= 20000) { // 60 * 1000 = 1 minute
-                    // Play ringtone for new notification
-                    const ringtone = new Audio('audio/notification.wav'); // Replace with your audio file path
+                if (currentTime - formattedTimestamp <= 1000) { // 60 * 1000 = 1 minute
                     ringtone.play().catch(error => {
                         console.error("Error playing ringtone:", error);
                     });
                 }
+
+                showNotificationDot(); // Show red dot to indicate new notifications
 
                 // Update the last notification timestamp
                 lastNotificationTimestamp = notificationsArray[0].timestamp;
@@ -126,8 +127,6 @@ async function addNotification(message) {
                 return; // Stop if Firestore operation fails
             }
         }
-
-        showNotificationDot(); // Show red dot to indicate new notifications
     } catch (error) {
         console.error("Error fetching staff documents from Firestore:", error);
     }

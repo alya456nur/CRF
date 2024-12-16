@@ -51,6 +51,27 @@ async function fetchCompanies() {
 }
 
 
+async function retrieveStaffsDept() {
+    const staffMap2 = {};
+    try {
+        // Query to filter staff by 'staffDept' being 'Marketing'
+        const querySnapshot = await getDocs(
+            query(collection(db, 'STAFF'), where('staffDept', '==', 'Marketing'))
+        );
+        
+        querySnapshot.forEach((doc) => {
+            const staffData = doc.data();
+            // Combine Fname and Lname to create staffName
+            const staffName = `${staffData.Fname} ${staffData.Lname}`;
+
+            staffMap2[doc.id] = staffName;
+        });
+    } catch (error) {
+        console.error("Error fetching staff:", error);
+    }
+
+    return staffMap2;  // Return the map of staff members in Marketing
+}
 
 
 // Handle form submission
@@ -229,6 +250,9 @@ async function handleEditSubmission(companyId) {
         console.error(`Error updating company with ID ${companyId}:`, error);
     }
 
+    const timestamp = new Date().toLocaleString(); // Get current time
+    addNotification(`${staffName} updated company ${companyName} at ${timestamp}`);
+
     // Reset the form fields
     const companyForm = document.getElementById('upCompanyForm');
     companyForm.reset(); // Resets all form fields to default
@@ -352,4 +376,4 @@ async function deleteCompany(companyId) {
 
 
 
-export{fetchCompanies, handleFormSubmission, handleEditSubmission, deleteCompany, editItem};
+export{fetchCompanies, handleFormSubmission, handleEditSubmission, deleteCompany, editItem, retrieveStaffsDept};
