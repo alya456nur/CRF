@@ -425,7 +425,7 @@ function getStatusHTML(status) {
     return `
         <div style="
             display: inline-block; 
-            width: 100%; 
+            width: 120px; 
             height: 20px; 
             background-color: ${backgroundColor}; 
             border: 2px solid ${backgroundColor}; 
