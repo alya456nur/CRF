@@ -1101,7 +1101,6 @@ async function checkAndDisplayCOA(testData) {
 async function uploadFile(inputElement, companyID, prodID, folder, testID) {
     const file = inputElement.files[0];
     if (!file) {
-        showModal("errorFile");
         return;
     }
 
@@ -1165,7 +1164,14 @@ async function displayTestSubmission(testData) {
     const outFileInput = document.getElementById('outFile2');
     const inFileInput = document.getElementById('inFile2');
 
-     try {
+    // Check if both file inputs are empty
+    if (!outFileInput.files.length && !inFileInput.files.length) {
+        hideCustomAlert(); // Hide the alert if shown
+        showModal("errorFile"); // Show error modal
+        return; // Exit function early
+    }
+
+    try {
         // Wait for the uploadFile function to finish before proceeding
         await uploadFile(outFileInput, companyID, prodID, "outCOA", testID);
         await uploadFile(inFileInput, companyID, prodID, "COA", testID);
@@ -1179,6 +1185,7 @@ async function displayTestSubmission(testData) {
         // Optionally, show an error modal or message
     }
 }
+
 
 
 // Function to handle COA file download

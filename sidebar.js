@@ -117,6 +117,30 @@ async function updateSidebarForStaffDept(staffDept) {
             <a href="#" onclick="highlightActiveLink(event)" data-page="staff"><i class="fa-solid fa-users-gear"></i> STAFF </a>
 
             <div class="nav-item">
+                <a href="javascript:void(0)" onclick="toggleSubNav(event); highlightActiveLink(event)"><i class="bi bi-folder"></i> CLIENTS <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="sub-nav">
+                    <a href="#" onclick="highlightActiveLink(event)" data-page="company"><i class="bi bi-building"></i> COMPANIES </a>
+                    <a href="#" onclick="highlightActiveLink(event)" data-page="contact"><i class="bi bi-file-person"></i> CONTACTS </a>
+                </div>
+            </div>
+
+            <a href="#" onclick="highlightActiveLink(event)" data-page="list"><i class="bi bi-archive"></i> SAMPLES </a>
+
+            <div class="nav-item">
+                <a href="javascript:void(0)" onclick="toggleSubNav(event); highlightActiveLink(event)"><i class="fa-solid fa-flask"></i> LAB TESTING <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="sub-nav">
+                    <a href="#" onclick="highlightActiveLink(event)" data-page="testing"><i class="bi bi-list-ul"></i> TESTING LIST </a>
+                    <div class="nav-item">
+                        <a href="javascript:void(0)" onclick="toggleSubNav(event); highlightActiveLink(event)"><i class="bi bi-card-list"></i> PARAMETER <i class="fa-solid fa-chevron-down"></i></a>
+                        <div class="sub-nav">
+                            <a href="#" onclick="highlightActiveLink(event)" data-page="internal"><i class="fa-solid fa-vial"></i>INTERNAL </a>
+                            <a href="#" onclick="highlightActiveLink(event)" data-page="outsource"><i class="fa-solid fa-microscope"></i> OUTSOURCES </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-item">
                 <a href="#" onclick="highlightActiveLink(event)" data-page="report"><i class="bi bi-file-earmark-bar-graph"></i> REPORT </a>
             </div>
 
