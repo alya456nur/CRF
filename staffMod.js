@@ -51,19 +51,18 @@ async function fetchStaff() {
 
 // Handle staff registration
 async function handleStaffRegister(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     showCustomAlert('Registering staff, please wait...', () => { });
 
-    // Get form values
     const dept = document.getElementById('dept').value;
-    const Lname = document.getElementById('LName').value;
+    const Lname = document.getElementById('LName').value  || " ";
     const Fname = document.getElementById('FName').value;
     const contact = document.getElementById('contact').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('Password').value;
     const confirmPassword = document.getElementById('ConfirmPassword').value;
 
-    // Check if passwords match
+    // Password validation
     if (password !== confirmPassword) {
         hideCustomAlert();
         AlertMe('Passwords do not match. Please try again.');
@@ -78,48 +77,42 @@ async function handleStaffRegister(event) {
         return;
     }
 
+    // Log the data to check what's being sent
+    console.log("Staff registration data:", {
+        email,
+        password,
+        Fname,
+        Lname,
+        dept,
+        contact
+    });
+
     try {
-        // Check if the email already exists in Firebase Authentication
-        const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-        if (signInMethods.length > 0) {
-            hideCustomAlert();
-            AlertMe('This email is already registered. Please use a different email.');
-            return;
-        }
+        const createStaffAccount = httpsCallable(functions, 'createStaffAccount');
 
-        hideCustomAlert();
-
-        const timestamp = new Date().toLocaleString(); // Get current time
-        addNotification(`${staffName} registered a staff at ${timestamp}`);
-
-        showCustomAlert('Staff registered successfully. You will be logged out shortly. Please wait...', () => { });
-
-        // Register the staff in Firebase Authentication
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const staffUID = userCredential.user.uid; // Get the created UID
-
-
-        // Add the staff to Firestore with UID as document ID
-        await setDoc(doc(db, 'STAFF', staffUID), {
+        // Call the cloud function
+        const result = await createStaffAccount({
+            email: email,
+            password: password,
             Fname: Fname,
             Lname: Lname,
-            staffDept: dept,
-            staffContacts: contact,
-            staffEmail: email,
+            dept: dept,
+            contact: contact,
+            auth: { token: { admin: true } },
         });
 
-        // Sign out the user after creation to prevent auto-login
-        await signOut(auth); // This will log the user out immediately
-    } catch (error) {
-        hideCustomAlert();
-        console.error("Error registering staff:", error);
+        if (result.data.success) {
+            const timestamp = new Date().toLocaleString(); // Get current time
+            addNotification(`${Fname} ${Lname} registered a staff at ${timestamp}`);
+            hideCustomAlert();
+            AlertMe(`Staff registered successfully!`);
 
-        // Handle weak password error
-        if (error.code === 'auth/weak-password') {
-            AlertMe('The password is too weak. Please ensure it meets all criteria.');
-        } else {
-            AlertMe('Error registering staff. Please try again.');
+            cancelStaff();
         }
+    } catch (error) {
+        console.error("Error registering staff:", error.message);
+        hideCustomAlert();
+        AlertMe('Failed to register staff. Please try again.');
     }
 }
 
@@ -172,14 +165,28 @@ async function deleteStaff(staffId) {
     showCustomAlert("Deleting staff's account, please wait...", () => {}); // Show loading message
     
     try {
+        // 1. First, delete the Firestore document for the staff
         const staffDocRef = doc(db, 'STAFF', staffId); // Firestore reference to the contact
         await deleteDoc(staffDocRef); // Delete the contact document from Firestore
+
+        // 2. Then, call the deleteUser function to delete the user account on Firebase Auth
+        const deleteUserFunction = httpsCallable(functions, 'deleteUser');
         
-        hideCustomAlert(); // Hide the loading alert
-        showModal('deleteStaff2'); // Show success modal
+        // Pass the staffId (or the UID) to delete the user account on Firebase Auth
+        const result = await deleteUserFunction({staffId: staffId });
+
+        if (result.data && result.data.message === 'User deleted successfully.') {
+
+            const timestamp = new Date().toLocaleString(); // Get current time
+            addNotification(`${Fname} ${Lname} deleted a staff at ${timestamp}`);
+            hideCustomAlert(); // Hide the loading alert
+            showModal('deleteStaff2'); // Show success modal
+        } else {
+            throw new Error('Failed to delete the user from Firebase Auth.');
+        }
     } catch (error) {
         hideCustomAlert(); // Hide loading in case of error
-        AlertMe("Error deleting contact:", error); // Log error for debugging
+        AlertMe("Error deleting staff:", error.message); // Log error for debugging
     }
 }
 

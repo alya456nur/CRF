@@ -1,12 +1,12 @@
 // Import the necessary Firebase modules
-import { app , auth, db, storage, logEvent, ref,onSnapshot , getDownloadURL, uploadBytes,  doc, query, where, getDoc, collection, getDocs, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged,setPersistence,browserSessionPersistence} from "./firebase-config.js";
+import { app , auth, db, storage,functions,httpsCallable, logEvent, ref,onSnapshot , getDownloadURL, uploadBytes,  doc, query, where, getDoc, collection, getDocs, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged,setPersistence,browserSessionPersistence} from "./firebase-config.js";
 
 import {addNotification, removeNotification, clearNotifications, loadNotifications} from './popupMod.js';
 
 import {fetchStaff, handleEditStaff, handleStaffRegister, deleteStaff} from './staffMod.js';
 
 import {populateYearOptions, filterDate, populateAll, fetchChartData} from './dashboardMod.js';
-import { fetchCompanies, handleFormSubmission, editItem, handleEditSubmission, deleteCompany} from './companyMod.js';
+import { fetchCompanies, handleFormSubmission, editItem, handleEditSubmission, deleteCompany, retrieveStaffsDept} from './companyMod.js';
 import { fetchContacts, addContactSubmission, EditContactSubmission, deleteContact, editContact, retrieveCompanies, fetchComContact, fetchOptions} from './contactMod.js';
 import {fetchProducts, fetchStaffProduct, retrieveStaffs, fetchStaffOptions,formatDate} from './overviewMod.js';
 import {fetchProductsM, editProd, EditProductSubmission, formatDateForInput, addProdSubmission, deleteProd, fetchStaffOptions2, populateStaffOptions2, fetchStaffOptions3, fetchWithCache,deleteFolder} from './listMod.js';
@@ -51,13 +51,25 @@ document.addEventListener('DOMContentLoaded', () => {
           Fname = userDoc.data().Fname;
           Lname = userDoc.data().Lname;
 
-            // Combine First Name and Last Name
-            staffName = `${Fname} ${Lname}`; // Concatenate with a space
+          // Combine First Name and Last Name
+          staffName = `${Fname} ${Lname}`; // Concatenate with a space
 
           // Update username and department elements
           document.getElementById("username").textContent = staffName;
           document.getElementById("department").textContent = staffDept;
 
+          // Set admin role if staffDept is "Admin"
+          if (staffDept === "Admin") {
+            try {
+              // Use Firebase Admin SDK to set custom claims for the user
+              const setAdminRole = httpsCallable(functions, 'setAdminRole');
+              await setAdminRole({ userId: user.uid});
+            } catch (error) {
+              console.error("Error setting admin role:", error);
+            }
+          }
+
+          // Logout handlers
           const logoutLink2 = document.querySelector('#logout2');
           if (logoutLink2) {
               logoutLink2.addEventListener('click', function(event) {
@@ -75,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
                   logoutUser();
                 });
             };
-
 
           // Once the user is authenticated and the sidebar is ready, load page content
           await loadPageContent();
@@ -298,6 +309,7 @@ async function loadContent(page) {
             window.populateStaffOptions2 = populateStaffOptions2;
             window.fetchStaffOptions3 = fetchStaffOptions3;
             window.retrieveStaffs = retrieveStaffs;
+            window.retrieveStaffsDept = retrieveStaffsDept;
 
             fetchStaffProduct();
             fetchCompanies();
