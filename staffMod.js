@@ -1,4 +1,4 @@
-import { app,auth, db, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot,fetchSignInMethodsForEmail, createUserWithEmailAndPassword,signOut } from "./firebase-config.js";
+import { app,auth, db, functions,httpsCallable, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot,fetchSignInMethodsForEmail, createUserWithEmailAndPassword,signOut } from "./firebase-config.js";
 
 // Save staff data in an array
 async function fetchStaff() {
@@ -49,7 +49,7 @@ async function fetchStaff() {
     }
 }
 
-// Handle form submission
+// Handle staff registration
 async function handleStaffRegister(event) {
     event.preventDefault(); // Prevent default form submission
     showCustomAlert('Registering staff, please wait...', () => { });
@@ -109,7 +109,7 @@ async function handleStaffRegister(event) {
         });
 
         // Sign out the user after creation to prevent auto-login
-		await signOut(auth); // This will log the user out immediately
+        await signOut(auth); // This will log the user out immediately
     } catch (error) {
         hideCustomAlert();
         console.error("Error registering staff:", error);
@@ -122,6 +122,20 @@ async function handleStaffRegister(event) {
         }
     }
 }
+
+
+// Utility function to sign in with UID (for re-authentication)
+async function signInWithUid(auth, uid) {
+    const userRef = doc(db, "users", uid); // Reference the admin user document
+    const userSnapshot = await getDoc(userRef);
+    if (userSnapshot.exists()) {
+        const userData = userSnapshot.data();
+        const email = userData.email;
+        const password = userData.password; // You would need to handle password storage securely
+        await signInWithEmailAndPassword(auth, email, password); // Re-authenticate using email and password
+    }
+}
+
 
 
 async function handleEditStaff(staffData){
@@ -169,4 +183,4 @@ async function deleteStaff(staffId) {
     }
 }
 
-export{fetchStaff, handleEditStaff, deleteStaff, handleStaffRegister};
+export{fetchStaff, handleEditStaff, deleteStaff, handleStaffRegister, signInWithUid};

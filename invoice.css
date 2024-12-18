@@ -4,7 +4,27 @@ body, html {
     padding: 0;
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
+.exportBtn{
+    display: flex;
+    justify-content: end;
+}
 
+.export2{
+    background: gray;
+    margin-right: 20px;
+    font-family: "Poppins", sans-serif;
+    border: 2px solid darkgray;
+    padding: 5px 20px;
+    font-weight: 600;
+    color: lightgray;
+    border-radius: 3px;
+}
+
+.export2:hover{
+    background: lightgray;
+    cursor: pointer;
+    color: gray;
+}
 .input-wrapper {
     position: relative;
     width: auto;

@@ -6,7 +6,7 @@ import {addNotification, removeNotification, clearNotifications, loadNotificatio
 import {fetchStaff, handleEditStaff, handleStaffRegister, deleteStaff} from './staffMod.js';
 
 import {populateYearOptions, filterDate, populateAll, fetchChartData} from './dashboardMod.js';
-import { fetchCompanies, handleFormSubmission, editItem, handleEditSubmission, deleteCompany, retrieveStaffsDept} from './companyMod.js';
+import { fetchCompanies, handleFormSubmission, editItem, handleEditSubmission, deleteCompany} from './companyMod.js';
 import { fetchContacts, addContactSubmission, EditContactSubmission, deleteContact, editContact, retrieveCompanies, fetchComContact, fetchOptions} from './contactMod.js';
 import {fetchProducts, fetchStaffProduct, retrieveStaffs, fetchStaffOptions,formatDate} from './overviewMod.js';
 import {fetchProductsM, editProd, EditProductSubmission, formatDateForInput, addProdSubmission, deleteProd, fetchStaffOptions2, populateStaffOptions2, fetchStaffOptions3, fetchWithCache,deleteFolder} from './listMod.js';
@@ -298,7 +298,6 @@ async function loadContent(page) {
             window.populateStaffOptions2 = populateStaffOptions2;
             window.fetchStaffOptions3 = fetchStaffOptions3;
             window.retrieveStaffs = retrieveStaffs;
-            window.retrieveStaffsDept = retrieveStaffsDept;
 
             fetchStaffProduct();
             fetchCompanies();

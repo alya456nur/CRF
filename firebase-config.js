@@ -4,6 +4,8 @@ import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, o
 import { getFirestore, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc,arrayRemove,onSnapshot, orderBy,writeBatch, serverTimestamp  } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject, getMetadata, listAll } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
 import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-functions.js";
+
 
 // Firebase configuration
 const firebaseConfig = {
@@ -24,6 +26,9 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 const analytics = getAnalytics(app);
+const functions = getFunctions(app);
 
 // Export all Firebase services and functions
-export { app, auth, db, storage, fetchSignInMethodsForEmail, createUserWithEmailAndPassword, listAll,  deleteObject ,analytics, Timestamp,serverTimestamp , doc, getDoc, query, where, collection, getDocs,orderBy, writeBatch ,getMetadata,addDoc, updateDoc, setDoc, deleteDoc,arrayRemove, onSnapshot, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, ref, getDownloadURL, uploadBytes, logEvent };
+export { app, auth, db, storage,functions, fetchSignInMethodsForEmail, createUserWithEmailAndPassword, listAll,  deleteObject ,analytics, Timestamp,serverTimestamp , doc, getDoc, 
+query, where, collection, getDocs,orderBy, writeBatch ,getMetadata,addDoc, updateDoc, setDoc, deleteDoc,arrayRemove, onSnapshot, signInWithEmailAndPassword, sendPasswordResetEmail, 
+signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, ref, getDownloadURL, uploadBytes, logEvent, httpsCallable };

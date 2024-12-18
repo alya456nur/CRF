@@ -14,7 +14,7 @@ function filterInvoices() {
         // Matching criteria for search and filters
         const matchesSearch = !searchInput || companyName.includes(searchInput) || name.includes(searchInput) ||  id.includes(searchInput);
         const matchesCompany = !filterCompany || companyName.includes(companyName2.toLowerCase());
-        const matchesResult = !filterStatus || status.includes(filterStatus.toLowerCase());
+        const matchesResult = !filterStatus || status === filterStatus.toLowerCase();
 
         return matchesSearch && matchesCompany && matchesResult;
     });
@@ -30,6 +30,18 @@ function displayFilteredInvoices(filteredCharges) {
     // Calculate start and end index for the current page
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = Math.min(startIndex + rowsPerPage, filteredCharges.length);
+
+    // Get the button element
+    const exportButton = document.getElementById('exportExcl');
+
+    function exportFile(filteredCharges) {
+        exportButton.onclick = function () {
+            exportToExcel(filteredCharges);
+        };
+    }
+
+    exportFile(filteredCharges);
+
 
     filteredCharges.slice(startIndex, endIndex).forEach((charge, index) => {
         const row = document.createElement('tr');

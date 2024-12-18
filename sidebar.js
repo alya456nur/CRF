@@ -141,6 +141,14 @@ async function updateSidebarForStaffDept(staffDept) {
             </div>
 
             <div class="nav-item">
+                <a href="javascript:void(0)" onclick="toggleSubNav(event); highlightActiveLink(event)"><i class="bi bi-calculator-fill"></i> FINANCE <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="sub-nav">
+                    <a href="#" onclick="highlightActiveLink(event)" data-page="invoice"><i class="fa-solid fa-file-invoice-dollar"></i> INVOICE </a>
+                    <a href="#" onclick="highlightActiveLink(event)" data-page="PO"><i class="fa-solid fa-receipt"></i> PURCHASE ORDER (PO) </a>
+                </div>
+            </div>
+
+            <div class="nav-item">
                 <a href="#" onclick="highlightActiveLink(event)" data-page="report"><i class="bi bi-file-earmark-bar-graph"></i> REPORT </a>
             </div>
 

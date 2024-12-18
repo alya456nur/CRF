@@ -509,3 +509,40 @@ function toggleVisibility(inputId) {
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+
+function exportToExcel(data) {
+    // Create a new array that includes only the necessary fields
+    const filteredData = data.map(item => ({
+        'Date of Payment': item.payDate ? item.payDate.toLocaleDateString() : '-',
+        'Testing ID': item.prodID,
+        'In-House Total': item.inTotal,
+        'Outsources Total': item.outTotal,
+        'Subtotal': item.subtotal,
+        'SST (8%)': item.sst,
+        'Total Amount': item.total,
+        'Payment Status': item.status,
+        'Payment Method': item.method,
+    }));
+
+    // Convert the filtered data to a sheet
+    const ws = XLSX.utils.json_to_sheet(filteredData);
+
+    // Create a new workbook and append the sheet
+    const wb = XLSX.utils.book_new();
+
+    // Get today's date in a readable format
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+
+    // Append the sheet with the name including today's date
+    XLSX.utils.book_append_sheet(wb, ws, `Sales Data (${formattedDate})`);
+
+    // Generate a random number for the file name
+    const randomID = Math.floor(Math.random() * 1000000); // Generate a random number between 0 and 999999
+    const fileName = `sales_data_${randomID}.xlsx`; // Append random ID to the file name
+
+    // Trigger the file download
+    XLSX.writeFile(wb, fileName);
+}
+
