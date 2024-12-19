@@ -1,8 +1,7 @@
 // Import the necessary Firebase modules
-import { app } from "./firebase-config.js";
-import { getFirestore, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { app, db, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, deleteDoc, onSnapshot } from "./firebase-config.js";
 
-const db = getFirestore(app);
+
 
 // Helper function to format date as dd/mm/yy
 function formatDate(dateInput) {

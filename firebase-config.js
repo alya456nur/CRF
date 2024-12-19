@@ -1,6 +1,8 @@
 // Import necessary Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, fetchSignInMethodsForEmail, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, setPersistence, 
+browserSessionPersistence, fetchSignInMethodsForEmail, updateEmail,
+updatePassword ,reauthenticateWithCredential, sendEmailVerification, EmailAuthProvider} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getFirestore, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc,arrayRemove,onSnapshot, orderBy,writeBatch, serverTimestamp  } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 import { getStorage, ref, getDownloadURL, uploadBytes, deleteObject, getMetadata, listAll } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
 import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
@@ -29,6 +31,9 @@ const analytics = getAnalytics(app);
 const functions = getFunctions(app);
 
 // Export all Firebase services and functions
-export { app, auth, db, storage,functions, fetchSignInMethodsForEmail, createUserWithEmailAndPassword, listAll,  deleteObject ,analytics, Timestamp,serverTimestamp , doc, getDoc, 
-query, where, collection, getDocs,orderBy, writeBatch ,getMetadata,addDoc, updateDoc, setDoc, deleteDoc,arrayRemove, onSnapshot, signInWithEmailAndPassword, sendPasswordResetEmail, 
-signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, ref, getDownloadURL, uploadBytes, logEvent, httpsCallable };
+export { 
+  app, auth, db, storage,functions, updateEmail, updatePassword, fetchSignInMethodsForEmail,reauthenticateWithCredential, sendEmailVerification, EmailAuthProvider,
+  listAll,  deleteObject ,analytics, Timestamp,serverTimestamp , doc, getDoc, query, where, collection, getDocs,orderBy, writeBatch ,getMetadata,addDoc, updateDoc, 
+  setDoc, deleteDoc,arrayRemove, onSnapshot, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, setPersistence, 
+  browserSessionPersistence, ref, getDownloadURL, uploadBytes, logEvent, httpsCallable 
+};

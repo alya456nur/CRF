@@ -45,13 +45,13 @@ exports.createStaffAccount = functions.https.onCall(async (data) => {
   }
 
 
-  const {email, password, Fname, Lname, dept, contact} = data.data;
+  const {email, password, FName, LName, dept, contact} = data.data;
 
   const missingFields = [];
   if (!email) missingFields.push("email");
   if (!password) missingFields.push("password");
-  if (!Fname) missingFields.push("Fname");
-  if (!Lname) missingFields.push("Lname");
+  if (!FName) missingFields.push("Fname");
+  if (!LName) missingFields.push("Lname");
   if (!dept) missingFields.push("dept");
   if (!contact) missingFields.push("contact");
 
@@ -68,8 +68,8 @@ exports.createStaffAccount = functions.https.onCall(async (data) => {
     const userRecord = await admin.auth().createUser({email, password});
 
     await admin.firestore().collection("STAFF").doc(userRecord.uid).set({
-      Fname,
-      Lname,
+      FName,
+      LName,
       staffDept: dept,
       staffContacts: contact,
       staffEmail: email,

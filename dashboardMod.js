@@ -1,4 +1,4 @@
-import { app, db, Timestamp, doc, getDoc, query, where, collection, getDocs, onSnapshot } from "./firebase-config.js";
+import { app, db, doc, getDoc, query, where, collection, getDocs, onSnapshot } from "./firebase-config.js";
 
 // Function to filter and fetch data from the TESTING and CHARGE collections based on the selected dates
 async function filterDate() {

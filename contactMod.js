@@ -1,5 +1,5 @@
 // Import the necessary Firebase modules
-import { app, db, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot } from "./firebase-config.js";
+import { app, db, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot } from "./firebase-config.js";
 
 
 // Save contact data in an array

@@ -1,5 +1,5 @@
 // Import the necessary Firebase modules
-import { app, db, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, arrayRemove, onSnapshot } from "./firebase-config.js";
+import { app, db, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, arrayRemove, onSnapshot } from "./firebase-config.js";
 
 // Save internal data in an array
 async function fetchInternal() {

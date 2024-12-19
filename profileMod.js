@@ -1,12 +1,5 @@
-import { app } from "./firebase-config.js";
-import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-import { getAuth, EmailAuthProvider,reauthenticateWithCredential, updateEmail, updatePassword , onAuthStateChanged, sendPasswordResetEmail, sendEmailVerification} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getStorage, ref, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
-
-
-const db = getFirestore(app);
-const auth = getAuth(app);
-const storage = getStorage(app);
+import { app, db, auth, storage, doc, getDoc, updateDoc, EmailAuthProvider,reauthenticateWithCredential, 
+updateEmail, updatePassword , onAuthStateChanged, sendPasswordResetEmail, sendEmailVerification, ref, getDownloadURL, uploadBytes } from "./firebase-config.js";
 
 async function loadProfileData() {
     const user = auth.currentUser;

@@ -1,4 +1,4 @@
-import { app,auth, db, functions,httpsCallable, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot,fetchSignInMethodsForEmail, createUserWithEmailAndPassword,signOut } from "./firebase-config.js";
+import { app,auth, db, functions,httpsCallable, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot,fetchSignInMethodsForEmail } from "./firebase-config.js";
 
 // Save staff data in an array
 async function fetchStaff() {
@@ -55,8 +55,8 @@ async function handleStaffRegister(event) {
     showCustomAlert('Registering staff, please wait...', () => { });
 
     const dept = document.getElementById('dept').value;
-    const Lname = document.getElementById('LName').value  || " ";
-    const Fname = document.getElementById('FName').value;
+    const LName = document.getElementById('LName').value  || " ";
+    const FName = document.getElementById('FName').value;
     const contact = document.getElementById('contact').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('Password').value;
@@ -77,16 +77,6 @@ async function handleStaffRegister(event) {
         return;
     }
 
-    // Log the data to check what's being sent
-    console.log("Staff registration data:", {
-        email,
-        password,
-        Fname,
-        Lname,
-        dept,
-        contact
-    });
-
     try {
         const createStaffAccount = httpsCallable(functions, 'createStaffAccount');
 
@@ -94,8 +84,8 @@ async function handleStaffRegister(event) {
         const result = await createStaffAccount({
             email: email,
             password: password,
-            Fname: Fname,
-            Lname: Lname,
+            Fname: FName,
+            Lname: LName,
             dept: dept,
             contact: contact,
             auth: { token: { admin: true } },

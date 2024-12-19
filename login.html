@@ -186,6 +186,10 @@
                 else if (error.code === 'auth/user-not-found') {
                     errorMessage = 'User is not found. Please register them first';
                 }
+                else if (error.code === 'auth/network-request-failed') {
+                    errorMessage = 'Network error: Please check your internet connection and try again.';
+                }
+
 
                 console.error('Error signing in:', errorMessage);
                 closeAlert();
