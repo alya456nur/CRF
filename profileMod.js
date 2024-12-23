@@ -78,7 +78,7 @@ async function saveChanges() {
                 const avatarImg = document.querySelector(".avatar-icon2");
                 avatarImg.innerHTML = `<img src="${profilePicUrl}" alt="Profile Picture" class="profile-pic">`;
             } catch (error) {
-                console.error("Error uploading profile picture:", error);
+                showAlert("Error uploading profile picture:", error);
             }
         }
 
@@ -109,7 +109,8 @@ async function saveChanges() {
 }
 
 // Function to handle email update
-async function submitEmailChange() {
+async function submitEmailChange(event) {
+    event.preventDefault(); // Prevents default form submission
     showCustomAlert('Updating email, please wait...', () => { });
     const user = auth.currentUser;
     const newEmail = document.getElementById("newEmail").value;
@@ -117,7 +118,14 @@ async function submitEmailChange() {
 
     // Check if user is logged in
     if (!user) {
-        console.error("No user is signed in.");
+        showAlert("No user is signed in.");
+        return;
+    }
+
+    // Check if any password field is empty
+    if (!newEmail || !password) {
+        showAlert('Please fill in all fields.');
+        hideCustomAlert();
         return;
     }
 
@@ -130,25 +138,34 @@ async function submitEmailChange() {
 
         // After reauthentication, update the email
         await updateEmail(user, newEmail);
-        
+
         // Send a verification email
         await sendEmailVerification(user);
 
         hideCustomAlert();
-
-        console.log("Email updated successfully. Please verify your new email.");
-        showAlert("Email updated successfully. Please login with your new email.");
+        showAlert("Email updated successfully. Please verify and login with your new email.");
 
     } catch (error) {
         hideCustomAlert();
         console.error("Error updating email:", error);
-        showAlert("Failed to update email. Please try again.");
+
+        if (error.code === 'auth/wrong-password') {
+            showAlert("The password you entered is incorrect. Please try again.");
+        } else if (error.code === 'auth/invalid-email') {
+            showAlert("The email address entered is invalid. Please enter a valid email.");
+        } else if (error.code === 'auth/email-already-in-use') {
+            showAlert("The email address is already in use by another account. Please use a different email.");
+        } else {
+            showAlert("Failed to update email. Please try again later.");
+        }
     }
 }
 
 
+
 // Function to submit the password change
-async function submitPasswordChange() {
+async function submitPasswordChange(event) {
+    event.preventDefault();
     showCustomAlert('Updating password, please wait...', () => { });
 
     const currentPassword = document.getElementById('currentPassword').value;
@@ -167,6 +184,15 @@ async function submitPasswordChange() {
         hideCustomAlert();
         return;
     }
+
+    // Validate password rules
+    const passwordErrors = validatePassword(newPassword);
+    if (passwordErrors.length > 0) {
+        showAlert(`Password must meet the following criteria:<br><br><i class="fa-solid fa-circle-info"></i> ${passwordErrors.join('<br><i class="fa-solid fa-circle-info"></i> ')}`);
+        hideCustomAlert();
+        return;
+    }
+
 
     const user = auth.currentUser;
 

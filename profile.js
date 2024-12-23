@@ -23,7 +23,7 @@ function closeEmail() {
 function showAlert(message) {
     const customAlert = document.getElementById('cusAlert');
     const alertMessage = document.getElementById('Message');
-    alertMessage.textContent = message;
+    alertMessage.innerHTML = message;
     customAlert.classList.remove('hidden');
 }
 
@@ -31,7 +31,6 @@ function showAlert(message) {
 function closeAlert() {
     const customAlert = document.getElementById('cusAlert');
     customAlert.classList.add('hidden');
-    location.reload();
 }
 
 
@@ -71,6 +70,8 @@ function cancelEdit() {
     // Show "Change Email" and "Change Password" buttons
     document.getElementById('editEmail').style.display = 'block';
     document.getElementById('editPass').style.display = 'block';
+
+    loadProfileData();
 }
 
 // Function to disable input fields
@@ -89,6 +90,8 @@ function showEmailChange() {
     document.querySelector(".change-email-password-container").classList.remove("hidden");
     document.getElementById("changeEmailSection").style.display = "block";
     document.getElementById("changePasswordSection").style.display = "none";
+
+    document.getElementById('changeEmailForm').addEventListener('submit', submitEmailChange);
 }
 
 function showPasswordChange() {
@@ -98,9 +101,14 @@ function showPasswordChange() {
     document.querySelector(".change-email-password-container").classList.remove("hidden");
     document.getElementById("changeEmailSection").style.display = "none";
     document.getElementById("changePasswordSection").style.display = "block";
+
+    document.getElementById('changePasswordForm').addEventListener('submit', submitPasswordChange);
 }
 
 function cancelEmailChange() {
+    const form = document.getElementById('changeEmailForm');
+    form.reset();
+
     // Hide the container when canceling email change
     document.querySelector(".change-email-password-container").classList.add("hidden");
     document.getElementById("changeEmailSection").style.display = "none";
@@ -108,6 +116,8 @@ function cancelEmailChange() {
 }
 
 function cancelPasswordChange() {
+    const form = document.getElementById('changePasswordForm');
+    form.reset();
     // Hide the container when canceling password change
     document.querySelector(".change-email-password-container").classList.add("hidden");
     document.getElementById("changePasswordSection").style.display = "none";

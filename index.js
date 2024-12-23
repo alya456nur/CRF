@@ -3,7 +3,7 @@ import { app , auth, db, storage,functions,httpsCallable, logEvent, ref,onSnapsh
 
 import {addNotification, removeNotification, clearNotifications, loadNotifications} from './popupMod.js';
 
-import {fetchStaff, handleEditStaff, handleStaffRegister, deleteStaff} from './staffMod.js';
+import {fetchStaff, handleEditStaff, handleStaffRegister, deleteStaff,checkIfEmailExists} from './staffMod.js';
 
 import {populateYearOptions, filterDate, populateAll, fetchChartData} from './dashboardMod.js';
 import { fetchCompanies, handleFormSubmission, editItem, handleEditSubmission, deleteCompany, retrieveStaffsDept} from './companyMod.js';
@@ -297,6 +297,7 @@ async function loadContent(page) {
             window.handleEditStaff = handleEditStaff;
             window.handleStaffRegister = handleStaffRegister;
             window.deleteStaff = deleteStaff;
+            window.checkIfEmailExists = checkIfEmailExists;
 
             fetchStaff();
         }

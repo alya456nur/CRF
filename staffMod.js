@@ -50,12 +50,13 @@ async function fetchStaff() {
 }
 
 // Handle staff registration
+// Handle staff registration
 async function handleStaffRegister(event) {
     event.preventDefault();
     showCustomAlert('Registering staff, please wait...', () => { });
 
     const dept = document.getElementById('dept').value;
-    const LName = document.getElementById('LName').value  || " ";
+    const LName = document.getElementById('LName').value || " ";
     const FName = document.getElementById('FName').value;
     const contact = document.getElementById('contact').value;
     const email = document.getElementById('email').value;
@@ -73,19 +74,28 @@ async function handleStaffRegister(event) {
     const passwordErrors = validatePassword(password);
     if (passwordErrors.length > 0) {
         hideCustomAlert();
-        AlertMe(`Password must meet the following criteria:\n\n<i class="fa-solid fa-circle-info"></i> ${passwordErrors.join('\n<i class="fa-solid fa-circle-info"></i> ')}`);
+        AlertMe(`Password must meet the following criteria:\n\n<i class=\"fa-solid fa-circle-info\"></i> ${passwordErrors.join('\n<i class=\"fa-solid fa-circle-info\"></i> ')}`);
         return;
     }
 
     try {
+        // Check if email is already in use
+        const userExists = await checkIfEmailExists(email);
+
+        if (userExists) {
+            hideCustomAlert();
+            AlertMe('The email is already in use. Please try a different email.');
+            return;
+        }
+
         const createStaffAccount = httpsCallable(functions, 'createStaffAccount');
 
         // Call the cloud function
         const result = await createStaffAccount({
             email: email,
             password: password,
-            Fname: FName,
-            Lname: LName,
+            FName: FName,
+            LName: LName,
             dept: dept,
             contact: contact,
             auth: { token: { admin: true } },
@@ -94,8 +104,8 @@ async function handleStaffRegister(event) {
         if (result.data.success) {
             const timestamp = new Date().toLocaleString(); // Get current time
             addNotification(`${Fname} ${Lname} registered a staff at ${timestamp}`);
-            hideCustomAlert();
             AlertMe(`Staff registered successfully!`);
+            hideCustomAlert();
 
             cancelStaff();
         }
@@ -105,6 +115,18 @@ async function handleStaffRegister(event) {
         AlertMe('Failed to register staff. Please try again.');
     }
 }
+
+// Helper function to check if email exists using Firebase Auth
+async function checkIfEmailExists(email) {
+    try {
+        const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+        return signInMethods.length > 0;
+    } catch (error) {
+        console.error('Error checking email existence:', error);
+        throw error;
+    }
+}
+
 
 
 // Utility function to sign in with UID (for re-authentication)
@@ -141,11 +163,11 @@ async function handleEditStaff(staffData){
             staffDept: dept,
         });
 
-        hideCustomAlert();
         showModal('editStaff'); // Show success modal
-    } catch (error) {
         hideCustomAlert();
-        console.error(`Error updating company with ID ${staffID}:`, error);
+    } catch (error) {
+        console.error(`Error updating staff with ID ${staffID}:`, error);
+        hideCustomAlert();
     }
 
     cancelUpStaff();
@@ -169,15 +191,15 @@ async function deleteStaff(staffId) {
 
             const timestamp = new Date().toLocaleString(); // Get current time
             addNotification(`${Fname} ${Lname} deleted a staff at ${timestamp}`);
-            hideCustomAlert(); // Hide the loading alert
             showModal('deleteStaff2'); // Show success modal
+            hideCustomAlert(); // Hide the loading alert
         } else {
             throw new Error('Failed to delete the user from Firebase Auth.');
         }
     } catch (error) {
-        hideCustomAlert(); // Hide loading in case of error
         AlertMe("Error deleting staff:", error.message); // Log error for debugging
+        hideCustomAlert(); // Hide loading in case of error
     }
 }
 
-export{fetchStaff, handleEditStaff, deleteStaff, handleStaffRegister, signInWithUid};
+export{fetchStaff, handleEditStaff, deleteStaff, handleStaffRegister, signInWithUid, checkIfEmailExists};

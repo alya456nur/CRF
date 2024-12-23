@@ -68,8 +68,8 @@ exports.createStaffAccount = functions.https.onCall(async (data) => {
     const userRecord = await admin.auth().createUser({email, password});
 
     await admin.firestore().collection("STAFF").doc(userRecord.uid).set({
-      FName,
-      LName,
+      Fname: FName,
+      Lname: LName,
       staffDept: dept,
       staffContacts: contact,
       staffEmail: email,
