@@ -64,6 +64,10 @@ function groupChargesByTimeFrame(charges, timeFrame) {
       title = "Weekly Sales Data (RM)";
     } 
     else if (timeFrame === "monthly") {
+       // Ensure the charge is from the current year
+      if (timestamp.getFullYear() !== now.getFullYear()) {
+        return; // Skip charges from different years
+      }
       key = timestamp.toLocaleDateString("en-US", { month: "short" }); // e.g., "Jan", "Feb"
       title = "Monthly Sales Data (RM)";
     } 
