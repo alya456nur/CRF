@@ -63,6 +63,7 @@ function groupChargesByTimeFrame(charges, timeFrame) {
       key = `Week ${weekNumber}`; // e.g., "Week 1", "Week 2"
       title = "Weekly Sales Data (RM)";
     } 
+    
     else if (timeFrame === "monthly") {
        // Ensure the charge is from the current year
       if (timestamp.getFullYear() !== now.getFullYear()) {
