@@ -48,6 +48,7 @@
                     <th>DATE RECEIVED</th>
                     <th>COMPANY</th>
                     <th>PIC</th>
+                    <th>STATUS</th>
                     <th></th>
                 </tr>
             </thead>
@@ -219,11 +220,8 @@
 <!-- Delete Confirmation Modal -->
 <div id="deleteProd" class="modal">
     <div class="modal-content">
-        <div style="border-bottom: 1px solid black; width:110%; text-align:left; margin-left:-20px;padding-left:10px;"> Delete Sample?</div>
-        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will permanently delete all data associated with this record:</p>
-        <p>- The selected sample.</p>
-        <p>- All charges and testing related to the sample.</p>
-        <p>- All files related to the sample.</p>
+        <div style="border-bottom: 1px solid black; width:110%; text-align:left; margin-left:-20px;padding-left:10px;"> Cancel Sample?</div>
+        <p><i class="bi bi-exclamation-diamond-fill" style="color:red;padding-right: 10px;"></i> This action will permanently cancelled pending/ongoing data associated with this record:</p>
         <p>Are you sure you want to proceed?</p>
         <button class="modal-button cancel" onclick="closeModal('deleteProd')">Cancel</button>
         <button class="modal-button delete" id="confirmDeleteButton">Delete</button>

@@ -884,6 +884,12 @@ a {
 .green-icon:hover {
     color: green;
 }
+.green-icon.disabled-icon {
+    color: gray; /* Optional: visually indicate it's disabled */
+    cursor: not-allowed; /* Change cursor to not-allowed */
+    pointer-events: none; /* Prevent any interaction */
+}
+
 
 /* Disabled edit-icon (green-icon) */
 .green-icon.disabled-icon, .delete-icon.disabled-icon, .upload-icon.disabled-icon {
@@ -897,6 +903,12 @@ a {
 }
 .delete-icon:hover {
     color: darkred;
+}
+
+.delete-icon.disabled-icon {
+    color: gray; /* Optional: visually indicate it's disabled */
+    cursor: not-allowed; /* Change cursor to not-allowed */
+    pointer-events: none; /* Prevent any interaction */
 }
 
 

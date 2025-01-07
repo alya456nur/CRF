@@ -31,7 +31,7 @@
 
 </div>
 
-<div class="exportBtn" >
+<div class="exportBtn"  id="exportExcel">
 
     <button id="exportExcl"class="export2">Export   <i class="fa-solid fa-arrow-up-from-bracket export-icon"></i></button>
     
@@ -80,7 +80,9 @@
                     <th>TOTAL AMOUNT</th>
                     <th>STATUS</th>
                     <th style="text-align: center;">INVOICE</th>
-                    <th></th>
+                    <th style="text-align: center;">PROOF OF PAYMENT(POP)</th>
+                    <th style="text-align: center;">UPLOAD INVOICE</th>
+                    <th style="text-align: center;">UPLOAD POP</th>
                 </tr>
             </thead>
             <tbody>
@@ -159,7 +161,7 @@
                 <a href="" id="invoiceFile"><i class="bi bi-file-earmark-pdf-fill"></i></a>
             </div>
 
-            <div class="info-contain" style="margin-bottom: 10px;">
+            <div class="info-contain" style="margin: 10px 20px;">
                 <div class="pdf-upload-container">
                     <label for="invoiceUpload" class="upload-btn">Upload Invoice</label>
                     <input type="file" id="invoiceUpload" accept=".pdf" style="display: none;">
@@ -168,6 +170,26 @@
             </div>
 
             <p class="poppins-semibold" style="padding:20px 0 0 20px;margin: 0;">Remarks:</p>
+            <div class="info-contain" style="margin: 10px 20px;">
+                <label style="margin-right: 20px;">
+                    <input type="checkbox" class="paymentCheckbox" name="paymentMethod" id="paymentViaPO" value="PO/LOI" style="width: auto;"> Payment via PO/LOI
+                </label>
+                <label>
+                    <input type="checkbox" class="paymentCheckbox" name="paymentMethod" id="paymentDeposit" value="Deposit" style="width: auto;"> Deposit
+                </label>
+            </div>
+
+            <div class="info-contain" id="addOnDate" style="margin: 10px 20px;">
+                <label for="addDate">DATE<p style="color: red; display: inline;">*</p></label>
+                <input type="date" id="addDate" name="addDate" style="width: auto;border-radius: 5px;">
+            </div>
+
+            <div class="info-contain" id="depoPercent" style="margin: 10px 20px;">
+                <label for="depoNum">Percentage(%)<p style="color: red; display: inline;">*</p></label>
+                <input type="Number" id="depoNum" name="depoNum" placeholder="0" style="padding: 5px;width: 70px;">
+            </div>
+
+
             <div class="info-contain">
                 <textarea class="remarksInvoice" id="remarksInvoice" disabled style="height: 100px;margin: 0px 0px 20px 0px;"></textarea>
                 <i id="editInput" class="fa-solid fa-pencil" onclick="enableEditIN('remarksInvoice')"></i>
@@ -193,6 +215,13 @@
     <div class="modal-content">
         <p>Invoice uploaded and updated successfully.</p>
         <button class="modal-button ok" onclick="closeModal('uploadInvoice')">OK</button>
+    </div>
+</div>
+
+<div id="uploadPop" class="modal">
+    <div class="modal-content">
+        <p>POP uploaded and updated successfully.</p>
+        <button class="modal-button ok" onclick="closeModal('uploadPop')">OK</button>
     </div>
 </div>
 

@@ -424,7 +424,7 @@ function displayFilteredTests(filteredTests) {
 
 
         const companyName = companyMap[test.companyID] || 'Unknown Company';
-        const isEditable = test.result === 'PENDING' && staffDept === 'Marketing'; // Check if the test result is PENDING
+        const isEditable = test.result === 'PENDING' || test.result === 'ONGOING'; // Check if the test result is PENDING
         const isCancel = test.result === 'PENDING' || test.result === 'ONGOING';
 
         let coaHTML = '';

@@ -1,4 +1,4 @@
-import { app, db, auth, storage, ref,getDownloadURL, uploadBytes, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot,  deleteObject  } from "./firebase-config.js";
+import { app, db, auth, storage, ref,getDownloadURL, uploadBytes, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot,  deleteObject, listAll } from "./firebase-config.js";
 
 async function fetchInvoices() {
     showCustomAlert('Fetching charges, please wait...', () => {});
@@ -74,7 +74,7 @@ async function fetchInvoices() {
                         const prodName = productData ? productData.prodName : 'Unknown Sample';
 
                         // Only include charges with a valid payDate
-                        const payDate = chargeData.payDate ? chargeData.payDate.toDate() : null;
+                        const payDate = chargeData.payDate ? chargeData.payDate.toDate() : '';
 
                         charges.push({
                             register: testData.dateRegis.toDate(),
@@ -85,13 +85,18 @@ async function fetchInvoices() {
                             subtotal: chargeData.subTotal || 0,
                             total: chargeData.Total || 0,
                             invoice: chargeData.invoice || '-',
+                            proof: chargeData.proof || false,
                             remarks: chargeData.remarks || '',
                             status: chargeData.payStatus || '',
                             method: chargeData.payMethod || '',
                             payDate: payDate,
                             companyID: chargeData.companyID,
                             prodID: prodID || 'Unknown',
-                            prodName: prodName
+                            prodName: prodName,
+
+                            addOn:chargeData.addOn || '',
+                            addOnDate:chargeData.addOnDate || null,
+                            depoPercent:chargeData.depoPercent || 0,
                         });
 
                         // Check if payDate is within the selected date range
@@ -135,7 +140,6 @@ function generateInvoiceIcon(invoiceFilePath) {
             const a = document.createElement('a');
             a.href = url;
             a.target = '_blank'; // Open in a new tab
-            a.innerText = 'Open Invoice'; // You can change this text or add an icon
 
             // Append the link to the document body and trigger the click event
             document.body.appendChild(a);
@@ -145,8 +149,46 @@ function generateInvoiceIcon(invoiceFilePath) {
             document.body.removeChild(a);
         })
         .catch((error) => {
-            console.error('Error downloading Invoice:', error);
+            console.error('Error downloading Files:', error);
         });
+}
+
+// Function to handle COA file download
+async function generatePopIcon(popFilePath, prodID) {
+    try {
+        const storageRef = ref(storage, popFilePath);
+        // List all files in the folder
+        const files = await listAll(storageRef);
+
+        const zip = new JSZip();
+
+        // Fetch each file
+        for (const fileRef of files.items) {
+            const fileURL = await getDownloadURL(fileRef);
+            const response = await fetch(fileURL);
+            const fileBlob = await response.blob();
+
+            // Add file to ZIP
+            zip.file(fileRef.name, fileBlob);
+        }
+
+        // Generate ZIP file
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+
+        // Create download link
+        const zipFileName = `Proof_of_Payment_${prodID}.zip`;
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(zipBlob);
+        link.download = zipFileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+    }   catch (error) {
+        console.error("Error downloading or zipping files:", error);
+        alert("An error occurred while downloading files.");
+    }
+
 }
 
 async function uploadInvoice(chargeData) {
@@ -211,6 +253,63 @@ async function uploadInvoice(chargeData) {
                 console.error('Error uploading invoice:', error);
                 alert('Failed to upload invoice. Please try again.');
             }
+        }
+    });
+}
+
+async function uploadPop(chargeData) {
+    // Create a file input dynamically
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'application/pdf';
+    fileInput.multiple = true; // Allow multiple file selection
+
+    // Trigger the file input dialog
+    fileInput.click();
+
+    fileInput.addEventListener('change', async (event) => {
+        const files = event.target.files; // Get all selected files
+
+        if (files.length > 0) {
+            try {
+                const timestamp = new Date().toLocaleString(); // Get current time
+
+                for (const file of files) {
+                    // Validate file type (optional)
+                    if (file.type !== 'application/pdf') {
+                        alert(`Invalid file type: ${file.name}. Only PDF files are allowed.`);
+                        continue;
+                    }
+
+                    // Define the storage path for each file
+                    const FilePath = `COMPANY/${chargeData.companyID}/SAMPLE/${chargeData.prodID}/PROOF OF PAYMENT/${file.name}`;
+                    const storageRef = ref(storage, FilePath);
+
+                    // Upload the file to Firebase Storage
+                    await uploadBytes(storageRef, file);
+
+                    // (Optional) Get the uploaded file's download URL
+                    const downloadURL = await getDownloadURL(storageRef);
+
+                }
+
+                // Update Firestore to record that a proof has been uploaded
+                const chargeDocRef = doc(db, 'CHARGE', chargeData.chargeID);
+                await updateDoc(chargeDocRef, {
+                    proof: true // Store file name as key and URL as value
+                });
+
+                // Add a notification for each uploaded file
+                addNotification(`${staffName} uploaded POP file (${file.name}) for testing ${chargeData.prodID} at ${timestamp}`);
+
+                // Show a modal or provide user feedback
+                showModal('uploadPop');
+            } catch (error) {
+                console.error('Error uploading files:', error);
+                alert('Failed to upload files. Please try again.');
+            }
+        } else {
+            alert('No files selected.');
         }
     });
 }
@@ -295,20 +394,19 @@ async function removeInvoice(chargeData) {
     }
 }
 
-async function editCharge(chargeID){
-    try{
-        // Fetch the product from Firestore using prodID
+async function editCharge(chargeID) {
+    try {
+        // Fetch the charge from Firestore using chargeID
         const chargeDocRef = doc(db, 'CHARGE', chargeID);
         const chargeDoc = await getDoc(chargeDocRef);
 
         if (!chargeDoc.exists()) {
-            console.error('charge not found');
+            console.error('Charge not found');
             return;
         }
 
         const docID = chargeDoc.id;
-
-        const chargeData = chargeDoc.data(); // Get the product data
+        const chargeData = chargeDoc.data(); // Get the charge data
 
         // Automatically select the correct option in the 'state' dropdown
         const statusSelect = document.getElementById('changeStatus');
@@ -319,12 +417,9 @@ async function editCharge(chargeID){
             console.error('Invalid status value');
         }
 
+        document.getElementById('payDate').value = chargeData.payDate ? formatDateForInput(chargeData.payDate) : '';
 
-        document.getElementById('payDate').value = formatDateForInput(chargeData.payDate) || '';
-
-        
-
-        // Automatically select the correct option in the 'state' dropdown
+        // Automatically select the correct option in the 'method' dropdown
         const methodSelect = document.getElementById('changeMethod');
         methodSelect.value = chargeData.payMethod || ''; // Set the value of the select element
 
@@ -333,8 +428,35 @@ async function editCharge(chargeID){
             console.error('Invalid method value');
         }
 
-
         document.getElementById('remarksInvoice').textContent = chargeData.remarks;
+
+        // Auto-select the correct checkmark for addOn
+        const paymentViaPOCheck = document.getElementById('paymentViaPO');
+        const paymentDepositCheck = document.getElementById('paymentDeposit');
+
+        if (chargeData.addOn === 'PO/LOI') {
+            paymentViaPOCheck.checked = true;
+            paymentDepositCheck.checked = false;
+
+            showContainer('addOnDate');
+            document.getElementById('addDate').value = formatDateForInput(chargeData.addOnDate);
+            hideContainer('depoPercent');
+        } else if (chargeData.addOn === 'Deposit') {
+            paymentDepositCheck.checked = true;
+            paymentViaPOCheck.checked = false;
+
+            showContainer('addOnDate');
+            document.getElementById('addDate').value = formatDateForInput(chargeData.addOnDate);
+            showContainer('depoPercent');
+            document.getElementById('depoNum').value = chargeData.depoPercent;
+        } else {
+            // If addOn is empty or unavailable, uncheck both
+            paymentViaPOCheck.checked = false;
+            paymentDepositCheck.checked = false;
+
+            hideContainer('addOnDate');
+            hideContainer('depoPercent');
+        }
 
         const saveButton = document.getElementById('saveData');
 
@@ -346,11 +468,11 @@ async function editCharge(chargeID){
 
         setSaveOnClick(docID);
 
-
     } catch (error) {
         console.error('Error fetching charge data:', error);
     }
 }
+
 
 async function displaySubmission(chargeId) {
     showCustomAlert('Updating charge, please wait...', () => {});
@@ -363,6 +485,30 @@ async function displaySubmission(chargeId) {
     const method = document.getElementById('changeMethod').value;
     const dateInput = document.getElementById('payDate').value;
     const date = dateInput ? new Date(dateInput) : null;
+
+    const dateInput2 = document.getElementById('addDate').value;
+    const date2 = dateInput2 ? new Date(dateInput2) : null;
+
+    const depoPercent = document.getElementById('depoNum').value;
+
+    const paymentCheckboxes = document.querySelectorAll('.paymentCheckbox');
+
+    // Function to get the value of the selected checkbox
+    function getSelectedPaymentMethod() {
+        let selectedValue = null;
+
+        paymentCheckboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                selectedValue = checkbox.value; // Get the value of the checked checkbox
+            }
+        });
+
+        return selectedValue; // Return the selected value (or null if none selected)
+    }
+
+    // Get the selected payment method if any checkbox is checked
+    const selectedMethod = getSelectedPaymentMethod();
+    console.log('Selected Payment Method:', selectedMethod);
 
     try {
         // Search for matching TESTING documents with chargeId
@@ -383,6 +529,28 @@ async function displaySubmission(chargeId) {
                     payMethod: method,
                     payDate: date
                 });
+
+                // Update other fields only if checkboxes are checked
+                if (selectedMethod) {
+                    // Update based on selected method
+                    if (selectedMethod === 'PO/LOI') {
+                        // Only update these fields if payment method is selected
+                        await updateDoc(chargeDocRef, {
+                            addOn: selectedMethod,
+                            addOnDate: date2,
+                            depoPercent: 0
+                        });
+                    }
+                    // Update based on selected method
+                    else if (selectedMethod === 'Deposit') {
+                        // Only update these fields if payment method is selected
+                        await updateDoc(chargeDocRef, {
+                            addOn: selectedMethod,
+                            addOnDate: date2,
+                            depoPercent: depoPercent
+                        });
+                    }
+                }
 
                 const timestamp = new Date().toLocaleString(); // Get current time
                 addNotification(`${staffName} updated invoice's data for testing ${prodID} at ${timestamp}`);
@@ -405,4 +573,5 @@ async function displaySubmission(chargeId) {
 
 
 
-export {fetchInvoices, generateInvoiceIcon, uploadInvoice, checkAndDisplayCOARealTime, removeInvoice, displaySubmission, editCharge};
+
+export {fetchInvoices, generateInvoiceIcon, uploadInvoice, checkAndDisplayCOARealTime, removeInvoice, displaySubmission, editCharge, generatePopIcon, uploadPop};

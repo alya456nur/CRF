@@ -46,7 +46,6 @@ function displayFilteredInvoices(filteredCharges) {
     filteredCharges.slice(startIndex, endIndex).forEach((charge, index) => {
         const row = document.createElement('tr');
 
-        let invoice = '';
         // Check if COA is available
         if (charge.invoice !== '-') {
             const invoiceFilePath = `COMPANY/${charge.companyID}/SAMPLE/${charge.prodID}/INVOICE/${charge.invoice}`;
@@ -57,7 +56,18 @@ function displayFilteredInvoices(filteredCharges) {
             invoiceHTML = '-';
         }
 
+        // Check if COA is available
+        if (charge.proof) {
+            const proofFilePath = `COMPANY/${charge.companyID}/SAMPLE/${charge.prodID}/PROOF OF PAYMENT`;
+            proofHTML = `
+                <a href="#" class="download-pop" data-pop="${proofFilePath}" title="Download POP"><i class="fa-regular fa-file-zipper"></i> </a>
+            `;
+        } else {
+            proofHTML = '-';
+        }
+
         const isCancel = charge.status === 'NOT COMPLETED';
+        const isComplete = charge.status === 'COMPLETED';
 
         const companyName = companyMap[charge.companyID] || 'Unknown Company';
         row.innerHTML = `
@@ -73,8 +83,12 @@ function displayFilteredInvoices(filteredCharges) {
             <td>RM ${charge.total}</td>
             <td>${getStatusHTML(charge.status)}</td>
             <td style="text-align: center;">${invoiceHTML}</td>
-            <td>
+            <td style="text-align: center;">${proofHTML}</td>
+            <td style="text-align: center;">
                 <i class="fa-solid fa-arrow-up-from-bracket upload-icon ${!isCancel ? 'disabled-icon' : ''}" title="${isCancel ? 'Upload Invoice' : 'Disabled'}"></i>
+            </td>
+            <td style="text-align: center;">
+                <i class="fa-solid fa-arrow-up-from-bracket upload-pop ${!isComplete ? 'disabled-icon' : ''}" title="${isComplete ? 'Upload POP' : 'Disabled'}"></i>
             </td>
         `;
         chargeTableBody.appendChild(row);
@@ -90,7 +104,19 @@ function displayFilteredInvoices(filteredCharges) {
             });
         }
 
+        // Handle COA download event
+        if (charge.proof) {
+            const popLink = row.querySelector('.download-pop');
+            popLink.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent the default link behavior
+                e.preventDefault(); // Prevent any default navigation
+                const popPath = popLink.getAttribute('data-pop');
+                generatePopIcon(popPath, charge.prodID);
+            });
+        }
+
         const uploadIcon = row.querySelector('.upload-icon');
+        const uploadPOP= row.querySelector('.upload-pop');
 
         if (isCancel) {
             // Add event listener for delete icon
@@ -102,6 +128,18 @@ function displayFilteredInvoices(filteredCharges) {
             // Add a visual cue to show the icon is disabled (optional)
             uploadIcon.classList.add('disabled');
             uploadIcon.setAttribute('title', 'Disabled');
+        }
+
+        if (isComplete) {
+            // Add event listener for delete icon
+            uploadPOP.addEventListener('click', (e) => {
+                e.stopPropagation();
+                uploadPop(charge);
+            });
+        } else {
+            // Add a visual cue to show the icon is disabled (optional)
+            uploadPOP.classList.add('disabled');
+            uploadPOP.setAttribute('title', 'Disabled');
         }
 
         // Row click event to display charge information
@@ -163,6 +201,8 @@ function getFilterInvoices() {
 function displayChargeInfo(chargeData) {
     const formContainer = document.getElementById('displayInvoice');
 
+    hideContainer('exportExcel');
+
     hideContainer('data');
 
     hideContainer('filterDate');
@@ -208,6 +248,38 @@ function displayCharge(chargeData){
         };
     }
     uploadIn(chargeData);
+
+    // Select all checkboxes with the class 'paymentCheckbox'
+    const paymentCheckboxes = document.querySelectorAll('.paymentCheckbox');
+
+    // Add a click event listener to each checkbox
+    paymentCheckboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', (event) => {
+            if (event.target.checked) {
+                // Uncheck all other checkboxes
+                paymentCheckboxes.forEach((cb) => {
+                    if (cb !== event.target) {
+                        cb.checked = false;
+                    }
+                });
+
+                // Logic to show/hide containers based on the selected checkbox
+                if (event.target.id === 'paymentViaPO') {
+                    showContainer('addOnDate');
+                    hideContainer('depoPercent');
+                } else if (event.target.id === 'paymentDeposit') {
+                    showContainer('addOnDate');
+                    showContainer('depoPercent');
+                }
+            } else {
+                // If both checkboxes are unchecked, hide both containers
+                if (![...paymentCheckboxes].some(cb => cb.checked)) {
+                    hideContainer('addOnDate');
+                    hideContainer('depoPercent');
+                }
+            }
+        });
+    });
 }
 
 
@@ -231,6 +303,7 @@ function cancelDisplayInvoice() {
     formContainer.classList.remove('active');
 
     // Show other elements
+    showContainer('exportExcel');
     showContainer('data');
     showContainer('filterDate');
     showContainer('searchContainer');

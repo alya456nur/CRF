@@ -34,7 +34,7 @@ function confirmDeleteP(companyID,prodId) {
     showModal('deleteProd');
     const confirmButton = document.getElementById('confirmDeleteButton');
     confirmButton.onclick = function() {
-        deleteProd(companyID,prodId);
+        cancelProd(companyID,prodId);
         closeModal('deleteProd');
     };
 }
@@ -185,6 +185,8 @@ function displayFilteredProductsM(filteredProducts) {
     filteredProducts.slice(startIndex, endIndex).forEach((product, index) => {
         const row = document.createElement('tr');
 
+        const isCancel = product.status === 'CANCELLED';
+
         const companyName = companyMap[product.company] || 'Unknown Company';
         row.innerHTML = `
             <td>${startIndex + index + 1}</td>
@@ -193,23 +195,40 @@ function displayFilteredProductsM(filteredProducts) {
             <td>${formatDate(product.date)}</td>
             <td>${companyName || 'Unknown Company'}</td>
             <td>${staffMap[product.staff] || 'Unknown Staff'}</td>
+            <td>${getStatusHTML(product.status)}</td>
             <td>
-                <i class="bi bi-pencil-square green-icon edit-icon" title="Edit"></i>
-                <i class="bi bi-trash delete-icon" title="Delete"></i>
+                <i class="bi bi-pencil-square green-icon edit-icon ${isCancel ? 'disabled-icon' : ''}" title="${!isCancel ? 'Edit' : 'Disabled'}"></i>
+                <i class="fa-solid fa-ban delete-icon ${isCancel ? 'disabled-icon' : ''}" title="${!isCancel ? 'Cancel' : 'Disabled'}"></i>
             </td>
         `;
 
         productTableBody.appendChild(row);
 
-        // Add event listeners for edit and delete icons
-        row.querySelector('.edit-icon').addEventListener('click', (e) => {
-            e.stopPropagation();
-            editProd(product.id);
-        });
-        row.querySelector('.delete-icon').addEventListener('click', (e) => {
-            e.stopPropagation();
-            confirmDeleteP(product.company,product.id);
-        });
+
+        const editBtn = row.querySelector('.edit-icon')
+
+        const deleteBtn = row.querySelector('.delete-icon');
+
+        if (!isCancel) {
+            // Add event listeners for edit and delete icons
+            editBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                editProd(product.id);
+            });
+
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                confirmDeleteP(product.company,product.id);
+            });
+        } else {
+            // Add a visual cue to show the icon is disabled (optional)
+            editBtn.classList.add('disabled');
+            editBtn.setAttribute('title', 'Disabled');
+
+            // Add a visual cue to show the icon is disabled (optional)
+            deleteBtn.classList.add('disabled');
+            deleteBtn.setAttribute('title', 'Disabled');
+        }
 
         // Row click event to display product information
         row.addEventListener('click', () => displayProductInfoM(product));

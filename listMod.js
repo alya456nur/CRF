@@ -75,6 +75,7 @@ async function fetchProductsM() {
                     company: companyID,
                     date: productDate,
                     appearance: productData.physcAppearance,
+                    status: productData.status,
                     staff: staffID, // Include the retrieved staffID
                 };
             });
@@ -143,6 +144,7 @@ async function addProdSubmission(event) {
             physcAppearance: appearance,
             companyID: company,
             dateReceived: date,
+            status: 'ACTIVE'
         });
 
         // Update the ID tracker document with the new highest ID for the year
@@ -180,7 +182,7 @@ async function editProd(prodID) {
         document.getElementById('productName2').value = prodToEdit.prodName;
 
 
-        appearance = document.getElementById('appearance2');
+        const appearance = document.getElementById('appearance2');
         appearance.value = prodToEdit.physcAppearance || ''; // Set the value of the select element
 
         // Check if the provided state is a valid option
@@ -325,59 +327,51 @@ async function populateStaffOptions2(staffMap, staffSelectId) {
     }
 }
 
-async function deleteProd(companyID, prodID) {
-    showCustomAlert('Deleting product, please wait...', () => {}); // Show loading message
+async function cancelProd(companyID, prodID) {
+    showCustomAlert('Cancelling product, please wait...', () => {}); // Show loading message
 
     try {
-        // 1. Query all TESTING documents that reference the prodID
+        // 1. Update the PRODUCT document status to 'CANCELLED'
+        const prodDocRef = doc(db, 'PRODUCT', prodID);
+        await updateDoc(prodDocRef, { status: 'CANCELLED' }); // Update product status to 'CANCELLED'
+
+        // 2. Query all TESTING documents that reference the prodID
         const testingQuery = query(collection(db, 'TESTING'), where('prodID', '==', prodID));
         const testingSnapshot = await getDocs(testingQuery);
 
-        const deletePromises = testingSnapshot.docs.map(async (testingDoc) => {  // Renamed 'doc' to 'testingDoc'
+        const updatePromises = testingSnapshot.docs.map(async (testingDoc) => {
             const testingData = testingDoc.data();
-            const chargeID = testingData.chargeID; // Retrieve the chargeID from TESTING document
 
-            // 3. Fetch the associated CHARGE document
-            const chargeDocRef = doc(db, 'CHARGE', chargeID); // Use 'doc()' correctly here
-            const chargeDocSnap = await getDoc(chargeDocRef);
+            // 3. Change the resultStatus to 'CANCELLED' if it is 'PENDING' or 'ONGOING'
+            if (testingData.resultStatus === 'PENDING' || testingData.resultStatus === 'ONGOING') {
+                await updateDoc(testingDoc.ref, { resultStatus: 'CANCELLED' });
 
-            if (chargeDocSnap.exists()) {
-                const chargeData = chargeDocSnap.data();
+                const chargeID = testingData.chargeID; // Retrieve the chargeID from TESTING document
+                // 4. Fetch the associated CHARGE document
+                const chargeDocRef = doc(db, 'CHARGE', chargeID);
+                const chargeDocSnap = await getDoc(chargeDocRef);
 
-                // 4. Only delete the TESTING document if payStatus is not 'COMPLETED' and resultStatus is not 'ONGOING' or 'COMPLETED'
-                if (chargeData.payStatus !== 'COMPLETED' &&
-                    testingData.resultStatus !== 'ONGOING' &&
-                    testingData.resultStatus !== 'COMPLETED') {
-                    
-                    // Delete the TESTING document
-                    await deleteDoc(testingDoc.ref); // Use 'testingDoc.ref' to delete the TESTING document
+                if (chargeDocSnap.exists()) {
+                    const chargeData = chargeDocSnap.data();
 
-                    // Delete the CHARGE document
-                    await deleteDoc(chargeDocRef); // Delete the CHARGE document
+                    await updateDoc(chargeDocRef, { payStatus: 'CANCELLED' });
                 }
             }
         });
 
-        // 5. Wait for all TESTING documents to be deleted
-        await Promise.all(deletePromises);
-
-        // 6. Delete the PRODUCT document
-        const prodDocRef = doc(db, 'PRODUCT', prodID);
-        await deleteDoc(prodDocRef); // Delete the PRODUCT document from Firestore
-
-        // 7. Delete the product file from the company folder in Firebase Storage (recursively)
-        await deleteFolder(`COMPANY/${companyID}/SAMPLE/${prodID}`);
+        // Wait for all associated records to be updated
+        await Promise.all(updatePromises);
 
         const timestamp = new Date().toLocaleString(); // Get current time
-        addNotification(`${staffName} deleted sample ${prodID} at ${timestamp}`);
+        addNotification(`${staffName} cancelled sample ${prodID} at ${timestamp}`);
 
-        // 8. Hide the loading alert, show success modal
+        // Hide the loading alert, show success modal
         hideCustomAlert();
-        showModal('deleteProd2'); // Show success modal
+        showModal('cancelProd'); // Show success modal
     } catch (error) {
         // In case of error, hide the loading alert and log the error
         hideCustomAlert();
-        console.error("Error deleting product:", error);
+        console.error('Error cancelling product:', error);
     }
 }
 
@@ -423,4 +417,4 @@ async function fetchStaffOptions3(elementID) {
     populateStaffOptions3(staffMap, elementID);  // Pass the ID of the dropdown
 }
 
-export{fetchProductsM, editProd, EditProductSubmission, formatDateForInput, addProdSubmission, deleteProd, fetchStaffOptions2, populateStaffOptions2, fetchStaffOptions3, fetchWithCache, deleteFolder};
+export{fetchProductsM, editProd, EditProductSubmission, formatDateForInput, addProdSubmission, cancelProd, fetchStaffOptions2, populateStaffOptions2, fetchStaffOptions3, fetchWithCache, deleteFolder};

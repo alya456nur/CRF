@@ -568,6 +568,7 @@ async function addTestSubmission(event) {
             Total,
             remarks: '-',
             invoice: '-',
+            proof: '-',
             payStatus: 'NOT COMPLETED',
             dateCreated: today
         });

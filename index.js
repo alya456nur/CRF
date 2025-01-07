@@ -9,13 +9,13 @@ import {populateYearOptions, filterDate, populateAll, fetchChartData} from './da
 import { fetchCompanies, handleFormSubmission, editItem, handleEditSubmission, deleteCompany, retrieveStaffsDept} from './companyMod.js';
 import { fetchContacts, addContactSubmission, EditContactSubmission, deleteContact, editContact, retrieveCompanies, fetchComContact, fetchOptions} from './contactMod.js';
 import {fetchProducts, fetchStaffProduct, retrieveStaffs, fetchStaffOptions,formatDate} from './overviewMod.js';
-import {fetchProductsM, editProd, EditProductSubmission, formatDateForInput, addProdSubmission, deleteProd, fetchStaffOptions2, populateStaffOptions2, fetchStaffOptions3, fetchWithCache,deleteFolder} from './listMod.js';
+import {fetchProductsM, editProd, EditProductSubmission, formatDateForInput, addProdSubmission, cancelProd, fetchStaffOptions2, populateStaffOptions2, fetchStaffOptions3, fetchWithCache,deleteFolder} from './listMod.js';
 import{loadProfileData, saveChanges, submitEmailChange, submitPasswordChange} from './profileMod.js';
 import {fetchInternal, deleteInternal, editInternal, handleEditInternal, addInternalSubmission} from './internalMod.js';
 import {fetchOutsources, deleteOutsource, editOutsource, handleEditOutsource, addOutsourceSubmission} from './outsourceMod.js';
 import {fetchTestings,retrieveInternal, retrieveOutsource, retrieveProducts,fillInfo, fillSample, paramIn, paramOut, addTestSubmission, generateCOAIcon,changeStatus, removeFile,
 cancelTest, editTest, fillInfo2, fillSample2, populateTables, formatDate2, fetchContacts2, populateTables2, checkAndDisplayCOA, uploadFile, displayTestSubmission} from './testingMod.js';
-import {fetchInvoices, generateInvoiceIcon, uploadInvoice,checkAndDisplayCOARealTime, removeInvoice, displaySubmission,editCharge} from './invoiceMod.js';
+import {fetchInvoices, generateInvoiceIcon, uploadInvoice,checkAndDisplayCOARealTime, removeInvoice, displaySubmission,editCharge, generatePopIcon, uploadPop} from './invoiceMod.js';
 import {renderChart, listenToCharges } from './reportMod.js';
 import {fetchPOs, uploadPO, deletePO,displayPORealTime, removePO, displaySubmissionPO,editPO, addPOSubmission} from './poMod.js';
 
@@ -346,7 +346,7 @@ async function loadContent(page) {
             window.fetchOptions = fetchOptions;
             window.formatDateForInput = formatDateForInput;
             window.addProdSubmission = addProdSubmission;
-            window.deleteProd = deleteProd;
+            window.cancelProd = cancelProd;
             window.fetchStaffOptions2 = fetchStaffOptions2;
             window.populateStaffOptions2 = populateStaffOptions2;
             window.fetchStaffOptions3 = fetchStaffOptions3;
@@ -432,6 +432,8 @@ async function loadContent(page) {
             window.fetchInvoices = fetchInvoices;
             window.editCharge = editCharge;
             window.formatDateForInput = formatDateForInput;
+            window.generatePopIcon = generatePopIcon;
+            window.uploadPop = uploadPop;
 
             dateListener('invoice');
             setInitialDate();

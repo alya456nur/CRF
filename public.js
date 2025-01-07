@@ -412,10 +412,13 @@ function getStatusHTML(status) {
             backgroundColor = '#ff7f00'; // Semi-transparent white
             textColor = 'white'; // Neon Yellow
             break;
+
+        case 'ACTIVE':
         case 'COMPLETED':
             backgroundColor = '#0fce0f'; // Semi-transparent white
             textColor = 'white'; // Neon Green
             break;
+            
         default:
             backgroundColor = '#B0BEC5'; // Semi-transparent white
             textColor = 'white'; // Neon Grey
