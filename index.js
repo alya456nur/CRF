@@ -288,6 +288,7 @@ async function loadContent(page) {
             window.listenToCharges = listenToCharges;
             window.renderChart = renderChart;
             window.filterDate = filterDate;
+            window.fetchChartData = fetchChartData;
             
             dateListener('dashboard');
             setInitialDate();
