@@ -153,13 +153,20 @@
     // Import the necessary Firebase modules
     import { app, auth, db, storage, analytics, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail, logEvent } from "./firebase-config.js";
 
+    // Disable back navigation completely
+    window.history.pushState(null, null, window.location.href);
+
+    window.addEventListener("popstate", () => {
+      window.history.pushState(null, null, window.location.href);
+    });
+
     // Check the user's authentication status
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in
-        window.location.href = "/";
+        window.location.replace("/"); // Redirect to the home page
       }
     });
+
 
     // Handle sign-in
     document.getElementById('loginForm').addEventListener('submit', function (e) {
