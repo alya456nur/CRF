@@ -78,8 +78,8 @@ function displayFilteredInvoices(filteredCharges) {
             <td>${charge.prodName}</td>
             <td>RM ${charge.inTotal}</td>
             <td>RM ${charge.outTotal}</td>
-            <td>RM ${charge.sst}</td>
             <td>RM ${charge.subtotal}</td>
+            <td>RM ${charge.sst}</td>
             <td>RM ${charge.total}</td>
             <td>${getStatusHTML(charge.status)}</td>
             <td style="text-align: center;">${invoiceHTML}</td>

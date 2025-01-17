@@ -16,7 +16,6 @@ function formatDate(dateInput) {
     return `${day}-${month}-${year}`;
 }
 
-
 // Function to fetch products in real-time with unsubscribe capability
 async function fetchProducts() {
     // Retrieve initial and last date values
@@ -87,9 +86,9 @@ async function fetchProducts() {
                 const productData = productDocs[i];
                 const companyData = companyDocs[i];
 
-                // If chargeData or companyData is missing, still proceed, but log it for clarity
-                if (!chargeData || !companyData) {
-                    console.warn(`Missing chargeData or companyData for TESTING doc ID: ${testingDoc.id}`);
+                // Skip if resultStatus is "CANCELLED"
+                if (testingData.resultStatus === "CANCELLED") {
+                    continue; // Skip this iteration
                 }
 
                 const regDate = testingData.dateRegis ? testingData.dateRegis.toDate() : null;
@@ -139,6 +138,7 @@ async function fetchProducts() {
         console.error("Error fetching products:", error);
     }
 }
+
 
 
 
