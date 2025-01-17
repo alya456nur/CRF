@@ -192,11 +192,12 @@ async function retrieveProducts(companyID) {
     const prodMap = {};
     try {
         const productQuery = query(
-            collection(db, 'PRODUCT'), 
-            where('companyID', '==', companyID) // Filter by companyID
+            collection(db, 'PRODUCT'),
+            where('companyID', '==', companyID), // Filter by companyID
+            where('status', '==', 'ACTIVE')     // Filter by status
         );
         const querySnapshot = await getDocs(productQuery);
-        
+
         querySnapshot.forEach((doc) => {
             const prodData = doc.data();
             prodMap[doc.id] = prodData.prodName;
@@ -207,6 +208,7 @@ async function retrieveProducts(companyID) {
 
     return prodMap; // Return the map of products
 }
+
 
 
 async function fillInfo() {
