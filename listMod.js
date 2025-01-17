@@ -178,13 +178,6 @@ async function addExistProdSubmission(event) {
     const date = dateInput ? new Date(dateInput) : null;
 
     try {
-        // Validate required fields
-        if (!idNumber || !yearSuffix || !prodName || !appearance || !company) {
-            hideCustomAlert();
-            alert('All fields are required. Please fill in all the details.');
-            return;
-        }
-
         // Pad the number with leading zeros to ensure it's always 4 digits
         const paddedNumber = idNumber.toString().padStart(4, '0');
 
@@ -198,7 +191,7 @@ async function addExistProdSubmission(event) {
         if (productDoc.exists()) {
             // Product already exists, show an error message
             hideCustomAlert();
-            alert(`Product with ID ${prodID} already exists. Please use a different ID.`);
+            AlertMe(`Product with ID ${prodID} already exists. Please use a different ID.`);
             return; // Stop further execution
         }
 
