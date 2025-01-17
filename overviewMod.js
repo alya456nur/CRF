@@ -125,9 +125,9 @@ async function fetchProducts() {
                 }
             }
 
-            // Sort by date
-            overviews.sort((a, b) => b.date - a.date);
-
+            // Sort by register date
+            overviews.sort((a, b) => b.id.localeCompare(a.id));
+            
             // Filter products after fetching and sorting
             filterProducts(overviews); // Pass the products array to filterProducts()
         });
