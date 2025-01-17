@@ -570,7 +570,7 @@ async function addTestSubmission(event) {
             Total,
             remarks: '-',
             invoice: '-',
-            proof: '-',
+            proof: false,
             payStatus: 'NOT COMPLETED',
             dateCreated: today
         });
