@@ -9,7 +9,7 @@ import {populateYearOptions, filterDate, populateAll, fetchChartData} from './da
 import { fetchCompanies, handleFormSubmission, editItem, handleEditSubmission, deleteCompany, retrieveStaffsDept} from './companyMod.js';
 import { fetchContacts, addContactSubmission, EditContactSubmission, deleteContact, editContact, retrieveCompanies, fetchComContact, fetchOptions} from './contactMod.js';
 import {fetchProducts, fetchStaffProduct, retrieveStaffs, fetchStaffOptions,formatDate} from './overviewMod.js';
-import {fetchProductsM, editProd, EditProductSubmission, formatDateForInput, addProdSubmission, cancelProd, fetchStaffOptions2, populateStaffOptions2, fetchStaffOptions3, fetchWithCache,deleteFolder} from './listMod.js';
+import {fetchProductsM, editProd, EditProductSubmission, formatDateForInput, addProdSubmission, addExistProdSubmission , cancelProd, fetchStaffOptions2, populateStaffOptions2, fetchStaffOptions3, fetchWithCache,deleteFolder} from './listMod.js';
 import{loadProfileData, saveChanges, submitEmailChange, submitPasswordChange} from './profileMod.js';
 import {fetchInternal, deleteInternal, editInternal, handleEditInternal, addInternalSubmission} from './internalMod.js';
 import {fetchOutsources, deleteOutsource, editOutsource, handleEditOutsource, addOutsourceSubmission} from './outsourceMod.js';
@@ -364,6 +364,7 @@ async function loadContent(page) {
             fetchStaffOptions('filterStaff');
             fetchOptions('filterCompany');
             document.getElementById('prodForm').addEventListener('submit', addProdSubmission);
+            document.getElementById('prodForm2').addEventListener('submit', addExistProdSubmission);
         }
         else if (page === 'internal') {
             window.deleteInternal = deleteInternal;

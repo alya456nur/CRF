@@ -7,9 +7,9 @@ function toggleButtons() {
 
 function addProd() {
     const formContainer = document.getElementById('addProductForm');
-    const addBtn = document.querySelector('.floating-button'); // Select the add button
     const heading = document.getElementById('listHeading'); // Select the <h1> element with the id listHeading
 
+    hideContainer("AddBUTTON");
     hideContainer('productTable');
     hideContainer('pagination');
     hideContainer('filterDate');
@@ -19,13 +19,33 @@ function addProd() {
     hideContainer('pagination');
 
     setTimeout(() => {
-        changeTitle('Add Sample', 'Samples / List / Add Sample');
-        heading.textContent = 'Add Samples'; // Restore the original <h1> text
+        changeTitle('Add New Sample', 'Samples / List / Add New Sample');
+        heading.textContent = 'Add New Sample'; // Restore the original <h1> text
         formContainer.classList.add('active');
         fetchOptions('companyName'); // Populate the dropdown before setting the default value
         autoFillDate("dateReceived");
+    }, 500);
+}
 
-        addBtn.style.display = 'none'; // Show the add button
+function addExistProd() {
+    const formContainer = document.getElementById('addExistProductForm');
+    const heading = document.getElementById('listHeading'); // Select the <h1> element with the id listHeading
+
+    hideContainer("AddBUTTON");
+    hideContainer('productTable');
+    hideContainer('pagination');
+    hideContainer('filterDate');
+    hideSelect2('filterStaff');
+    hideSelect2('filterCompany');
+    hideContainer('searchContainer');
+    hideContainer('pagination');
+
+    setTimeout(() => {
+        changeTitle('Add Existing Sample', 'Samples / List / Add Existing Sample');
+        heading.textContent = 'Add Existing Sample (Before 2025)'; // Restore the original <h1> text
+        formContainer.classList.add('active');
+        fetchOptions('companyNameE'); // Populate the dropdown before setting the default value
+        autoFillDate("dateReceivedE");
     }, 500);
 }
 
@@ -61,7 +81,6 @@ function cancelInfoPM() {
 
 function cancelAddL() {
     const formContainer = document.getElementById('addProductForm');
-    const addBtn = document.querySelector('.floating-button'); // Select the add button
     const heading = document.getElementById('listHeading'); // Select the <h1> element with the id listHeading
 
 
@@ -72,13 +91,32 @@ function cancelAddL() {
     setTimeout(() => {
         changeTitle('<i class="bi bi-file-spreadsheet"></i> SAMPLES', 'Samples / List');
         heading.textContent = 'List of Samples'; // Restore the original <h1> text
+        showContainer("AddBUTTON");
         showContainer('productTable');
         showContainer('filterDate');
         showSelect2('filterStaff');
         showSelect2('filterCompany');
         showContainer('searchContainer');
         showContainer('pagination');
-        addBtn.style.display = 'block'; // Show the add button
+    }, 500);
+}
+
+function cancelAddExistL() {
+    const formContainer = document.getElementById('addExistProductForm');
+    const heading = document.getElementById('listHeading'); // Select the <h1> element with the id listHeading
+
+    formContainer.classList.remove('active');
+
+    setTimeout(() => {
+        changeTitle('<i class="bi bi-file-spreadsheet"></i> SAMPLES', 'Samples / List');
+        heading.textContent = 'List of Samples'; // Restore the original <h1> text
+        showContainer("AddBUTTON");
+        showContainer('productTable');
+        showContainer('filterDate');
+        showSelect2('filterStaff');
+        showSelect2('filterCompany');
+        showContainer('searchContainer');
+        showContainer('pagination');
     }, 500);
 }
 

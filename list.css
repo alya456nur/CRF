@@ -2,8 +2,18 @@
 body, html {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+p{
+    font-size: 13px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+}
+
+.sampleID{
+    display: flex;
+    gap: 2px;
+    align-items: center;
 }
 
 .hidden {

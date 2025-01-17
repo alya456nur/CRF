@@ -10,7 +10,10 @@
 <div class="container">
     <div class="top">
         <h3 id="listHeading">List of Samples</h3>
-        <button class="floating-button" id="float"onclick="addProd()">+ Add Sample</button>
+        <div class="top" style="gap: 10px;" id="AddBUTTON">
+            <button class="floating-button" id="float"onclick="addExistProd()">+ Add Existing Sample</button>
+            <button class="floating-button" id="float"onclick="addProd()">+ Add New Sample</button>
+        </div>
     </div>
 
     <!-- Search and Filter Container -->
@@ -122,8 +125,8 @@
             <div class="prodApp">
                 <div class="form-group">
 
-                    <label for="appearance">Physical Appearance <p style="color: red; display: inline;">*</p></label>
-                    <select id="appearanceS" name="appearance" required>
+                    <label for="appearances">Physical Appearance <p style="color: red; display: inline;">*</p></label>
+                    <select id="appearances" name="appearances" required>
                         <option value="" disabled selected>Select Appearance</option>
                         <option value="LIQUID">LIQUID</option>
                         <option value="SEMI SOLID">SEMI SOLID</option>
@@ -143,12 +146,71 @@
             </div>
             
             <label for="productName">Sample Name <p style="color: red; display: inline;">*</p></label>
-            <input type="text" id="productName" name="productName" placeholder="Enter Sample's name" required>
+            <input type="text" id="productName" name="productName" placeholder="Enter Sample's name" style="border-radius: 5px;" required>
 
 
             <div style="display: flex; align-items: center; gap: 10px;">
                 <button type="submit" class="modal-button ok">Add</button>
                 <button type="button" class="modal-button delete" onclick="cancelAddL()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <!--ADD PRODUCT FORM-->
+    <div class="form-container" id="addExistProductForm">
+        <button class="close-button" onclick="cancelAddExistL()">X</button>
+        <form id="prodForm2">
+
+
+            <div class="separate poppins-semibold">
+                <p class="formInfo">Sample Information</p>
+                <div class="line-info"></div>
+            </div>
+
+            <div class="sampleID">
+                <label for="idSample" style="margin: 0;">Sample ID<p style="color: red; display: inline;">*</p> :</label>
+                <p>MBC - </p>
+                <input type="number" id="idNum" name="idNum" placeholder="Num eg. 0001" style="border-radius:5px; width:100px;" required 
+                       min="0" max="9999" oninput="this.value = this.value.slice(0, 4);">
+                <p> - </p>
+                <input type="number" id="yearNum" name="yearNum" placeholder="Year eg. 24" style="border-radius:5px; width:100px;" required 
+                       min="0" max="99" oninput="this.value = this.value.slice(0, 2);">
+            </div>
+
+            <label for="company">Company <p style="color: red; display: inline;">*</p></label>
+            <select id="companyNameE" name="company" class="company" required style="border-radius: 5px;"></select>
+
+
+            <div class="prodApp">
+                <div class="form-group">
+
+                    <label for="appearance">Physical Appearance <p style="color: red; display: inline;">*</p></label>
+                    <select id="appearanceE" name="appearance" required>
+                        <option value="" disabled selected>Select Appearance</option>
+                        <option value="LIQUID">LIQUID</option>
+                        <option value="SEMI SOLID">SEMI SOLID</option>
+                        <option value="SOLID">SOLID</option>
+                        <option value="SOLID POWDER">SOLID POWDER</option>
+                        <option value="POWDER">POWDER</option>
+                        <option value="SWAB">SWAB</option>
+                        <option value="PASTE">PASTE</option>
+                        <option value="SURFACE">SURFACE</option>
+                        <option value="AIR">AIR</option>
+                    </select>
+                </div>
+                <div class="form-group" id="dateGroup">
+                    <label for="dateReceived">Date Received <p style="color: red; display: inline;">*</p></label>
+                    <input type="date" id="dateReceivedE" name="dateReceived" required> 
+                </div>
+            </div>
+            
+            <label for="productName">Sample Name <p style="color: red; display: inline;">*</p></label>
+            <input type="text" id="productNameE" name="productName" placeholder="Enter Sample's name" style="border-radius: 5px;" required>
+
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button type="submit" class="modal-button ok">Add</button>
+                <button type="button" class="modal-button delete" onclick="cancelAddExistL()">Cancel</button>
             </div>
         </form>
     </div>

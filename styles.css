@@ -816,6 +816,7 @@ a {
 .top {
     display: flex;
     align-items: center; /* Vertically center the elements */
+    justify-content: space-between;
 }
 
 

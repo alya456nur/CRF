@@ -109,7 +109,7 @@ async function addProdSubmission(event) {
     showCustomAlert('Adding product, please wait...', () => { });
 
     const prodName = document.getElementById('productName').value;
-    const appearance = document.getElementById('appearanceS').value;
+    const appearance = document.getElementById('appearances').value;
     const company = document.getElementById('companyName').value;
     const dateInput = document.getElementById('dateReceived').value;
     const date = dateInput ? new Date(dateInput) : null;
@@ -163,6 +163,68 @@ async function addProdSubmission(event) {
     prodForm.reset();
     cancelAddL();
 }
+
+// Handle form submission
+async function addExistProdSubmission(event) {
+    event.preventDefault();
+    showCustomAlert('Adding product, please wait...', () => { });
+
+    const idNumber = document.getElementById('idNum').value;
+    const yearSuffix = document.getElementById('yearNum').value;
+    const prodName = document.getElementById('productNameE').value;
+    const appearance = document.getElementById('appearanceE').value;
+    const company = document.getElementById('companyNameE').value;
+    const dateInput = document.getElementById('dateReceivedE').value;
+    const date = dateInput ? new Date(dateInput) : null;
+
+    try {
+        // Validate required fields
+        if (!idNumber || !yearSuffix || !prodName || !appearance || !company) {
+            hideCustomAlert();
+            alert('All fields are required. Please fill in all the details.');
+            return;
+        }
+
+        // Pad the number with leading zeros to ensure it's always 4 digits
+        const paddedNumber = idNumber.toString().padStart(4, '0');
+
+        // Generate prodID in the desired format
+        const prodID = `MBC-${paddedNumber}-${yearSuffix}`;
+
+        // Check if the prodID already exists in Firestore
+        const productRef = doc(db, 'PRODUCT', prodID);
+        const productDoc = await getDoc(productRef);
+
+        if (productDoc.exists()) {
+            // Product already exists, show an error message
+            hideCustomAlert();
+            alert(`Product with ID ${prodID} already exists. Please use a different ID.`);
+            return; // Stop further execution
+        }
+
+        // Add the new product with the generated prodID as document ID
+        await setDoc(productRef, {
+            prodName: prodName,
+            physcAppearance: appearance,
+            companyID: company,
+            dateReceived: date || null, // Use null if no date is provided
+            status: 'ACTIVE'
+        });
+
+        const timestamp = new Date().toLocaleString(); // Get current time
+        addNotification(`${staffName} added a new sample at ${timestamp}`);
+        hideCustomAlert();
+        showModal('addProd'); // Show success modal
+    } catch (error) {
+        hideCustomAlert();
+        console.error("Error adding product:", error);
+    }
+
+    const prodForm = document.getElementById('prodForm2');
+    prodForm.reset();
+    cancelAddExistL();
+}
+
 
 
 // Make `editProd` async to use await inside
@@ -417,4 +479,4 @@ async function fetchStaffOptions3(elementID) {
     populateStaffOptions3(staffMap, elementID);  // Pass the ID of the dropdown
 }
 
-export{fetchProductsM, editProd, EditProductSubmission, formatDateForInput, addProdSubmission, cancelProd, fetchStaffOptions2, populateStaffOptions2, fetchStaffOptions3, fetchWithCache, deleteFolder};
+export{fetchProductsM, editProd, EditProductSubmission,addExistProdSubmission, formatDateForInput, addProdSubmission, cancelProd, fetchStaffOptions2, populateStaffOptions2, fetchStaffOptions3, fetchWithCache, deleteFolder};
