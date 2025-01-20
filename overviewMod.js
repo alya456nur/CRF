@@ -16,6 +16,7 @@ function formatDate(dateInput) {
     return `${day}-${month}-${year}`;
 }
 
+
 // Function to fetch products in real-time with unsubscribe capability
 async function fetchProducts() {
     // Retrieve initial and last date values
@@ -86,9 +87,9 @@ async function fetchProducts() {
                 const productData = productDocs[i];
                 const companyData = companyDocs[i];
 
-                // Skip if resultStatus is "CANCELLED"
-                if (testingData.resultStatus === "CANCELLED") {
-                    continue; // Skip this iteration
+                // If chargeData or companyData is missing, still proceed, but log it for clarity
+                if (!chargeData || !companyData) {
+                    console.warn(`Missing chargeData or companyData for TESTING doc ID: ${testingDoc.id}`);
                 }
 
                 const regDate = testingData.dateRegis ? testingData.dateRegis.toDate() : null;
@@ -124,9 +125,9 @@ async function fetchProducts() {
                 }
             }
 
-            // Sort by register date
-            overviews.sort((a, b) => b.id.localeCompare(a.id));
-            
+            // Sort by date
+            overviews.sort((a, b) => b.date - a.date);
+
             // Filter products after fetching and sorting
             filterProducts(overviews); // Pass the products array to filterProducts()
         });
@@ -138,7 +139,6 @@ async function fetchProducts() {
         console.error("Error fetching products:", error);
     }
 }
-
 
 
 

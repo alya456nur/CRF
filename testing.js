@@ -330,7 +330,7 @@ function displayTestInfo(testData) {
     setTimeout(() => {
         changeTitle('Sample Testing Request','Lab Testing / Testing List / View More Details'); 
         formContainer.classList.add('active');
-        if(testData.result === 'PENDING'){
+        if(testData.result === 'PENDING' && staffDept === "Lab"){
             changeStatus(testData.testID, "ONGOING");
         }
         displayTest(testData);
@@ -495,19 +495,9 @@ function displayFilteredTests(filteredTests) {
             deleteIcon.setAttribute('title', 'Cancel disabled');
         }
 
-
-        // Row click event to display product information (only for Lab staff)
-        if (staffDept === "Lab") {
-            row.addEventListener('click', () => {
-                displayTestInfo(test); // Assuming 'test' is the relevant data
-            });
-        } else {
-            row.style.cursor = 'not-allowed'; // Change cursor style to indicate no action
-            row.removeEventListener('click', () => {
-                displayTestInfo(test); // Remove any previously added click event listeners
-            });
-        }
-
+        row.addEventListener('click', () => {
+            displayTestInfo(test); // Assuming 'test' is the relevant data
+        });
     });
 
     updatePageInfoT(filteredTests.length);

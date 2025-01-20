@@ -139,7 +139,7 @@ async function fetchTestings() {
             testingData = tempTestingData;
 
             // Sort by register date
-            testingData.sort((a, b) => b.prodID.localeCompare(a.prodID));
+            testingData.sort((a, b) => b.register - a.register);
 
             // Display filtered table (initially displays all companies)
             filterTestings();

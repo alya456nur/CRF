@@ -402,6 +402,12 @@ button.modal-button {
     text-align: center;
     width: 100%;
     margin: 0;
+}
+
+.upload-btn:hover {
+    background-color: darkblue ;
+}
+
 
 .file-name-display {
     flex-grow: 1;
