@@ -12,7 +12,7 @@ p{
 
 .sampleID{
     display: flex;
-    gap: 2px;
+    gap: 5px;
     align-items: center;
 }
 

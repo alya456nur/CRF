@@ -1,0 +1,19 @@
+{
+  "name": "COMPANY/vf9WjEho4WiD0hE437ot/SAMPLE/MBC-0001-25/outCOA/token.pdf",
+  "bucket": "crf-biotech.appspot.com",
+  "metageneration": 1,
+  "generation": 1737429048312,
+  "contentType": "application/pdf",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "2d4cf10b-4919-4eae-aefb-ae9db0d332a2"
+  ],
+  "etag": "TpspOMt3HwtlWpn3Jp2H1rwowhk",
+  "customMetadata": {},
+  "timeCreated": "2025-01-21T03:10:48.312Z",
+  "updated": "2025-01-21T03:10:48.312Z",
+  "size": 68167,
+  "md5Hash": "rQZikfpnQcCvtfQzz4nsdw==",
+  "crc32c": "3008526105"
+}

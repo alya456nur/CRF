@@ -41,8 +41,8 @@ function addExistProd() {
     hideContainer('pagination');
 
     setTimeout(() => {
-        changeTitle('Add Existing Sample', 'Samples / List / Add Existing Sample');
-        heading.textContent = 'Add Existing Sample (Before 2025)'; // Restore the original <h1> text
+        changeTitle('Add Sample', 'Samples / List / Add Sample');
+        heading.textContent = 'Add Sample'; // Restore the original <h1> text
         formContainer.classList.add('active');
         fetchOptions('companyNameE'); // Populate the dropdown before setting the default value
         autoFillDate("dateReceivedE");
@@ -99,6 +99,9 @@ function cancelAddL() {
         showContainer('searchContainer');
         showContainer('pagination');
     }, 500);
+
+    const prodForm = document.getElementById('prodForm');
+    prodForm.reset();
 }
 
 function cancelAddExistL() {
@@ -118,6 +121,9 @@ function cancelAddExistL() {
         showContainer('searchContainer');
         showContainer('pagination');
     }, 500);
+
+    const prodForm = document.getElementById('prodForm2');
+    prodForm.reset();
 }
 
 function cancelUpdateL() {

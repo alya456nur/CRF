@@ -1,0 +1,19 @@
+{
+  "name": "COMPANY/vf9WjEho4WiD0hE437ot/SAMPLE/MBC-0001-25/INVOICE/source.pdf",
+  "bucket": "crf-biotech.appspot.com",
+  "metageneration": 1,
+  "generation": 1737429007752,
+  "contentType": "application/pdf",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "b8aa4f4c-f569-4d24-bfbd-e86482df6977"
+  ],
+  "etag": "UGiX01DcvqjfVrOekyShQAv4cd8",
+  "customMetadata": {},
+  "timeCreated": "2025-01-21T03:10:07.753Z",
+  "updated": "2025-01-21T03:10:07.753Z",
+  "size": 259586,
+  "md5Hash": "XZSH92tY4La7gxnF1zzicQ==",
+  "crc32c": "3792257942"
+}

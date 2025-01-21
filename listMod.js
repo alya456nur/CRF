@@ -1,5 +1,6 @@
 // Import the necessary Firebase modules
-import { app, auth, db, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot ,deleteObject, storage, ref, listAll} from "./firebase-config.js";
+import { app, auth, db, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot ,deleteObject, storage, 
+ref, listAll, runTransaction} from "./firebase-config.js";
 
 
 // Helper function to format date as YYYY-MM-DD for date input
@@ -86,8 +87,27 @@ async function fetchProductsM() {
             // Filter out any null values (products that don't meet the date filter)
             const validProducts = productsData.filter(product => product !== null);
 
-            // Sort products by date in descending order
-            validProducts.sort((a, b) => b.id.localeCompare(a.id));
+            // Sort products by ID in descending order, considering both numeric parts
+            validProducts.sort((a, b) => {
+                const idA = a.id.split('-');
+                const idB = b.id.split('-');
+
+                // Assuming the ID format is 'Prefix-Number-SubNumber' (e.g., MBC-0001-25)
+                const numA1 = parseInt(idA[1], 10);  // First numeric part
+                const numA2 = parseInt(idA[2], 10);  // Second numeric part
+
+                const numB1 = parseInt(idB[1], 10);  // First numeric part
+                const numB2 = parseInt(idB[2], 10);  // Second numeric part
+
+                // First compare by the second numeric part (descending order)
+                if (numB2 !== numA2) {
+                    return numB2 - numA2; // Compare second numeric part in descending order
+                } else {
+                    // If second parts are the same, compare first numeric part (descending order)
+                    return numB1 - numA1; // Compare first numeric part in descending order
+                }
+            });
+
 
             products = validProducts; // Update the products array
             filterProductsM(); // Display filtered and sorted products
@@ -164,7 +184,6 @@ async function addProdSubmission(event) {
     cancelAddL();
 }
 
-// Handle form submission
 async function addExistProdSubmission(event) {
     event.preventDefault();
     showCustomAlert('Adding product, please wait...', () => { });
@@ -178,46 +197,42 @@ async function addExistProdSubmission(event) {
     const date = dateInput ? new Date(dateInput) : null;
 
     try {
-        // Pad the number with leading zeros to ensure it's always 4 digits
         const paddedNumber = idNumber.toString().padStart(4, '0');
-
-        // Generate prodID in the desired format
         const prodID = `MBC-${paddedNumber}-${yearSuffix}`;
-
-        // Check if the prodID already exists in Firestore
         const productRef = doc(db, 'PRODUCT', prodID);
-        const productDoc = await getDoc(productRef);
 
-        if (productDoc.exists()) {
-            // Product already exists, show an error message
-            hideCustomAlert();
-            AlertMe(`Product with ID ${prodID} already exists. Please use a different ID.`);
-            return; // Stop further execution
-        }
+        // Run a Firestore transaction
+        await runTransaction(db, async (transaction) => {
+            const productDoc = await transaction.get(productRef);
+            if (productDoc.exists()) {
+                throw new Error(`Sample with ID ${prodID} already exists. Please use a different ID.`);
+            }
 
-        // Add the new product with the generated prodID as document ID
-        await setDoc(productRef, {
-            prodName: prodName,
-            physcAppearance: appearance,
-            companyID: company,
-            dateReceived: date || null, // Use null if no date is provided
-            status: 'ACTIVE'
+            transaction.set(productRef, {
+                prodName: prodName,
+                physcAppearance: appearance,
+                companyID: company,
+                dateReceived: date || null,
+                status: 'ACTIVE'
+            });
         });
 
-        const timestamp = new Date().toLocaleString(); // Get current time
+        const timestamp = new Date().toLocaleString();
         addNotification(`${staffName} added a new sample at ${timestamp}`);
         hideCustomAlert();
-        showModal('addProd'); // Show success modal
+        const prodForm = document.getElementById('prodForm2');
+        prodForm.reset();
+        showModal('addProd');
+        cancelAddExistL();
     } catch (error) {
         hideCustomAlert();
-        console.error("Error adding product:", error);
+        if (error.message.includes("already exists")) {
+            AlertMe(error.message);
+        } else {
+            console.error("Error adding product:", error);
+        }
     }
-
-    const prodForm = document.getElementById('prodForm2');
-    prodForm.reset();
-    cancelAddExistL();
 }
-
 
 
 // Make `editProd` async to use await inside

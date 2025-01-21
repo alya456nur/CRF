@@ -363,7 +363,6 @@ async function loadContent(page) {
             fetchProductsM();
             fetchStaffOptions('filterStaff');
             fetchOptions('filterCompany');
-            document.getElementById('prodForm').addEventListener('submit', addProdSubmission);
             document.getElementById('prodForm2').addEventListener('submit', addExistProdSubmission);
         }
         else if (page === 'internal') {
