@@ -40,14 +40,6 @@ function formatNumber(number) {
 }
 
 
-
-// Helper function to format numbers with commas
-function formatNumber(number) {
-    return number.toLocaleString(); // Use browser's locale settings to format numbers
-}
-
-
-
 //set initial date current month of the year
 function setInitialDate() {
     const initialDateInput = document.getElementById('initialDate');

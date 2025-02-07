@@ -300,7 +300,7 @@ async function uploadPop(chargeData) {
                 });
 
                 // Add a notification for each uploaded file
-                addNotification(`${staffName} uploaded POP file (${file.name}) for testing ${chargeData.prodID} at ${timestamp}`);
+                addNotification(`${staffName} uploaded POP files for testing ${chargeData.prodID} at ${timestamp}`);
 
                 // Show a modal or provide user feedback
                 showModal('uploadPop');
