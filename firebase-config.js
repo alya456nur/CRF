@@ -4,7 +4,7 @@ import { getAuth, connectAuthEmulator, signInWithEmailAndPassword, sendPasswordR
 browserSessionPersistence, fetchSignInMethodsForEmail, updateEmail,
 updatePassword ,reauthenticateWithCredential, sendEmailVerification, EmailAuthProvider} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getFirestore, runTransaction, connectFirestoreEmulator, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc,
-arrayRemove,onSnapshot, orderBy,writeBatch, serverTimestamp  } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+arrayRemove,onSnapshot, orderBy,writeBatch, serverTimestamp, deleteField  } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 import { getStorage, connectStorageEmulator, ref, getDownloadURL, uploadBytes, deleteObject, getMetadata, listAll, list  } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
 import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 import { getFunctions, connectFunctionsEmulator, httpsCallable } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-functions.js";
@@ -53,6 +53,6 @@ if (window.location.hostname === "localhost" || window.location.hostname === "12
 export { 
   app, auth, db, storage,functions, updateEmail, updatePassword, fetchSignInMethodsForEmail,reauthenticateWithCredential, sendEmailVerification, EmailAuthProvider, list ,
   listAll,  deleteObject ,analytics, Timestamp,serverTimestamp , doc, getDoc, query, where, collection, getDocs,orderBy, writeBatch ,getMetadata,addDoc, updateDoc, 
-  setDoc, deleteDoc,arrayRemove, onSnapshot, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, setPersistence, runTransaction,
+  setDoc, deleteDoc,arrayRemove, onSnapshot, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, setPersistence, runTransaction, deleteField,
   browserSessionPersistence, ref, getDownloadURL, uploadBytes, logEvent, httpsCallable, connectFirestoreEmulator, connectAuthEmulator, connectStorageEmulator,connectFunctionsEmulator
 };

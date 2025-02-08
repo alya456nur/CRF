@@ -1,4 +1,4 @@
-import { app, db, auth, storage, ref,getDownloadURL, uploadBytes, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot,  deleteObject, listAll } from "./firebase-config.js";
+import { app, db, auth, storage, ref,getDownloadURL, uploadBytes, Timestamp, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot,  deleteObject, listAll, deleteField } from "./firebase-config.js";
 
 async function fetchInvoices() {
     showCustomAlert('Fetching charges, please wait...', () => {});
@@ -124,7 +124,7 @@ async function fetchInvoices() {
         });
     } catch (error) {
         console.error('Error fetching charges and products:', error);
-        showCustomAlert('Error fetching charges. Please try again.', () => {});
+        alert('Error fetching charges. Please try again.');
     }
 }
 
@@ -251,68 +251,67 @@ async function uploadInvoice(chargeData) {
                 showModal('uploadInvoice');
             } catch (error) {
                 console.error('Error uploading invoice:', error);
-                alert('Failed to upload invoice. Please try again.');
+                AlertMe('Failed to upload invoice. Please try again.');
             }
         }
     });
 }
 
 async function uploadPop(chargeData) {
-    // Create a file input dynamically
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'application/pdf';
-    fileInput.multiple = true; // Allow multiple file selection
+    showCustomAlert('Uploading POP file(s), please wait...', () => {});
+    const fileInput = document.getElementById('file-input'); // Get existing file input
+    const files = fileInput.filePOP; // Get selected files
 
-    // Trigger the file input dialog
-    fileInput.click();
+    if (filePOP.length === 0) {
+        AlertMe('No files selected.');
+        return;
+    }
 
-    fileInput.addEventListener('change', async (event) => {
-        const files = event.target.files; // Get all selected files
+    try {
+        const timestamp = new Date().toLocaleString(); // Get current time
 
-        if (files.length > 0) {
-            try {
-                const timestamp = new Date().toLocaleString(); // Get current time
-
-                for (const file of files) {
-                    // Validate file type (optional)
-                    if (file.type !== 'application/pdf') {
-                        alert(`Invalid file type: ${file.name}. Only PDF files are allowed.`);
-                        continue;
-                    }
-
-                    // Define the storage path for each file
-                    const FilePath = `COMPANY/${chargeData.companyID}/SAMPLE/${chargeData.prodID}/PROOF OF PAYMENT/${file.name}`;
-                    const storageRef = ref(storage, FilePath);
-
-                    // Upload the file to Firebase Storage
-                    await uploadBytes(storageRef, file);
-
-                    // (Optional) Get the uploaded file's download URL
-                    const downloadURL = await getDownloadURL(storageRef);
-
-                }
-
-                // Update Firestore to record that a proof has been uploaded
-                const chargeDocRef = doc(db, 'CHARGE', chargeData.chargeID);
-                await updateDoc(chargeDocRef, {
-                    proof: true // Store file name as key and URL as value
-                });
-
-                // Add a notification for each uploaded file
-                addNotification(`${staffName} uploaded POP files for testing ${chargeData.prodID} at ${timestamp}`);
-
-                // Show a modal or provide user feedback
-                showModal('uploadPop');
-            } catch (error) {
-                console.error('Error uploading files:', error);
-                alert('Failed to upload files. Please try again.');
+        for (const file of filePOP) {
+            // Validate file type (optional)
+            if (file.type !== 'application/pdf') {
+                AlertMe(`Invalid file type: ${file.name}. Only PDF files are allowed.`);
+                continue;
             }
-        } else {
-            alert('No files selected.');
+
+            // Define the storage path for each file
+            const FilePath = `COMPANY/${chargeData.companyID}/SAMPLE/${chargeData.prodID}/PROOF OF PAYMENT/${file.name}`;
+            const storageRef = ref(storage, FilePath);
+
+            // Upload the file to Firebase Storage
+            await uploadBytes(storageRef, file);
+
+            // (Optional) Get the uploaded file's download URL
+            const downloadURL = await getDownloadURL(storageRef);
         }
-    });
+
+        // Update Firestore to record that a proof has been uploaded
+        const chargeDocRef = doc(db, 'CHARGE', chargeData.chargeID);
+        await updateDoc(chargeDocRef, {
+            proof: true
+        });
+
+        // Add a notification for each uploaded file
+        addNotification(`${staffName} uploaded POP file(s) for testing ${chargeData.prodID} at ${timestamp}`);
+
+        closeModalPOP2();
+        hideCustomAlert();
+
+        // Show a modal or provide user feedback
+        showModal('uploadPop');
+
+        // Clear file input after upload
+        fileInput.value = ''; 
+    } catch (error) {
+        console.error('Error uploading files:', error);
+        hideCustomAlert();
+        AlertMe('Failed to upload files. Please try again.');
+    }
 }
+
 
 
 async function checkAndDisplayCOARealTime(chargeData) {
@@ -387,7 +386,7 @@ async function removeInvoice(chargeData) {
             addNotification(`${staffName} remove invoice for testing ${chargeData.prodID} at ${timestamp}`);
         }
         catch (error){
-            console.log('error updating CHARGE')
+            console.error('error updating CHARGE')
         }
     }catch (error) {
         alert("Failed to remove the file. Please try again.");
@@ -477,9 +476,6 @@ async function editCharge(chargeID) {
 async function displaySubmission(chargeId) {
     showCustomAlert('Updating charge, please wait...', () => {});
 
-    console.log("test");
-
-    // Check if state is valid
     const status = document.getElementById('changeStatus').value;
     const remarks = document.getElementById('remarksInvoice').value;
     const method = document.getElementById('changeMethod').value;
@@ -490,76 +486,64 @@ async function displaySubmission(chargeId) {
     const date2 = dateInput2 ? new Date(dateInput2) : null;
 
     const depoPercent = document.getElementById('depoNum').value;
-
     const paymentCheckboxes = document.querySelectorAll('.paymentCheckbox');
 
-    // Function to get the value of the selected checkbox
     function getSelectedPaymentMethod() {
         let selectedValue = null;
-
         paymentCheckboxes.forEach((checkbox) => {
             if (checkbox.checked) {
-                selectedValue = checkbox.value; // Get the value of the checked checkbox
+                selectedValue = checkbox.value;
             }
         });
-
-        return selectedValue; // Return the selected value (or null if none selected)
+        return selectedValue;
     }
 
-    // Get the selected payment method if any checkbox is checked
     const selectedMethod = getSelectedPaymentMethod();
-    console.log('Selected Payment Method:', selectedMethod);
 
     try {
-        // Search for matching TESTING documents with chargeId
         const testingCollectionRef = collection(db, 'TESTING');
         const q = query(testingCollectionRef, where('chargeID', '==', chargeId));
 
         const querySnapshot = await getDocs(q);
         if (!querySnapshot.empty) {
-            // Use a for...of loop instead of forEach to use await properly
             for (const docSnapshot of querySnapshot.docs) {
-                const prodID = docSnapshot.data().prodID; // Get prodID from the document
+                const prodID = docSnapshot.data().prodID;
+                const chargeDocRef = doc(db, 'CHARGE', chargeId);
 
-                // Correct usage of doc() to reference the charge document
-                const chargeDocRef = doc(db, 'CHARGE', chargeId); // Use 'doc' properly here
-                await updateDoc(chargeDocRef, {
+                // Base updates (always update these fields)
+                const baseUpdate = {
                     payStatus: status,
                     remarks: remarks,
                     payMethod: method,
-                    payDate: date
-                });
+                    payDate: date,
+                };
 
-                // Update other fields only if checkboxes are checked
-                if (selectedMethod) {
-                    // Update based on selected method
+                // If no payment method is selected, delete `addOn` and `addOnDate`
+                if (!selectedMethod) {
+                    baseUpdate.addOn = deleteField();
+                    baseUpdate.addOnDate = deleteField();
+                } else {
+                    // Otherwise, update based on selected method
                     if (selectedMethod === 'PO/LOI') {
-                        // Only update these fields if payment method is selected
-                        await updateDoc(chargeDocRef, {
-                            addOn: selectedMethod,
-                            addOnDate: date2,
-                            depoPercent: 0
-                        });
-                    }
-                    // Update based on selected method
-                    else if (selectedMethod === 'Deposit') {
-                        // Only update these fields if payment method is selected
-                        await updateDoc(chargeDocRef, {
-                            addOn: selectedMethod,
-                            addOnDate: date2,
-                            depoPercent: depoPercent
-                        });
+                        baseUpdate.addOn = selectedMethod;
+                        baseUpdate.addOnDate = date2;
+                        baseUpdate.depoPercent = 0;
+                    } else if (selectedMethod === 'Deposit') {
+                        baseUpdate.addOn = selectedMethod;
+                        baseUpdate.addOnDate = date2;
+                        baseUpdate.depoPercent = depoPercent;
                     }
                 }
 
-                const timestamp = new Date().toLocaleString(); // Get current time
+                await updateDoc(chargeDocRef, baseUpdate);
+
+                const timestamp = new Date().toLocaleString();
                 addNotification(`${staffName} updated invoice's data for testing ${prodID} at ${timestamp}`);
 
-                // Success modal
-                showModal('editCharge'); // Show success modal
+                showModal('editCharge');
             }
         } else {
-            console.log('No matching TESTING documents found for chargeId:', chargeId);
+            console.error('No matching TESTING documents found for chargeId:', chargeId);
         }
 
         hideCustomAlert();
@@ -569,6 +553,7 @@ async function displaySubmission(chargeId) {
         console.error(`Error updating charge with ID ${chargeId}:`, error);
     }
 }
+
 
 
 

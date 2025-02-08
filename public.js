@@ -540,4 +540,3 @@ function exportToExcel(data) {
     // Trigger the file download
     XLSX.writeFile(wb, fileName);
 }
-

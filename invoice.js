@@ -134,7 +134,7 @@ function displayFilteredInvoices(filteredCharges) {
             // Add event listener for delete icon
             uploadPOP.addEventListener('click', (e) => {
                 e.stopPropagation();
-                uploadPop(charge);
+                popFunctions(charge);
             });
         } else {
             // Add a visual cue to show the icon is disabled (optional)

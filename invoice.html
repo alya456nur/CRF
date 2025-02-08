@@ -2,6 +2,30 @@
 
 <link rel="stylesheet" href="invoice.css">
 
+<div id="alertUser" class="modal" style="z-index: 1001;">
+    <div class="modal-content">
+        <p id="Message" style="text-align: left;"></p>
+        <button class="modal-button ok" onclick="closeModal('alertUser')">OK</button>
+    </div>
+</div>
+
+<div class="modal-file" id="modal-pop">
+    <div class="file-container">
+        <div class="upload-container" id="drop-area">
+            <p>Drag & Drop files here or <b>click</b> to select</p>
+            <input type="file" id="file-input" multiple>
+        </div>
+
+        <div class="file-list" id="file-list"></div>
+
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px ; gap: 20px;">
+            <button class="modal-button delete" id="cancel-POP">Cancel</button>
+            <button class="upload-btn" id="upload-files" disabled>Upload</button>
+        </div>
+    </div>
+</div>
+
+
 <div class="contentTitle">
     <h3> <i class="fa-solid fa-file-invoice-dollar" style="padding: 2px;"></i> Price for Lab Testing</h3>
     <h6>Finance / Invoice</h6>
