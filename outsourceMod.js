@@ -133,7 +133,7 @@ async function editOutsource(outsourceId) {
         // Populate the form with the selected company's data
         document.getElementById('outName2').value = outsourceToEdit.testName || 'Unavailable';
         document.getElementById('outParam2').value = outsourceToEdit.param || 'N/A';
-        document.getElementById('outPrice2').value = outsourceToEdit.price || 'N/A';
+        document.getElementById('outPrice2').value = outsourceToEdit.price || 0;
 
         const formContainer = document.getElementById('updateOutsourceForm');
         const addBtn = document.querySelector('.floating-button');
@@ -168,7 +168,7 @@ async function handleEditOutsource(outsourceId) {
     // Get form values
     const name = document.getElementById('outName2').value;
     const parameter = document.getElementById('inParam2').value;
-    const price = parseFloat(document.getElementById('outPrice').value);
+    const price = parseFloat(document.getElementById('outPrice2').value);
 
     try {
         // Update the company data in Firestore using the document ID

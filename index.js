@@ -416,6 +416,7 @@ async function loadContent(page) {
             dateListener('test');
             setInitialDate();
 
+            fetchStaffProduct();
             fetchTestings();
             fetchOptions('filterCompany');
 

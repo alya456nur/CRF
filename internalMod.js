@@ -132,7 +132,7 @@ async function editInternal(internalId) {
         // Populate the form with the selected company's data
         document.getElementById('internalName2').value = internalToEdit.testName || 'Unavailable';
         document.getElementById('inParam2').value = internalToEdit.param || 'N/A';
-        document.getElementById('inPrice2').value = internalToEdit.price || 'N/A';
+        document.getElementById('inPrice2').value = internalToEdit.price || 0;
 
         const formContainer = document.getElementById('updateInternalForm');
         const addBtn = document.querySelector('.floating-button');
@@ -166,7 +166,7 @@ async function handleEditInternal(internalId) {
     // Get form values
     const name = document.getElementById('internalName2').value;
     const parameter = document.getElementById('inParam2').value;
-    const price = parseFloat(document.getElementById('inPrice').value);
+    const price = parseFloat(document.getElementById('inPrice2').value);
 
     try {
         // Update the company data in Firestore using the document ID

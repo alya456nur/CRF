@@ -84,7 +84,7 @@ async function updateSidebarForStaffDept(staffDept) {
                 <a href="#" onclick="highlightActiveLink(event)" data-page="report"><i class="bi bi-file-earmark-bar-graph"></i> REPORT </a>
             </div>
 
-            <a href="#" onclick="highlightActiveLink(event)" data-page="profile"><i class="bi bi-person"></i> Profile </a>
+            <a href="#" onclick="highlightActiveLink(event)" data-page="profile"><i class="bi bi-person"></i> PROFILE </a>
 
             <a href="javascript:void(0)" onclick="highlightActiveLink(event)" id="logout-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
         `,
@@ -105,7 +105,7 @@ async function updateSidebarForStaffDept(staffDept) {
                 <a href="#" onclick="highlightActiveLink(event)" data-page="report"><i class="bi bi-file-earmark-bar-graph"></i> REPORT </a>
             </div>
 
-            <a href="#" onclick="highlightActiveLink(event)" data-page="profile"><i class="bi bi-person"></i> Profile </a>
+            <a href="#" onclick="highlightActiveLink(event)" data-page="profile"><i class="bi bi-person"></i> PROFILE </a>
 
             <a href="javascript:void(0)" onclick="highlightActiveLink(event)" id="logout-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
         `,
@@ -152,9 +152,10 @@ async function updateSidebarForStaffDept(staffDept) {
                 <a href="#" onclick="highlightActiveLink(event)" data-page="report"><i class="bi bi-file-earmark-bar-graph"></i> REPORT </a>
             </div>
 
+            <a href="#" onclick="highlightActiveLink(event)" data-page="profile"><i class="bi bi-person"></i> PROFILE </a>
+
             <a href="javascript:void(0)" onclick="highlightActiveLink(event)" id="logout-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
         `,
-        // Add more departments and their respective nav items here...
     };
 
     // Insert department-specific nav items

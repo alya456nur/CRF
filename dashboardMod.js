@@ -94,7 +94,7 @@ async function populateYearOptions() {
 
         querySnapshot.forEach((doc) => {
             const chargeData = doc.data();
-            const dateCreated = chargeData?.dateCreated?.toDate(); // Assuming it's a Firestore Timestamp
+            const dateCreated = chargeData?.payDate?.toDate(); // Assuming it's a Firestore Timestamp
             if (dateCreated) {
                 const year = dateCreated.getFullYear(); // Extract the year from dateCreated
                 years.add(year); // Add year to the Set

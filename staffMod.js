@@ -1,4 +1,4 @@
-import { app,auth, db, functions,httpsCallable, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot,fetchSignInMethodsForEmail } from "./firebase-config.js";
+import { app,auth, db, functions,httpsCallable, doc, getDoc, query, where, collection, getDocs, addDoc, updateDoc, setDoc, deleteDoc, onSnapshot,fetchSignInMethodsForEmail, serverTimestamp } from "./firebase-config.js";
 
 // Save staff data in an array
 async function fetchStaff() {
