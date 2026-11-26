@@ -52,12 +52,13 @@
     }
   ],
   "emulators": {
+    "hosting": {
+      "port": 5000
+    },
     "firestore": {
       "host": "localhost",
       "port": 8080,
-      "enabled": true,
-      "memory": false, 
-      "hostPort": "localhost:8080"
+      "enabled": true
     },
     "auth": {
       "host": "localhost",
@@ -66,8 +67,7 @@
     "storage": {
       "host": "localhost",
       "port": 9199,
-      "enabled": true,
-      "file": "./storage" 
+      "enabled": true
     },
     "functions": {
       "host": "localhost",
